@@ -1,0 +1,16 @@
+{
+  "name": "D3 testing",
+  "version": "0.0.1",
+  "main": "script2.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "jquery": "x.x.x",
+    "bootstrap": "3.x.x",
+    "nextprot": "0.0.x"
+
+  }
+}
