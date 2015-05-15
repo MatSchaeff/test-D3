@@ -1,6 +1,8 @@
 
 
-svg rect{fill:rgba(78,204,169,0.7);stroke:#32856E;stroke-width:1px;}
+svg rect{fill:rgba(78,204,169,1);
+    stroke:#32856E;stroke-width:1px;
+}
 
 .brush .extent {
     stroke: #fff;

@@ -9,6 +9,29 @@ Promise.all([nx.getPeptide(entry),nx.getProteinSequence(entry)]).then(function (
     var sequence = data1[1][1].sequence;
     console.log(sequence);
     var block = [];
+
+    var data2;
+    //data1[0].forEach( function(o) {
+    //    if (o.isoformSpecificity.hasOwnProperty(entry + "-2")) {
+    //
+    //        var start = parseInt(o.isoformSpecificity[entry + "-2"].positions[0].first*2400/sequence.length);
+    //        var end = parseInt(o.isoformSpecificity[entry + "-2"].positions[0].second*2400/sequence.length);
+    //
+    //        //if(end != start){
+    //
+    //            block.push({
+    //                x: start,
+    //                y: end,
+    //                pepLength: end - start,
+    //                level: 0
+    //            });
+    //
+    //        //}
+    //    }
+    //});
+
+    console.log(block.length);
+
     data1[0].forEach(function (o) {
         if (o.isoformSpecificity.hasOwnProperty(entry + "-2")) {
             block.push({
@@ -153,6 +176,7 @@ Promise.all([nx.getPeptide(entry),nx.getProteinSequence(entry)]).then(function (
     //        .transition()
     //        .duration(1500)
     //        .attr("x", X)
+    //        .attr("x", X)
     //        .attr("y", Y)
     //        .attr("width", pepWidth)
     //        .height("height", 8);
@@ -232,7 +256,8 @@ Promise.all([nx.getPeptide(entry),nx.getProteinSequence(entry)]).then(function (
     }
 
     function reset_axis() {
-      svgContainer.transition().duration(500)
+      svgContainer
+          .transition().duration(500)
           .select(".x.axis")
           .call(xAxis);
     }
