@@ -104,8 +104,9 @@ Promise.all([nx.getPeptide(entry),nx.getProteinSequence(entry)]).then(function (
         .attr("height", height);
 
     //Create group of sequence
-    svgContainer.append("g")
-        .attr("class", "seqGroup")
+    var texto = svgContainer.append("g")
+        .attr("class", "seqGroup");
+    var texto2=texto
         .selectAll(".AA")
         .data(sequence)
         .enter()
@@ -114,6 +115,7 @@ Promise.all([nx.getPeptide(entry),nx.getProteinSequence(entry)]).then(function (
         .attr("class","AA")
         .attr("x", function(d,i) { return scaling(i)})
         .attr("y", 200)
+        .attr("font-size", "10px")
         .attr("font-family", "monospace")
         .text(function (d,i) { return d});
 
@@ -217,16 +219,45 @@ Promise.all([nx.getPeptide(entry),nx.getProteinSequence(entry)]).then(function (
         .style("top", "20px")
         .style("bottom", "30px")
         .style("left", "0px")
+        .style("background", "#000")
+        .append("div")
+        .attr("class", "remove")
+        .style("position", "absolute")
+        .style("z-index", "19")
+        .style("width", "60px")
+        .style("height", "30px")
+        .style("top", "190px")
+        .style("bottom", "30px")
+        .style("left", "0px")
         .style("background", "#000");
+
+    var fisheye = d3.fisheye.circular()
+        .radius(200)
+        .distortion(2);
+
+    svgContainer.on("mousemove", function() {
+        fisheye.focus(d3.mouse(this));
+
+        svgContainer.selectAll(".AA").data(sequence)
+            .attr("x", function(d,i) {
+                console.log(fisheye(200));
+                return fisheye(scaling(i)); });
+            //.attr("font-size", function(d,i) { return d.fisheye(1); });
+
+        //link.attr("x1", function(d) { return d.source.fisheye.x; })
+        //    .attr("y1", function(d) { return d.source.fisheye.y; })
+        //    .attr("x2", function(d) { return d.target.fisheye.x; })
+        //    .attr("y2", function(d) { return d.target.fisheye.y; });
+    });
 
     d3.select(".chart")
         .on("mousemove", function(){
             mousex = d3.mouse(this);
             mousex = mousex[0] + 5;
-            vertical.style("left", mousex + "px" )})
-        .on("mouseover", function(){
-            mousex = d3.mouse(this);
-            mousex = mousex[0] + 5;
-            vertical.style("left", mousex + "px")});
+            vertical.style("left", mousex + "px" )});
+        //.on("mouseover", function(){
+        //    mousex = d3.mouse(this);
+        //    mousex = mousex[0] + 5;
+        //    vertical.style("left", mousex + "px")});
 
 });
