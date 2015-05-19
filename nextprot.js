@@ -151,6 +151,30 @@
             });
         };
 
+        NextprotClient.prototype.getSignalPeptide = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "signal-peptide").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getProPeptide = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "maturation-peptide").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getDisulfideBond = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "disulfide-bond").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getAntibody = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "antibody").then(function (data){
+                return data.entry.antibodyMappings;
+            });
+        };
+
 
         //node.js compatibility
         if (typeof exports !== 'undefined') {
