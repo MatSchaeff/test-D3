@@ -174,7 +174,26 @@
                 return data.entry.antibodyMappings;
             });
         };
-
+        NextprotClient.prototype.getInitMeth= function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "initiator-methionine").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+        NextprotClient.prototype.getModifResidue = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "modified-residue").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+        NextprotClient.prototype.getCrossLink = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "cross-link").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+        NextprotClient.prototype.getGlycoSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "glycosylation-site").then(function (data){
+                return data.entry.annotations;
+            });
+        };
 
         //node.js compatibility
         if (typeof exports !== 'undefined') {
