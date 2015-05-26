@@ -34,6 +34,9 @@ body{
     background:#F3F3F4 !important;
     overflow-y:scroll;
 }
+.active {
+    z-index: 1 !important;
+}
 .brush .extent {
     stroke: #fff;
     fill-opacity: .125;

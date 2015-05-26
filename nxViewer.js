@@ -8,6 +8,7 @@ function FeatureViewer(sequence, div) {
         brushActive:false,
         verticalLine:false
     };
+
     var pathLevel=0;
     var svg;
     var svgContainer;
@@ -31,11 +32,11 @@ function FeatureViewer(sequence, div) {
                 // Append tooltip
                 tooltipDiv = d3.select('body')
                                .append('div')
-                               .attr('class', 'tooltip2')
+                               .attr('class', 'tooltip2');
                 var absoluteMousePos = d3.mouse(bodyNode);
                 tooltipDiv.style({
                     left: (absoluteMousePos[0]-30)+'px',
-                    top: (absoluteMousePos[1]-50)+'px',
+                    top: (absoluteMousePos[1]-52)+'px',
                     'background-color': 'rgba(0, 0, 0, 0.8)',
                     width: 'auto',
                     'max-width': '170px',
@@ -65,7 +66,7 @@ function FeatureViewer(sequence, div) {
                 var absoluteMousePos = d3.mouse(bodyNode);
                 tooltipDiv.style({
                     left: (absoluteMousePos[0]-30)+'px',
-                    top: (absoluteMousePos[1] - 50)+'px'
+                    top: (absoluteMousePos[1] - 52)+'px'
                 });
             })
             .on('mouseout.tooltip', function(pD, pI){
@@ -584,7 +585,7 @@ function FeatureViewer(sequence, div) {
 
         d3.select(".chart")
             .on("mousemove.Vline", function () {
-                mousex = d3.mouse(this)[0]+13;
+                mousex = d3.mouse(this)[0]-2;
                 vertical.style("left", mousex+ "px")
             });
 //.on("mouseover", function(){

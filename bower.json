@@ -10,6 +10,7 @@
   "dependencies": {
     "jquery": "x.x.x",
     "bootstrap": "3.x.x",
+    "sequence-viewer": "x.x.x",
     "nextprot": "0.0.x"
 
   }
