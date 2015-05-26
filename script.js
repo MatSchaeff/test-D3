@@ -36,9 +36,7 @@
                 }
             }
         });
-        return leveling.length;
-    }
-
+        return leveling.length;}
     function addLevelToBond(array) {
         var leveling = [];
         array.forEach(function (d) {
@@ -62,8 +60,7 @@
                 }
             }
         });
-        return leveling.length;
-    }
+        return leveling.length;}
 
     var margin = {top: 20, right: 20, bottom: 60, left: 100},
         width = $(window).width() - margin.left - margin.right - 17,
