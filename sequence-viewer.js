@@ -22,11 +22,12 @@ function Sequence(sequence) {
 
         var sources = "<div id=\"sequenceHeader\" style=\"border-bottom: 1px solid #E7EAEC;padding-bottom:5px;margin-bottom: 15px;\">" +
             "<div style=\"display:inline-block;\">" +
-            "<span class=\"badge\" style=\"background:#C50063;color:white;padding:8px 5px;border-radius:70%;margin-right:10px;vertical-align:middle;\">{{sequenceLength}}</span>" +
+            "<span class=\"badge\" style=\"border-radius:70%;border: 2px solid black;color:#C50063;padding:8px 5px;background-color:white;margin-right:10px;vertical-align:middle;\">{{sequenceLength}}</span>" +
             "</div><h4 style=\"display:inline-block;vertical-align:middle;\">Protein Sequence</h4>" +
             "</div>" +
             "<div style=\"margin-top: 5px;\">" +
-            "<div id=\"scroller\" style=\"max-height:150px;overflow:auto;white-space: nowrap;padding-right:20px;margin-right:10px;s\"><div id=\"charNumbers\" style=\"font-family: monospace;font-size: 13px;display:inline-block;text-align:right; padding-right:5px; border-right:1px solid LightGray;\"></div>" +
+            "<div id=\"scroller\" style=\"max-height:400px;overflow:auto;white-space: nowrap;padding-right:20px;margin-right:10px;s\">" +
+            "<div id=\"charNumbers\" style=\"font-family: monospace;font-size: 13px;display:inline-block;text-align:right; padding-right:5px; border-right:1px solid LightGray;\"></div>" +
             "<div id=\"fastaSeq\" display-option=\"" + lineJump + "\" style=\"font-family: monospace;font-size: 13px;display:inline-block;padding:5px;\">{{{sequence}}}</div></div>" +
             "<div id=\"coverageLegend\" style=\"margin-top: 10px;margin-left:15px;\"></div>" +
             "</div>";

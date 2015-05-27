@@ -371,8 +371,6 @@ function FeatureViewer(sequence, div) {
                 .attr("width", uniqueWidth)
                 .attr("height", 12)
                 .style("fill", object.color)
-                .style("stroke", "black")
-                .style("stroke-width", "1px")
                 .call(d3.helper.tooltip(object));
 
             forcePropagation(rectsPro);
