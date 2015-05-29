@@ -83,6 +83,7 @@
                                 x: start,
                                 y: end,
                                 length: end - start,
+                                id:start.toString()+"_"+end.toString(),
                                 category: category,
                                 description: o.description,
                                 cvCode: o.cvTermAccessionCode,
@@ -110,6 +111,7 @@
                                 x: start,
                                 y: end,
                                 length: end - start,
+                                id:start.toString()+"_"+end.toString(),
                                 category: category,
                                 description: o.xrefs[0].accession,
                                 cvCode: o.xrefs[0].resolvedUrl,
@@ -200,6 +202,7 @@
                                 x: start,
                                 y: end,
                                 length: end - start,
+                                id:start.toString()+"_"+end.toString(),
                                 category: category,
                                 description: o.evidences[0].accession,
                                 evidence: evidence,
@@ -240,17 +243,22 @@
             var isoID = $(this).text();
             console.log(isoID);
             $(".chart").html("");
-            CreateSVG(isoforms,isoID);
+            createSVG(isoforms,isoID);
             addFeatures(isoID);
             fillTable(isoID);
         }
     };
 
-    function CreateSVG(sequences,isoName) {
+    function createSVG(sequences,isoName) {
         sequences.forEach(function (o) {
             if (o.uniqueName === isoName) {
                 currentSeq = o.sequence;
-                ft = new FeatureViewer(currentSeq, ".chart");
+                ft = new FeatureViewer(currentSeq, ".chart", {
+                    showAxis: true,
+                    showSequence: true,
+                    brushActive: true,
+                    verticalLine: false
+                });
                 seqView = new Sequence(currentSeq);
                 seqView.render('#seqViewer', {
                     'showLineNumbers': true,
@@ -260,15 +268,11 @@
 
             }
         });
-        ft.create(".chart", {
-            showAxis: true,
-            showSequence: true,
-            brushActive: true,
-            verticalLine: true
-        });
     }
 
     function addFeatures(isoName) {
+        console.log(features);
+
         if (features[isoName].proPep && features[isoName].proPep.length != 0) {
             ft.addFeature({
                 data: features[isoName].proPep,
@@ -387,6 +391,7 @@
             $("#featuresTable").html(results);
         }
     }
+
     function featureSelection() {
         $(".featPosition").click(function() {
             var position = $(this).text().split(" - ").map(Number);
@@ -394,38 +399,52 @@
             seqView.selection(position[0],position[1],"#C50063");
         })
     }
-    d3.helper2 = {};
-
-    d3.helper2.engrenage = function(object){
-        var engrenageDiv;
-        var bodyNode2 = d3.select('body').node();
-
-        function engrenage(selection){
-            console.log("fonction working");
-
-            selection.on('click', function(pD, pI){
-                console.log("click working");
-                // Append tooltip
-                engrenageDiv = d3.select('body')
-                               .append('div')
-                               .attr('class', 'selection2');
-                var absoluteMousePos = d3.mouse(bodyNode);
-                engrenageDiv.style({
-                    left: (pD.x)+'px',
-                    top: 0+'px',
-                    'background-color': 'rgba(0, 0, 0, 0.8)',
-                    width: pD.length,
-                    height: '500px',
-                    'max-height': '43px',
-                    position: 'absolute',
-                    'z-index': 1000,
-                    'box-shadow': '0 1px 2px 0 #656565'
-                });
-            });
-
-        }
-        return engrenageDiv;
+    function inverseSelection() {
+        $(".jojo").click(function (d) {
+            var featSelected = this.id.slice(0, - 1);
+            var featPos = featSelected.split("_").map(Number);
+            featPos[0]-=1;
+            seqView.selection(featPos[0],featPos[1],"#C50063");
+            var ElementTop = $("#"+featSelected).position().top-60;
+            var scrollPosition = $("#featTableScroller").scrollTop();
+            var scrollingLength = ElementTop + scrollPosition;
+            $("#featTableScroller").animate({scrollTop: scrollingLength}, 1000);
+        })
     }
+
+
+    //d3.helper2 = {};
+    //
+    //d3.helper2.engrenage = function(object){
+    //    var engrenageDiv;
+    //    var bodyNode2 = d3.select('body').node();
+    //
+    //    function engrenage(selection){
+    //        console.log("fonction working");
+    //
+    //        selection.on('click', function(pD, pI){
+    //            console.log("click working");
+    //            // Append tooltip
+    //            engrenageDiv = d3.select('body')
+    //                           .append('div')
+    //                           .attr('class', 'selection2');
+    //            var absoluteMousePos = d3.mouse(bodyNode);
+    //            engrenageDiv.style({
+    //                left: (pD.x)+'px',
+    //                top: 0+'px',
+    //                'background-color': 'rgba(0, 0, 0, 0.8)',
+    //                width: pD.length,
+    //                height: '500px',
+    //                'max-height': '43px',
+    //                position: 'absolute',
+    //                'z-index': 1000,
+    //                'box-shadow': '0 1px 2px 0 #656565'
+    //            });
+    //        });
+    //
+    //    }
+    //    return engrenageDiv;
+    //}
         // .call(d3.helper.engrenage());
 
 
@@ -651,12 +670,11 @@
             CreateData.peptide(oneData[10],"peptides","Peptide");
             CreateData.peptide(oneData[11],"srmPeptides","SRM peptide");
 
-            CreateSVG(isoforms,isoName);
+            createSVG(isoforms,isoName);
             addFeatures(isoName);
             fillTable(isoName);
             featureSelection();
-
-            d3.selectAll(".jojo").call(d3.helper2.engrenage(features[isoName]["matures"]));
+            inverseSelection();
 
             var endTime = new Date().getTime();
             var time = endTime - startTime;
