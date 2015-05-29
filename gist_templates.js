@@ -5,35 +5,35 @@ this["HBtemplates"]["isoformChoice.tmpl"] = Handlebars.template({"1":function(de
 
   return "        <li role=\"presentation\"><a class=\"isoformNames\" href=\"#\" role=\"tab\" data-toggle=\"tab\">"
     + this.escapeExpression(((helper = (helper = helpers.uniqueName || (depth0 != null ? depth0.uniqueName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"uniqueName","hash":{},"data":data}) : helper)))
-    + "</a></li>\n";
+    + "</a></li>\r\n";
 },"3":function(depth0,helpers,partials,data) {
     var stack1;
 
-  return "        <li role=\"presentation\" class=\"dropdown\">\n            <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-expanded=\"false\"><span\n                    id=\"extendIsoformChoice\">More</span><span style=\"margin-left:5px;\" class=\"caret\"></span></a>\n            <ul id=\"moreIsoforms\" class=\"dropdown-menu\" role=\"menu\">\n                <li role=\"presentation\"><p href=\"#\" role=\"tab\" data-toggle=\"tab\"\n                                           style=\"pointer-events:none;cursor:default;padding: 3px 20px;\">Others\n                    Isoforms</p></li>\n"
+  return "        <li role=\"presentation\" class=\"dropdown\">\r\n            <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-expanded=\"false\"><span\r\n                    id=\"extendIsoformChoice\">More</span><span style=\"margin-left:5px;\" class=\"caret\"></span></a>\r\n            <ul id=\"moreIsoforms\" class=\"dropdown-menu\" role=\"menu\">\r\n                <li role=\"presentation\"><p href=\"#\" role=\"tab\" data-toggle=\"tab\"\r\n                                           style=\"pointer-events:none;cursor:default;padding: 3px 20px;\">Others\r\n                    Isoforms</p></li>\r\n"
     + ((stack1 = helpers.blockHelperMissing.call(depth0,this.lambda(((stack1 = (depth0 != null ? depth0.isoforms : depth0)) != null ? stack1.more : stack1), depth0),{"name":"isoforms.more","hash":{},"fn":this.program(4, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "            </ul>\n";
+    + "            </ul>\r\n";
 },"4":function(depth0,helpers,partials,data) {
     var helper;
 
   return "                <li role=\"presentation\"><a class=\"isoformNames\" href=\"#\" role=\"tab\" data-toggle=\"tab\">"
     + this.escapeExpression(((helper = (helper = helpers.uniqueName || (depth0 != null ? depth0.uniqueName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"uniqueName","hash":{},"data":data}) : helper)))
-    + "</a>\n                </li>\n";
+    + "</a>\r\n                </li>\r\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1;
 
-  return "<div role=\"tabpanel\">\n    <div class=\"navbar-brand \" style=\"padding:10px 15px;color:#C50063;height:auto;font-size:20px;\">Isoforms</div>\n    <ul class=\"nav nav-tabs\" role=\"tablist\" style=\"border:none\">\n"
+  return "<div role=\"tabpanel\">\r\n    <div class=\"navbar-brand \" style=\"padding:10px 15px;color:#C50063;height:auto;font-size:20px;\">Isoforms</div>\r\n    <ul class=\"nav nav-tabs\" role=\"tablist\" style=\"border:none\">\r\n"
     + ((stack1 = helpers.blockHelperMissing.call(depth0,this.lambda(((stack1 = (depth0 != null ? depth0.isoforms : depth0)) != null ? stack1.visible : stack1), depth0),{"name":"isoforms.visible","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + ((stack1 = helpers['if'].call(depth0,((stack1 = (depth0 != null ? depth0.isoforms : depth0)) != null ? stack1.more : stack1),{"name":"if","hash":{},"fn":this.program(3, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "    </ul>\n</div>";
+    + "    </ul>\r\n</div>";
 },"useData":true});
 
 this["HBtemplates"]["overviewProtein.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
-  "    <div id=\"cleavage-less\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Cleaved into :</div>\n        <div class=\"col-md-6 col-xs-6\">";
+  "    <div id=\"cleavage-less\" class=\"row\">\r\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Cleaved into :</div>\r\n        <div class=\"col-md-6 col-xs-6\">";
   stack1 = ((helper = (helper = helpers.cleavage || (depth0 != null ? depth0.cleavage : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"cleavage","hash":{},"fn":this.program(2, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.cleavage) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "</div>\n    </div>\n";
+  return buffer + "</div>\r\n    </div>\r\n";
 },"2":function(depth0,helpers,partials,data) {
     var helper;
 
@@ -42,11 +42,11 @@ this["HBtemplates"]["overviewProtein.tmpl"] = Handlebars.template({"1":function(
     + ", </span>";
 },"4":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
-  "    <div id=\"family-less\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Family Name :</div>\n        <div class=\"col-md-6 col-xs-6\">";
+  "    <div id=\"family-less\" class=\"row\">\r\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Family Name :</div>\r\n        <div class=\"col-md-6 col-xs-6\">";
   stack1 = ((helper = (helper = helpers.family || (depth0 != null ? depth0.family : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"family","hash":{},"fn":this.program(5, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.family) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "</div>\n    </div>\n";
+  return buffer + "</div>\r\n    </div>\r\n";
 },"5":function(depth0,helpers,partials,data) {
     var stack1;
 
@@ -57,7 +57,7 @@ this["HBtemplates"]["overviewProtein.tmpl"] = Handlebars.template({"1":function(
     var stack1, helper, options, buffer = 
   "                <dt>Cleaved into the following "
     + this.escapeExpression(this.lambda(((stack1 = (depth0 != null ? depth0.cleavage : depth0)) != null ? stack1.length : stack1), depth0))
-    + " chains</dt>\n";
+    + " chains</dt>\r\n";
   stack1 = ((helper = (helper = helpers.cleavage || (depth0 != null ? depth0.cleavage : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"cleavage","hash":{},"fn":this.program(8, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.cleavage) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
@@ -67,10 +67,10 @@ this["HBtemplates"]["overviewProtein.tmpl"] = Handlebars.template({"1":function(
 
   return "                <dd>"
     + this.escapeExpression(((helper = (helper = helpers.synonymName || (depth0 != null ? depth0.synonymName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"synonymName","hash":{},"data":data}) : helper)))
-    + "</dd>\n                ";
+    + "</dd>\r\n                ";
 },"10":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
-  "                <dt>Alternative Name</dt>\n";
+  "                <dt>Alternative Name</dt>\r\n";
   stack1 = ((helper = (helper = helpers.alternativeName || (depth0 != null ? depth0.alternativeName : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"alternativeName","hash":{},"fn":this.program(11, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.alternativeName) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
@@ -80,9 +80,9 @@ this["HBtemplates"]["overviewProtein.tmpl"] = Handlebars.template({"1":function(
 
   return "                <dd> "
     + this.escapeExpression(((helper = (helper = helpers.synonymName || (depth0 != null ? depth0.synonymName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"synonymName","hash":{},"data":data}) : helper)))
-    + "\n                    "
+    + "\r\n                    "
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.synonyms : depth0),{"name":"if","hash":{},"fn":this.program(12, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "\n                </dd>\n                ";
+    + "\r\n                </dd>\r\n                ";
 },"12":function(depth0,helpers,partials,data) {
     var stack1;
 
@@ -91,56 +91,56 @@ this["HBtemplates"]["overviewProtein.tmpl"] = Handlebars.template({"1":function(
     + ") </em>";
 },"14":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
-  "    <div id=\"family-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Family</div>\n        <div class=\"col-md-6 col-xs-6\">\n            <dl>\n                <dt>Family</dt>\n";
+  "    <div id=\"family-full\" class=\"row\">\r\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Family</div>\r\n        <div class=\"col-md-6 col-xs-6\">\r\n            <dl>\r\n                <dt>Family</dt>\r\n";
   stack1 = ((helper = (helper = helpers.family || (depth0 != null ? depth0.family : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"family","hash":{},"fn":this.program(15, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.family) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "            </dl>\n        </div>\n    </div>\n";
+  return buffer + "            </dl>\r\n        </div>\r\n    </div>\r\n";
 },"15":function(depth0,helpers,partials,data) {
     var stack1;
 
   return "                <dd>"
     + ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"family",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "")
-    + "</dd>\n";
+    + "</dd>\r\n";
 },"17":function(depth0,helpers,partials,data) {
     var stack1;
 
   return ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"history",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "");
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1, helper, options, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression, buffer = 
-  "<div id=\"proteinTitle\">\n    <button id=\"extender\" class=\"btn btn-default\" style=\"float:right\">Extend overview</button>\n    <h2>"
+  "<div id=\"proteinTitle\">\r\n    <button id=\"extender\" class=\"btn btn-default\" style=\"float:right\">Extend overview</button>\r\n    <h2>"
     + alias3(((helper = (helper = helpers.entryName || (depth0 != null ? depth0.entryName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"entryName","hash":{},"data":data}) : helper)))
-    + "</h2>\n</div>\n<div id=\"INFOS-LESS\" style=\"display:block\">\n"
+    + "</h2>\r\n</div>\r\n<div id=\"INFOS-LESS\" style=\"display:block\">\r\n"
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.cleavage : depth0),{"name":"if","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "    <div id=\"gene-less\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Gene Name :</div>\n        <div class=\"col-md-6 col-xs-6\">"
+    + "    <div id=\"gene-less\" class=\"row\">\r\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Gene Name :</div>\r\n        <div class=\"col-md-6 col-xs-6\">"
     + alias3(((helper = (helper = helpers.geneName || (depth0 != null ? depth0.geneName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"geneName","hash":{},"data":data}) : helper)))
-    + "</div>\n    </div>\n"
+    + "</div>\r\n    </div>\r\n"
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.family : depth0),{"name":"if","hash":{},"fn":this.program(4, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "</div>\n<div id=\"INFOS-FULL\" style=\"display:none\">\n    <div id=\"gene-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Protein</div>\n        <div class=\"col-md-6 col-xs-6\">\n            <dl>\n                <dt>Recommended Name</dt>\n                <dd> "
+    + "</div>\r\n<div id=\"INFOS-FULL\" style=\"display:none\">\r\n    <div id=\"gene-full\" class=\"row\">\r\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Protein</div>\r\n        <div class=\"col-md-6 col-xs-6\">\r\n            <dl>\r\n                <dt>Recommended Name</dt>\r\n                <dd> "
     + alias3(((helper = (helper = helpers.geneName || (depth0 != null ? depth0.geneName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"geneName","hash":{},"data":data}) : helper)))
-    + "</dd>\n"
+    + "</dd>\r\n"
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.cleavage : depth0),{"name":"if","hash":{},"fn":this.program(7, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "\n"
+    + "\r\n"
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.alternativeName : depth0),{"name":"if","hash":{},"fn":this.program(10, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "\n            </dl>\n        </div>\n    </div>\n"
+    + "\r\n            </dl>\r\n        </div>\r\n    </div>\r\n"
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.family : depth0),{"name":"if","hash":{},"fn":this.program(14, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "    <div id=\"History-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">History</div>\n        <div class=\"col-md-6 col-xs-6\">\n            <dl>\n                <dt>neXtProt</dt>\n                <dd>Integrated "
+    + "    <div id=\"History-full\" class=\"row\">\r\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">History</div>\r\n        <div class=\"col-md-6 col-xs-6\">\r\n            <dl>\r\n                <dt>neXtProt</dt>\r\n                <dd>Integrated "
     + alias3(((helper = (helper = helpers.integDate || (depth0 != null ? depth0.integDate : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"integDate","hash":{},"data":data}) : helper)))
-    + "</dd>\n                <dd>Last Updated "
+    + "</dd>\r\n                <dd>Last Updated "
     + alias3(((helper = (helper = helpers.lastUpdate || (depth0 != null ? depth0.lastUpdate : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"lastUpdate","hash":{},"data":data}) : helper)))
-    + "</dd>\n                <dt>UniProtKB</dt>\n                <dd>Entry version "
+    + "</dd>\r\n                <dt>UniProtKB</dt>\r\n                <dd>Entry version "
     + alias3(((helper = (helper = helpers.version || (depth0 != null ? depth0.version : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"version","hash":{},"data":data}) : helper)))
-    + "</dd>\n                <dd>Integration Date "
+    + "</dd>\r\n                <dd>Integration Date "
     + alias3(((helper = (helper = helpers.UniprotIntegDate || (depth0 != null ? depth0.UniprotIntegDate : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"UniprotIntegDate","hash":{},"data":data}) : helper)))
-    + "</dd>\n                <dd>Last Update "
+    + "</dd>\r\n                <dd>Last Update "
     + alias3(((helper = (helper = helpers.UniProtLastUpdate || (depth0 != null ? depth0.UniProtLastUpdate : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"UniProtLastUpdate","hash":{},"data":data}) : helper)))
-    + "</dd>\n                <dd>Sequence version "
+    + "</dd>\r\n                <dd>Sequence version "
     + alias3(((helper = (helper = helpers.seqVersion || (depth0 != null ? depth0.seqVersion : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"seqVersion","hash":{},"data":data}) : helper)))
-    + "</dd>\n                <dd>";
+    + "</dd>\r\n                <dd>";
   stack1 = ((helper = (helper = helpers.accessionNumber || (depth0 != null ? depth0.accessionNumber : depth0)) != null ? helper : alias1),(options={"name":"accessionNumber","hash":{},"fn":this.program(17, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
   if (!helpers.accessionNumber) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "</dd>\n            </dl>\n        </div>\n    </div>\n</div>\n<p style=\"margin:10px 10px;\">Entry whose protein(s) existence is based on "
+  return buffer + "</dd>\r\n            </dl>\r\n        </div>\r\n    </div>\r\n</div>\r\n<p style=\"margin:10px 10px;\">Entry whose protein(s) existence is based on "
     + alias3(((helper = (helper = helpers.proteineEvidence || (depth0 != null ? depth0.proteineEvidence : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"proteineEvidence","hash":{},"data":data}) : helper)))
     + "</p>";
 },"useData":true});
@@ -152,31 +152,31 @@ this["HBtemplates"]["peptideTable.tmpl"] = Handlebars.template({"1":function(dep
 },"2":function(depth0,helpers,partials,data) {
     var stack1, helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
-  return "        <tr>\n            <td>"
+  return "        <tr>\r\n            <td>"
     + alias3(((helper = (helper = helpers.category || (depth0 != null ? depth0.category : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"category","hash":{},"data":data}) : helper)))
-    + "</td>\n            <td style=\"text-align:center\">"
+    + "</td>\r\n            <td class=\"featPosition\" style=\"text-align:center\">"
     + alias3(((helper = (helper = helpers.x || (depth0 != null ? depth0.x : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"x","hash":{},"data":data}) : helper)))
     + " - "
     + alias3(((helper = (helper = helpers.y || (depth0 != null ? depth0.y : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"y","hash":{},"data":data}) : helper)))
-    + "</td>\n            <td>"
+    + "</td>\r\n            <td>"
     + alias3(((helper = (helper = helpers.length || (depth0 != null ? depth0.length : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"length","hash":{},"data":data}) : helper)))
-    + "</td>\n            <td>"
+    + "</td>\r\n            <td>"
     + ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || alias1).call(depth0,(depth0 != null ? depth0.category : depth0),{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "")
-    + "</td>\n            <td><div style=\"width:20%;display: inline-block;vertical-align: top\"><span style=\"background:#7CBA0F;padding:3px 7px;color:white;\">"
+    + "</td>\r\n            <td><div style=\"width:20%;display: inline-block;vertical-align: top\"><span style=\"background:#7CBA0F;padding:3px 7px;color:white;\">"
     + alias3(((helper = (helper = helpers.evidenceLength || (depth0 != null ? depth0.evidenceLength : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"evidenceLength","hash":{},"data":data}) : helper)))
-    + "</span></div>\n                <div style=\"width:75%;display: inline-block;\">\n"
+    + "</span></div>\r\n                <div style=\"width:70%;display: inline-block;\">\r\n"
     + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.evidence : depth0),{"name":"each","hash":{},"fn":this.program(3, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "                </div>\n            </td>\n        </tr>";
+    + "                </div>\r\n            </td>\r\n        </tr>";
 },"3":function(depth0,helpers,partials,data) {
     return "                <div>"
     + this.escapeExpression(this.lambda(depth0, depth0))
-    + "</div>\n";
+    + "</div>\r\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1, helper;
 
-  return "<div id=\"peptideTableTitle\" style=\"border-bottom: 1px solid #E7EAEC;padding:5px 15px;margin-bottom: 15px;\">\n    <div style=\"display:inline-block;\">\n            <span class=\"badge\"\n                  style=\"border-radius:70%;border: 2px solid black;color:#C50063;background-color:white;padding:8px 8px;margin-right:10px;vertical-align:middle;\">"
+  return "<div id=\"peptideTableTitle\" style=\"border-bottom: 1px solid #E7EAEC;margin-bottom: 15px;\">\r\n    <div style=\"display:inline-block;\">\r\n            <span class=\"badge\"\r\n                  style=\"border-radius:70%;border: 2px solid black;color:#C50063;background-color:white;padding:8px 8px;margin-right:10px;vertical-align:middle;\">"
     + this.escapeExpression(((helper = (helper = helpers.featuresLength || (depth0 != null ? depth0.featuresLength : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"featuresLength","hash":{},"data":data}) : helper)))
-    + "</span>\n    </div>\n    <h4 id=\"test\" style=\"display:inline-block;vertical-align:middle;\">Features</h4></div>\n<div style=\"height:500px;overflow: auto\">\n    <table id= \"featTable\" class=\"table table-striped table-fixed\" style=\"font-size:12px;\">\n        <thead>\n        <tr>\n            <th class=\"featName\" class=\"col-md-2\">Name</th>\n            <th data-sort=\"int\" style=\"text-align:center\" class=\"col-md-2\">Position</th>\n            <th data-sort=\"int\" class=\"col-md-1\">Length</th>\n            <th data-sort=\"string\" class=\"col-md-5\">Description</th>\n            <th data-sort=\"string\" class=\"col-md-2\">Evidence</th>\n        </tr>\n        </thead>\n        <tbody>\n"
+    + "</span>\r\n    </div>\r\n    <h4 id=\"test\" style=\"display:inline-block;vertical-align:middle;\">Features</h4></div>\r\n<div style=\"height:500px;overflow: auto\">\r\n    <table id= \"featTable\" class=\"table table-striped table-fixed\" style=\"font-size:12px;\">\r\n        <thead>\r\n        <tr>\r\n            <th class=\"featName\" class=\"col-md-2\">Name</th>\r\n            <th data-sort=\"int\" style=\"text-align:center\" class=\"col-md-2\">Position</th>\r\n            <th data-sort=\"int\" class=\"col-md-1\">Length</th>\r\n            <th data-sort=\"string\" class=\"col-md-5\">Description</th>\r\n            <th data-sort=\"string\" class=\"col-md-2\">Evidence</th>\r\n        </tr>\r\n        </thead>\r\n        <tbody>\r\n"
     + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.features : depth0),{"name":"each","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "</tbody>\n    </table>\n</div>";
+    + "</tbody>\r\n    </table>\r\n</div>";
 },"useData":true});

@@ -338,7 +338,7 @@ function FeatureViewer(sequence, div) {
                 .enter()
                 .append("rect")
                 .attr("clip-path", "url(#clip)")
-                .attr("class", object.className)
+                .attr("class", "jojo",object.className)
                 .attr("x", X)
                 .attr("width", pepWidth)
                 .attr("height", 12)

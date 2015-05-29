@@ -10,17 +10,6 @@
     var currentSeq;
     var isoforms;
     var features={};
-    var proPep;
-    var matures;
-    var signalPep;
-    var disBonds;
-    var antibody;
-    var initMeth;
-    var modifRes;
-    var crossLink;
-    var glycoSite;
-    var peptides;
-    var srmPeptides;
 
     function nxIsoformChoice(isoforms) {
         if ($("#nx-isoformChoice").length > 0) {
@@ -398,6 +387,50 @@
             $("#featuresTable").html(results);
         }
     }
+    function featureSelection() {
+        $(".featPosition").click(function() {
+            var position = $(this).text().split(" - ").map(Number);
+            position[0]-=1;
+            seqView.selection(position[0],position[1],"#C50063");
+        })
+    }
+    d3.helper2 = {};
+
+    d3.helper2.engrenage = function(object){
+        var engrenageDiv;
+        var bodyNode2 = d3.select('body').node();
+
+        function engrenage(selection){
+            console.log("fonction working");
+
+            selection.on('click', function(pD, pI){
+                console.log("click working");
+                // Append tooltip
+                engrenageDiv = d3.select('body')
+                               .append('div')
+                               .attr('class', 'selection2');
+                var absoluteMousePos = d3.mouse(bodyNode);
+                engrenageDiv.style({
+                    left: (pD.x)+'px',
+                    top: 0+'px',
+                    'background-color': 'rgba(0, 0, 0, 0.8)',
+                    width: pD.length,
+                    height: '500px',
+                    'max-height': '43px',
+                    position: 'absolute',
+                    'z-index': 1000,
+                    'box-shadow': '0 1px 2px 0 #656565'
+                });
+            });
+
+        }
+        return engrenageDiv;
+    }
+        // .call(d3.helper.engrenage());
+
+
+
+
     // $(function () {
     //     var startTime = new Date().getTime();
     //     [nx.getProteinSequence(entry), nx.getProPeptide(entry), nx.getMatureProtein(entry), nx.getSignalPeptide(entry), nx.getDisulfideBond(entry),
@@ -596,9 +629,9 @@
                     var url = "https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetTransitions?organism_name=Human;default_search=1;peptide_sequence_constraint=" + this.sequence + ";apply_action=QUERY";
                     return "<a href='" + url + "'>" + this.pepDescription + "</a>";
                 }
-                else if (type === "antibody") {
+                else if (type === "Antibody") {
                     var url = this.cvCode;
-                    return "<a href='" + url + "'>" + this.pepDescription + "</a>";
+                    return "<a href='" + url + "'>" + this.description + "</a>";
                 }
                 else if (this.cvCode) {
                     var url = "http://www.nextprot.org/db/term/" + this.cvCode;
@@ -621,7 +654,9 @@
             CreateSVG(isoforms,isoName);
             addFeatures(isoName);
             fillTable(isoName);
+            featureSelection();
 
+            d3.selectAll(".jojo").call(d3.helper2.engrenage(features[isoName]["matures"]));
 
             var endTime = new Date().getTime();
             var time = endTime - startTime;
