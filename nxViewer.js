@@ -53,6 +53,11 @@ function FeatureViewer(sequence, div,options) {
                     var first_line = '<p style="margin:2px;color:white">start : <span style="color:orangered">' + pD[0].x + '</span></p>';
                     var second_line = '<p style="margin:2px;color:white">end : <span style="color:orangered">' + pD[1].x + '</span></p>';
                 }
+                else if (object.type === "unique"){
+                    var first_line = '<p style="margin:2px;color:orangered">' + pD.x + '</p>';
+                    if (pD.description) var second_line = '<p style="margin:2px;color:white;font-size:9px">' + pD.description + '</p>';
+                    else var second_line = '';
+                }
                 else{
                     var first_line = '<p style="margin:2px;color:orangered">' + pD.x + ' - ' + pD.y + '</p>';
                     if (pD.description) var second_line = '<p style="margin:2px;color:white;font-size:9px">' + pD.description + '</p>';
@@ -82,6 +87,10 @@ function FeatureViewer(sequence, div,options) {
                     if (object.type === "path") {
                         var xTrans= scaling(pD[0].x)+margin.left;
                         var length=(scaling(pD[1].x) - scaling(pD[0].x));
+                    }
+                    else if (object.type === "unique") {
+                        var xTrans= scaling(pD.x-1)+margin.left;
+                        var length=(scaling(pD.y+1) - scaling(pD.x-1));
                     }
                     else {
                         var xTrans= scaling(pD.x)+margin.left;
@@ -131,7 +140,7 @@ function FeatureViewer(sequence, div,options) {
         return scaling(d.x);};
     var displaySequence = function (seq) {
         return width / seq > 5;};
-    var pepWidth = function (d) {
+    var rectWidth = function (d) {
         return (scaling(d.y) - scaling(d.x));};
     var uniqueWidth = function (d) {
         return (scaling(1));};
@@ -347,7 +356,7 @@ function FeatureViewer(sequence, div,options) {
         },
         rectangle: function (object, sequence, position) {
             var rectsPro = svgContainer.append("g")
-                .attr("class", "testing")
+                .attr("class", "rectangle")
                 .attr("transform", "translate(0," + position + ")");
 
             rectsPro.append("path")
@@ -364,10 +373,10 @@ function FeatureViewer(sequence, div,options) {
                 .enter()
                 .append("rect")
                 .attr("clip-path", "url(#clip)")
-                .attr("class", "jojo "+object.className)
+                .attr("class", "element "+object.className)
                 .attr("id", function(d) { return d.id+"f" })
                 .attr("x", X)
-                .attr("width", pepWidth)
+                .attr("width", rectWidth)
                 .attr("height", 12)
                 .style("fill", object.color)
                 .style("z-index", "3")
@@ -377,7 +386,7 @@ function FeatureViewer(sequence, div,options) {
         },
         unique: function (object, sequence, position) {
             var rectsPro = svgContainer.append("g")
-                .attr("class", "testing")
+                .attr("class", "uniquePosition")
                 .attr("transform", "translate(0," + position + ")");
 
             rectsPro.append("path")
@@ -393,7 +402,7 @@ function FeatureViewer(sequence, div,options) {
                 .enter()
                 .append("rect")
                 .attr("clip-path", "url(#clip)")
-                .attr("class", "jojo "+object.className)
+                .attr("class", "element "+object.className)
                 .attr("id", function(d) { return d.id+"f" })
                 .attr("x", X)
                 .attr("width", uniqueWidth)
@@ -419,7 +428,7 @@ function FeatureViewer(sequence, div,options) {
                 .enter()
                 .append("path")
                 .attr("clip-path", "url(#clip)")
-                .attr("class", "jojo "+object.className)
+                .attr("class", "element "+object.className)
                 .attr("id", function(d) { return d[0].id+"f" })
                 .attr("d", lineBond)
                 .style("fill", "none")
@@ -430,12 +439,12 @@ function FeatureViewer(sequence, div,options) {
             forcePropagation(pathsDB);
         },
         multipleRect: function (object, sequence, position, level) {
-            var rectsPep = svgContainer.append("g")
-                .attr("class", "peptideMapping")
+            var rects = svgContainer.append("g")
+                .attr("class", "multipleRects")
                 .attr("transform", "translate(0," + position + ")");
 
             for (var i = 0; i < level; i++) {
-                rectsPep.append("path")
+                rects.append("path")
                     .attr("d", line([{x: 0, y: (i * 10 - 2)}, {x: sequence.length-1, y: (i * 10 - 2)}]))
                     .attr("class", function () {
                         return "line" + object.className
@@ -444,23 +453,23 @@ function FeatureViewer(sequence, div,options) {
                     .style("stroke-width", "1px");
             }
 
-            rectsPep.selectAll("." + object.className)
+            rects.selectAll("." + object.className)
                 .data(object.data)
                 .enter()
                 .append("rect")
                 .attr("clip-path", "url(#clip)")
-                .attr("class", "jojo "+object.className)
+                .attr("class", "element "+object.className)
                 .attr("id", function(d) { return d.id+"f" })
                 .attr("x", X)
                 .attr("y", function (d) {
                     return d.level * 10
                 })
-                .attr("width", pepWidth)
+                .attr("width", rectWidth)
                 .attr("height", 8)
                 .style("fill", object.color)
                 .call(d3.helper.tooltip(object));
 
-            forcePropagation(rectsPep);
+            forcePropagation(rects);
         }
     };
 

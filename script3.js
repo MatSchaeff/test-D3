@@ -39,35 +39,6 @@
     }
 
     var CreateData = {
-        //classic: function (data) {
-        //    var newData = [];
-        //    data.forEach(function (o) {
-        //            //for (var name in o) {
-        //            //    if (o.targetingIsoformsMap.hasOwnProperty(name)) {
-        //            //        var start = o.targetingIsoformsMap[name].firstPosition,
-        //            //            end = o.targetingIsoformsMap[name].lastPosition;
-        //            //        newData[name].push({
-        //            //            x: start,
-        //            //            y: end,
-        //            //            matureLength: end - start,
-        //            //            description: o.description
-        //            //        });
-        //            //    }
-        //            //}
-        //            if (o.targetingIsoformsMap.hasOwnProperty(isoName)) {
-        //                var start = o.targetingIsoformsMap[isoName].firstPosition,
-        //                    end = o.targetingIsoformsMap[isoName].lastPosition;
-        //                newData.push({
-        //                    x: start,
-        //                    y: end,
-        //                    matureLength: end - start,
-        //                    description: o.description
-        //                });
-        //            }
-        //        }
-        //    );
-        //    return newData;
-        //},
         classic: function (data,property, category) {
             //features[property] = {};
             data.forEach(function (o) {
@@ -82,7 +53,7 @@
                             features[name][property].push({
                                 x: start,
                                 y: end,
-                                length: end - start,
+                                length: end-start+1,
                                 id:start.toString()+"_"+end.toString(),
                                 category: category,
                                 description: o.description,
@@ -122,20 +93,6 @@
                     }
                 }
             );
-            //data.forEach(function (o) {
-            //        if (o.isoformSpecificity.hasOwnProperty(isoName)) {
-            //            var start = o.isoformSpecificity[name].positions[0].first,
-            //                end = o.isoformSpecificity[name].positions[0].second;
-            //
-            //            newData.push({
-            //                x: start,
-            //                y: end,
-            //                pepLength: end - start,
-            //                description: o.antibodyUniqueName
-            //            });
-            //        }
-            //    }
-            //);
         },
         dsB: function (data,property) {
             //features[property] = {};
@@ -162,25 +119,6 @@
                     }
                 }
             );
-            //data.forEach(function (o) {
-            //        if (o.targetingIsoformsMap.hasOwnProperty(isoName)) {
-            //            var start = o.targetingIsoformsMap[isoName].firstPosition,
-            //                end = o.targetingIsoformsMap[isoName].lastPosition;
-            //            newData.push([
-            //                {
-            //                    x: start,
-            //                    y: 0
-            //                }, {
-            //                    x: end,
-            //                    y: 0
-            //                }, {
-            //                    x: end,
-            //                    y: 0
-            //                }
-            //            ]);
-            //        }
-            //    }
-            //);
         },
         peptide: function (data,property,category) {
 
@@ -214,19 +152,6 @@
                     }
                 }
             );
-            //data.forEach(function (o) {
-            //    if (o.isoformSpecificity.hasOwnProperty(isoName)) {
-            //        var start = o.isoformSpecificity[isoName].positions[0].first;
-            //        var end = o.isoformSpecificity[isoName].positions[0].second;
-            //        var description = o.peptideUniqueName;
-            //
-            //        newData.push({
-            //            x: start,
-            //            y: end,
-            //            description: description
-            //        });
-            //    }
-            //});
         }
     };
 
@@ -246,6 +171,7 @@
             createSVG(isoforms,isoID);
             addFeatures(isoID);
             fillTable(isoID);
+            featureSelection();
         }
     };
 
@@ -386,7 +312,7 @@
             };
             //datas.PeptideLength = datas.Peptides.length;
 
-            var template = HBtemplates['peptideTable.tmpl'];
+            var template = HBtemplates['featureTable.tmpl'];
             var results = template(datas);
             $("#featuresTable").html(results);
         }
@@ -394,13 +320,19 @@
 
     function featureSelection() {
         $(".featPosition").click(function() {
+            console.log("whut");
             var position = $(this).text().split(" - ").map(Number);
+            if (position.length === 1) position.push(position[0]);
             position[0]-=1;
             seqView.selection(position[0],position[1],"#C50063");
+            var ElementTop = $("#stringSelected").position().top-200;
+            var scrollPosition = $("#scroller").scrollTop();
+            var scrollingLength = ElementTop + scrollPosition;
+            $("#scroller").animate({scrollTop: scrollingLength}, 1000);
         })
     }
     function inverseSelection() {
-        $(".jojo").click(function (d) {
+        $(".element").click(function (d) {
             var featSelected = this.id.slice(0, - 1);
             var featPos = featSelected.split("_").map(Number);
             featPos[0]-=1;
@@ -409,10 +341,74 @@
             var scrollPosition = $("#featTableScroller").scrollTop();
             var scrollingLength = ElementTop + scrollPosition;
             $("#featTableScroller").animate({scrollTop: scrollingLength}, 1000);
+            var ElementTop2 = $("#stringSelected").position().top-200;
+            var scrollPosition2 = $("#scroller").scrollTop();
+            var scrollingLength2 = ElementTop2 + scrollPosition2;
+            $("#scroller").animate({scrollTop: scrollingLength2}, 1000);
         })
     }
 
+    $(function () {
+        var startTime = new Date().getTime();
+        Promise.all([nx.getProteinSequence(entry), nx.getProPeptide(entry), nx.getMatureProtein(entry), nx.getSignalPeptide(entry), nx.getDisulfideBond(entry),
+            nx.getAntibody(entry), nx.getInitMeth(entry), nx.getModifResidue(entry), nx.getCrossLink(entry), nx.getGlycoSite(entry), nx.getPeptide(entry),
+            nx.getSrmPeptide(entry)]).then(function (oneData) {
+            var endTime2 = new Date().getTime();
+            var time2 = endTime2 - startTime;
+            console.log('Execution time: ' + time2);
+            isoforms=oneData[0];
+            nxIsoformChoice(oneData[0]);
 
+            Handlebars.registerHelper('link_to', function (type, options) {
+                if (type === "Peptide"){
+                    var url = "https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?searchWithinThis=Peptide+Name&searchForThis=" + this.pepDescription + ";organism_name=Human";
+                    return "<a href='" + url + "'>" + this.pepDescription + "</a>";
+                }
+                else if (type ==="SRM peptide"){
+                    var url = "https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetTransitions?organism_name=Human;default_search=1;peptide_sequence_constraint=" + this.sequence + ";apply_action=QUERY";
+                    return "<a href='" + url + "'>" + this.pepDescription + "</a>";
+                }
+                else if (type === "Antibody") {
+                    var url = this.cvCode;
+                    return "<a href='" + url + "'>" + this.description + "</a>";
+                }
+                else if (this.cvCode) {
+                    var url = "http://www.nextprot.org/db/term/" + this.cvCode;
+                    return "<a href='" + url + "'>" + this.description + "</a>";
+                }
+                else return this.description;
+            });
+            Handlebars.registerHelper('position', function (length, options) {
+                if (length === 1) return this.x;
+                else return this.x + " - " + this.y;
+            });
+            CreateData.classic(oneData[1],"proPep", "Propeptide");
+            CreateData.classic(oneData[2],"matures", "Mature protein");
+            CreateData.classic(oneData[3],"signalPep", "Signal peptide");
+            CreateData.classic(oneData[4],"disBonds", "Disulfide bond");
+            CreateData.antibody(oneData[5],"antibody","Antibody");
+            CreateData.classic(oneData[6],"initMeth","Initiator meth");
+            CreateData.classic(oneData[7],"modifRes", "Modified residue");
+            CreateData.classic(oneData[8],"crossLink", "Cross-link");
+            CreateData.classic(oneData[9],"glycoSite","Glycosylation");
+            CreateData.peptide(oneData[10],"peptides","Peptide");
+            CreateData.peptide(oneData[11],"srmPeptides","SRM peptide");
+
+            createSVG(isoforms,isoName);
+            addFeatures(isoName);
+            fillTable(isoName);
+            featureSelection();
+            inverseSelection();
+
+            var endTime = new Date().getTime();
+            var time = endTime - startTime;
+            console.log('Execution time: ' + time);
+        }).catch(function (err) {
+            // catch any error that happened so far
+            console.log("Argh, broken: " + err.message);
+            console.log("Error at line : " + err.stack);
+        });
+    });
     //d3.helper2 = {};
     //
     //d3.helper2.engrenage = function(object){
@@ -628,63 +624,7 @@
     //             console.log("Error at line : " + err.stack);
     //         })
     // });
-    $(function () {
-        var startTime = new Date().getTime();
-        Promise.all([nx.getProteinSequence(entry), nx.getProPeptide(entry), nx.getMatureProtein(entry), nx.getSignalPeptide(entry), nx.getDisulfideBond(entry),
-            nx.getAntibody(entry), nx.getInitMeth(entry), nx.getModifResidue(entry), nx.getCrossLink(entry), nx.getGlycoSite(entry), nx.getPeptide(entry),
-            nx.getSrmPeptide(entry)]).then(function (oneData) {
-            var endTime2 = new Date().getTime();
-            var time2 = endTime2 - startTime;
-            console.log('Execution time: ' + time2);
-            isoforms=oneData[0];
-            nxIsoformChoice(oneData[0]);
 
-            Handlebars.registerHelper('link_to', function (type, options) {
-                if (type === "Peptide"){
-                    var url = "https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?searchWithinThis=Peptide+Name&searchForThis=" + this.pepDescription + ";organism_name=Human";
-                    return "<a href='" + url + "'>" + this.pepDescription + "</a>";
-                }
-                else if (type ==="SRM peptide"){
-                    var url = "https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetTransitions?organism_name=Human;default_search=1;peptide_sequence_constraint=" + this.sequence + ";apply_action=QUERY";
-                    return "<a href='" + url + "'>" + this.pepDescription + "</a>";
-                }
-                else if (type === "Antibody") {
-                    var url = this.cvCode;
-                    return "<a href='" + url + "'>" + this.description + "</a>";
-                }
-                else if (this.cvCode) {
-                    var url = "http://www.nextprot.org/db/term/" + this.cvCode;
-                    return "<a href='" + url + "'>" + this.description + "</a>";
-                }
-                else return this.description;
-            });
-            CreateData.classic(oneData[1],"proPep", "Propeptide");
-            CreateData.classic(oneData[2],"matures", "Mature protein");
-            CreateData.classic(oneData[3],"signalPep", "Signal peptide");
-            CreateData.classic(oneData[4],"disBonds", "Disulfide bond");
-            CreateData.antibody(oneData[5],"antibody","Antibody");
-            CreateData.classic(oneData[6],"initMeth","Initiator meth");
-            CreateData.classic(oneData[7],"modifRes", "Modified residue");
-            CreateData.classic(oneData[8],"crossLink", "Cross-link");
-            CreateData.classic(oneData[9],"glycoSite","Glycosylation");
-            CreateData.peptide(oneData[10],"peptides","Peptide");
-            CreateData.peptide(oneData[11],"srmPeptides","SRM peptide");
-
-            createSVG(isoforms,isoName);
-            addFeatures(isoName);
-            fillTable(isoName);
-            featureSelection();
-            inverseSelection();
-
-            var endTime = new Date().getTime();
-            var time = endTime - startTime;
-            console.log('Execution time: ' + time);
-        }).catch(function (err) {
-            // catch any error that happened so far
-            console.log("Argh, broken: " + err.message);
-            console.log("Error at line : " + err.stack);
-        });
-    });
 
     // var ft = new FeatureViewer("FDSJKLFJDSFKLJDFHADJKLFHDSJKLFHDAFJKLDHFJKLDASFHDJKLFHDSAJKLFHDAKLFJDHSAFKLDLSNCDJKLFENFIUPERWDJKPCNVDFPIEHFDCFJDKOWFPDJWFKLXSJFDW9FIPUAENDCXAMSFNDUAFIDJFDLKSAFJDSAKFLJDSADJFDW9FIPUAENDCXAMSFNDAAAAAAAAAAAFJDSAKFL");
     // ft.create(".chart", {

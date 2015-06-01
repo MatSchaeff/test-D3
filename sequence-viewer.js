@@ -57,7 +57,7 @@ function Sequence(sequence) {
         positions[1]=positions[1]+~~(positions[1]/10)+4*(~~(positions[1]/lineJump));
         var highlightColor=color;
         hlSeq = hlSeq.substring(0,positions[0])+
-        "<span style=\"background:" + color + ";color:white;\">" +
+        "<span id='stringSelected' style=\"background:" + color + ";color:white;\">" +
         hlSeq.substring(positions[0],positions[1]) +
         "</span>" +
         hlSeq.substring(positions[1],hlSeq.length);
