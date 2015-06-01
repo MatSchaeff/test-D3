@@ -79,31 +79,48 @@ function FeatureViewer(sequence, div,options) {
                 tooltipDiv.remove();
             })
             .on('click', function(pD,pI) {
+                    var xTemp;
+                    var yTemp;
+                    var xRect;
+                    var widthRect;
+                    var svgWidth=d3.select(".background").attr("width");
                     d3.select('body').selectAll('div.selectedRect').remove();
                     // Append tooltip
                     selectedRect = d3.select('.chart')
                         .append('div')
                         .attr('class', 'selectedRect');
                     if (object.type === "path") {
-                        var xTrans= scaling(pD[0].x)+margin.left;
-                        var length=(scaling(pD[1].x) - scaling(pD[0].x));
+                        xTemp= pD[0].x;
+                        yTemp= pD[1].x;
                     }
                     else if (object.type === "unique") {
-                        var xTrans= scaling(pD.x-1)+margin.left;
-                        var length=(scaling(pD.y+1) - scaling(pD.x-1));
+                        xTemp= pD.x-1;
+                        yTemp= pD.y+1;
                     }
                     else {
-                        var xTrans= scaling(pD.x)+margin.left;
-                        var length=(scaling(pD.y) - scaling(pD.x));
+                        xTemp= pD.x;
+                        yTemp= pD.y;
+                    }
+                    if (scaling(xTemp) < 0) {
+                        xRect = margin.left;
+                        widthRect=(scaling(yTemp));
+                    }
+                    else if (scaling(yTemp) > svgWidth) {
+                        xRect = scaling(xTemp)+ margin.left;
+                        widthRect=svgWidth - scaling(xTemp);
+                    }
+                    else {
+                        xRect = scaling(xTemp)+ margin.left;
+                        widthRect=(scaling(yTemp) - scaling(xTemp));
                     }
                     selectedRect.style({
-                        left: xTrans+'px',
+                        left: xRect+'px',
                         top: 20+'px',
-                        'background-color': 'rgba(0, 0, 0, 0.5)',
-                        width: length+'px',
+                        'background-color': 'rgba(0, 0, 0, 0.3)',
+                        width: widthRect+'px',
                         height: (Yposition+50)+'px',
                         position: 'absolute',
-                        'z-index': 1000,
+                        'z-index': 1,
                         'box-shadow': '0 1px 2px 0 #656565'
                     });
             })
@@ -374,12 +391,12 @@ function FeatureViewer(sequence, div,options) {
                 .append("rect")
                 .attr("clip-path", "url(#clip)")
                 .attr("class", "element "+object.className)
-                .attr("id", function(d) { return d.id+"f" })
+                .attr("id", function(d) { return "f"+d.id })
                 .attr("x", X)
                 .attr("width", rectWidth)
                 .attr("height", 12)
                 .style("fill", object.color)
-                .style("z-index", "3")
+                .style("z-index", "13")
                 .call(d3.helper.tooltip(object));
 
             forcePropagation(rectsPro);
@@ -394,6 +411,7 @@ function FeatureViewer(sequence, div,options) {
                 .attr("class", function () {
                     return "line" + object.className
                 })
+                .style("z-index", "0")
                 .style("stroke", object.color)
                 .style("stroke-width", "1px");
 
@@ -403,11 +421,12 @@ function FeatureViewer(sequence, div,options) {
                 .append("rect")
                 .attr("clip-path", "url(#clip)")
                 .attr("class", "element "+object.className)
-                .attr("id", function(d) { return d.id+"f" })
+                .attr("id", function(d) { return "f"+d.id })
                 .attr("x", X)
                 .attr("width", uniqueWidth)
                 .attr("height", 12)
                 .style("fill", object.color)
+                .style("z-index", "3")
                 .call(d3.helper.tooltip(object));
 
             forcePropagation(rectsPro);
@@ -419,6 +438,7 @@ function FeatureViewer(sequence, div,options) {
 
             pathsDB.append("path")
                 .attr("d", lineBond([{x: 0, y: 0}, {x: sequence.length-1, y: 0}]))
+                .style("z-index", "0")
                 .style("stroke", object.color)
                 .style("stroke-width", "1px");
             console.log(object);
@@ -429,10 +449,11 @@ function FeatureViewer(sequence, div,options) {
                 .append("path")
                 .attr("clip-path", "url(#clip)")
                 .attr("class", "element "+object.className)
-                .attr("id", function(d) { return d[0].id+"f" })
+                .attr("id", function(d) { return "f"+d[0].id })
                 .attr("d", lineBond)
                 .style("fill", "none")
                 .style("stroke", object.color)
+                .style("z-index", "3")
                 .style("stroke-width", "2px")
                 .call(d3.helper.tooltip(object));
 
@@ -449,6 +470,7 @@ function FeatureViewer(sequence, div,options) {
                     .attr("class", function () {
                         return "line" + object.className
                     })
+                    .style("z-index", "0")
                     .style("stroke", object.color)
                     .style("stroke-width", "1px");
             }
@@ -459,7 +481,7 @@ function FeatureViewer(sequence, div,options) {
                 .append("rect")
                 .attr("clip-path", "url(#clip)")
                 .attr("class", "element "+object.className)
-                .attr("id", function(d) { return d.id+"f" })
+                .attr("id", function(d) { return "f"+d.id })
                 .attr("x", X)
                 .attr("y", function (d) {
                     return d.level * 10
@@ -467,6 +489,7 @@ function FeatureViewer(sequence, div,options) {
                 .attr("width", rectWidth)
                 .attr("height", 8)
                 .style("fill", object.color)
+                .style("z-index", "3")
                 .call(d3.helper.tooltip(object));
 
             forcePropagation(rects);
@@ -517,6 +540,7 @@ function FeatureViewer(sequence, div,options) {
                 });
         }
     };
+
     var brush = d3.svg.brush()
         .x(scaling)
         //.on("brush", brushmove)
@@ -568,7 +592,7 @@ function FeatureViewer(sequence, div,options) {
         }
         else {
             d3.select(".brush").call(brush.clear());
-            resetAll();
+            //resetAll();
         }
     }
 
@@ -632,6 +656,58 @@ function FeatureViewer(sequence, div,options) {
             //    vertical.style("left", mousex + "px")});
     }
 
+    function addRectSelection(svgId) {
+        var elemSelected = d3.select(svgId).data();
+        var xTemp;
+        var yTemp;
+        var xRect;
+        var widthRect;
+        var svgWidth=d3.select(".background").attr("width");
+        d3.select('body').selectAll('div.selectedRect').remove();
+        // Append tooltip
+        var selectedRect = d3.select('.chart')
+            .append('div')
+            .attr('class', 'selectedRect');
+
+        if (elemSelected[0].length === 3) {
+            xTemp=elemSelected[0][0].x;
+            yTemp=elemSelected[0][1].x;
+            console.log("aaaaaaaa");
+        }
+        else if (elemSelected[0].x === elemSelected[0].y) {
+            xTemp=elemSelected[0].x-1;
+            yTemp=elemSelected[0].y+1;
+            console.log("bbbbbbbb");
+        }
+        else {
+            xTemp=elemSelected[0].x;
+            yTemp=elemSelected[0].y;
+            console.log("ccccccc");
+        }
+        if (scaling(xTemp) < 0) {
+            xRect = margin.left;
+            widthRect=(scaling(yTemp));
+        }
+        else if (scaling(yTemp) > svgWidth) {
+            xRect = scaling(xTemp)+ margin.left;
+            widthRect=svgWidth - scaling(xTemp);
+        }
+        else {
+            xRect = scaling(xTemp)+ margin.left;
+            widthRect=(scaling(yTemp) - scaling(xTemp));
+        }
+        selectedRect.style({
+            left: xRect+'px',
+            top: 20+'px',
+            'background-color': 'rgba(0, 0, 0, 0.3)',
+            width: widthRect+'px',
+            height: (Yposition+50)+'px',
+            position: 'absolute',
+            'z-index': 1,
+            'box-shadow': '0 1px 2px 0 #656565'
+        });
+    }
+
     function initSVG(div, options) {
         if (typeof options === 'undefined') {
             var options = {
@@ -644,7 +720,12 @@ function FeatureViewer(sequence, div,options) {
         // Create SVG
         svg = d3.select(div).append("svg")
             .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom);
+            .attr("height", height + margin.top + margin.bottom)
+            .on("contextmenu", function (d,i) {
+                d3.event.preventDefault();
+                resetAll();
+                // react on right-clicking
+            });
         svgContainer = svg
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -661,7 +742,7 @@ function FeatureViewer(sequence, div,options) {
             if (displaySequence(sequence.length)) {
                 fillSVG.sequence(sequence, Yposition);
             }
-            features.push({data: sequence, name: "Sequence",className: "AA", color: "black", type: "text"})
+            features.push({data: sequence, name: "Sequence",className: "AA", color: "black", type: "text"});
             yData.push({title: "sequence", y: Yposition-8});
         }
         if (options.showAxis) addXAxis(Yposition);
@@ -696,6 +777,7 @@ function FeatureViewer(sequence, div,options) {
 
     return {
         create:initSVG,
-        addFeature:addFeature
+        addFeature:addFeature,
+        selection:addRectSelection
     }
 }

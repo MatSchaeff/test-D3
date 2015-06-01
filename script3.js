@@ -10,6 +10,7 @@
     var currentSeq;
     var isoforms;
     var features={};
+    var selectedRect;
 
     function nxIsoformChoice(isoforms) {
         if ($("#nx-isoformChoice").length > 0) {
@@ -172,6 +173,7 @@
             addFeatures(isoID);
             fillTable(isoID);
             featureSelection();
+            inverseSelection();
         }
     };
 
@@ -320,23 +322,32 @@
 
     function featureSelection() {
         $(".featPosition").click(function() {
-            console.log("whut");
+            $(".tableHighlight").removeClass("tableHighlight");
+            $(this).parent().parent().addClass("tableHighlight");
             var position = $(this).text().split(" - ").map(Number);
             if (position.length === 1) position.push(position[0]);
+            var svgId = "#" + "f" + position[0] + "_" + position[1];
+
+            console.log(svgId);
             position[0]-=1;
             seqView.selection(position[0],position[1],"#C50063");
+            ft.selection(svgId);
+
             var ElementTop = $("#stringSelected").position().top-200;
             var scrollPosition = $("#scroller").scrollTop();
             var scrollingLength = ElementTop + scrollPosition;
             $("#scroller").animate({scrollTop: scrollingLength}, 1000);
+
         })
     }
     function inverseSelection() {
         $(".element").click(function (d) {
-            var featSelected = this.id.slice(0, - 1);
+            var featSelected = this.id.slice(1);
             var featPos = featSelected.split("_").map(Number);
             featPos[0]-=1;
             seqView.selection(featPos[0],featPos[1],"#C50063");
+            $(".tableHighlight").removeClass("tableHighlight");
+            $("#"+featSelected).addClass("tableHighlight");
             var ElementTop = $("#"+featSelected).position().top-60;
             var scrollPosition = $("#featTableScroller").scrollTop();
             var scrollingLength = ElementTop + scrollPosition;
