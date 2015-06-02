@@ -113,4 +113,9 @@ body{
   background-color:#666666 !important;
 }
 
+@font-face {
+    font-family: "HelveticaLight";
+    src: url('font/HelveticaNeue-Light.otf');
+}
+
 /* Style northward tooltips differently */
