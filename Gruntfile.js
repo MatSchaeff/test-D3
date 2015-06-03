@@ -8,10 +8,11 @@ module.exports = function(grunt) {
                 separator: ';'
             },
             dist: {
-                src: ['nextprot.js',
-                    'script2.js'
+                src: ['jquery.js',
+                    'd3.v3.js',
+                    'nxViewer.js'
                 ],
-                dest: 'dependencies.js'
+                dest: 'demo/featureViewer.bundle.js'
             }
         },
         connect: {

@@ -191,7 +191,7 @@
                 seqView.render('#seqViewer', {
                     'showLineNumbers': true,
                     'wrapAminoAcids': true,
-                    'charsPerLine': 60
+                    'charsPerLine': 50
                 });
 
             }
