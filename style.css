@@ -114,8 +114,10 @@ body{
 }
 
 @font-face {
-    font-family: "HelveticaLight";
-    src: url('font/HelveticaNeue-Light.otf');
+    font-family: "HelveticaUltraLight";
+    src: url('fonts/HelveticaNeue-UltraLight.otf');
 }
-
-/* Style northward tooltips differently */
+/*
+ * Row with equal height columns
+ * --------------------------------------------------
+ */

@@ -17,57 +17,57 @@
     <script src="script3.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-default" style="margin:0px" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand navbar-logo" href="/" style="padding-top:8px;">
-                <img src="/np-logo.png" style="width:25%;display:inline-block">neXtProt</a>
-        </div>
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
+    <nav class="navbar navbar-default" style="margin:0px" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand navbar-logo" href="/" style="padding-top:8px;">
+                    <img src="np-logo.png" style="width:25%;display:inline-block">neXtProt</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
 
-                <!-- Ressources -->
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Resources <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <!-- Learn -->
-                        <li ng-class=""><a href="https://search.nextprot.org">Search</a></li>
-                        <li ng-class=""><a href="http://snorql.nextprot.org">Snorql</a></li>
-                        <li ng-class=""><a href="https://api.nextprot.org">API</a></li>
-                    </ul>
-                </li>
+                        <!-- Ressources -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Resources <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <!-- Learn -->
+                                <li ng-class=""><a href="https://search.nextprot.org">Search</a></li>
+                                <li ng-class=""><a href="http://snorql.nextprot.org">Snorql</a></li>
+                                <li ng-class=""><a href="https://api.nextprot.org">API</a></li>
+                            </ul>
+                        </li>
 
-                    <!-- Help dropdown -->
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Help <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <!-- Learn -->
-                        <li ng-class="{'active':isActiveDoc('/help/learn-simple-search')}"><a href="/help/learn-simple-search">Simple search</a></li>
-                        <li ng-class="{'active':isActiveDoc('/help/learn-advanced-search')}"><a href="/help/learn-advanced-search">Advanced search</a></li>
-                        <li><a href="#"></a></li>
-                        <li ng-class="{'active':isActiveDoc('/help/search-results')}"><a href="/help/learn-search-results">Search results</a></li>
-                        <li><a href="#"></a></li>
-                        <li ng-class="{'active':isActiveDoc('/help/doc/introduction')}"><a ng-href="/help/doc/introduction" href="/help/doc/introduction">RDF help</a></li>
-                        <li><a href="#"></a></li>
-                        <li class="divider"></li>
-                        <li ng-class="{'active':isActiveDoc('/help/learn-protein-lists')}"><a href="/help/learn-protein-lists">Protein Lists</a></li>
-                        <li class="divider"></li>
-                        <li ng-class="{'active':isActiveDoc('/help/learn-developer-api')}"><a href="/help/learn-developer-api">Developer API</a></li>
-                       <!--  <li><a target="_blank" href="http://bl.ocks.org/calipho-sib">Look at our bl.ocks.org</a></li> -->
-                        <li class="divider"></li>
+                        <!-- Help dropdown -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Help <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <!-- Learn -->
+                                <li ng-class="{'active':isActiveDoc('/help/learn-simple-search')}"><a href="/help/learn-simple-search">Simple search</a></li>
+                                <li ng-class="{'active':isActiveDoc('/help/learn-advanced-search')}"><a href="/help/learn-advanced-search">Advanced search</a></li>
+                                <li><a href="#"></a></li>
+                                <li ng-class="{'active':isActiveDoc('/help/search-results')}"><a href="/help/learn-search-results">Search results</a></li>
+                                <li><a href="#"></a></li>
+                                <li ng-class="{'active':isActiveDoc('/help/doc/introduction')}"><a ng-href="/help/doc/introduction" href="/help/doc/introduction">RDF help</a></li>
+                                <li><a href="#"></a></li>
+                                <li class="divider"></li>
+                                <li ng-class="{'active':isActiveDoc('/help/learn-protein-lists')}"><a href="/help/learn-protein-lists">Protein Lists</a></li>
+                                <li class="divider"></li>
+                                <li ng-class="{'active':isActiveDoc('/help/learn-developer-api')}"><a href="/help/learn-developer-api">Developer API</a></li>
+                                <!--  <li><a target="_blank" href="http://bl.ocks.org/calipho-sib">Look at our bl.ocks.org</a></li> -->
+                                <li class="divider"></li>
 
                         <!-- FAQ
                         <li ng-class="{'active':isActiveDoc('/pages/faq')}"><a href="/pages/faq">FAQ</a></li>
-                        -->
+                    -->
 
-                        <!-- News -->
-                        <li ng-class="{'active':isActiveDoc('/what-is-new')}"><a href="/what-is-new">What's new?</a></li>
-                        <!-- Known issues -->
-                        <li ng-class="{'active':isActiveDoc('/known-issues')}"><a href="/known-issues">Known issues</a></li>
+                    <!-- News -->
+                    <li ng-class="{'active':isActiveDoc('/what-is-new')}"><a href="/what-is-new">What's new?</a></li>
+                    <!-- Known issues -->
+                    <li ng-class="{'active':isActiveDoc('/known-issues')}"><a href="/known-issues">Known issues</a></li>
 
-                        <!-- Found a bug -->
-                        <li ng-class=""><a target="_blank" href="https://github.com/calipho-sib/nextprot-ui/issues">Found
-                            a bug?<i class="glyphicon glyphicon-github"></i></a></li>
+                    <!-- Found a bug -->
+                    <li ng-class=""><a target="_blank" href="https://github.com/calipho-sib/nextprot-ui/issues">Found
+                        a bug?<i class="glyphicon glyphicon-github"></i></a></li>
                     </ul>
                 </li>
 
@@ -88,37 +88,22 @@
 
                 <!-- login button -->
                 <!-- ngIf: !user.profile.email --><li ng-if="!user.profile.email" class="ng-scope">
-                    <a href="" type="button" class="link" ng-click="login()">Login</a>
-                </li><!-- end ngIf: !user.profile.email -->
+                <a href="" type="button" class="link" ng-click="login()">Login</a>
+            </li><!-- end ngIf: !user.profile.email -->
 
-                <!-- once logged in user resources -->
-                <!-- ngIf: user.profile.email -->
-            </ul>
-        </div>
+            <!-- once logged in user resources -->
+            <!-- ngIf: user.profile.email -->
+        </ul>
     </div>
+</div>
 </nav>
 <div class="container-fluid">
   <div class="row">
-     <div style="background:#777777;height:1313px;padding:0px;border-radius:0px;" class="navbar col-md-2">
-        <h4 style="color:#F8F8F8;font-size:1.7em;height:40px;font-weight:100;padding:5px 0px 25px;margin-bottom:15px;text-align: center;">Glycogenin-1</h4>
-        <ul class="nav nav-stacked" id="navAside" style="color:lightslategrey;height:auto;max-height:450px;overflow:auto;padding-bottom:10px;border-top: 1px solid #595959;;border-bottom: 1px solid #C50063;box-shadow: 0px -3px 6px -6px #D0D0D0, inset 0px 3px 6px -6px #757575;">
-            <h5 style="color:#F8F8F8;font-size:20px;border-bottom: 1px solid #C50063;padding:0px 15px 15px;font-weight:300;text-shadow: -2px 0px 1px black"><span style="font-size: 28px;">P</span>rotein</h5>
-            <li role="presentation"><a href="/" data-toggle="tab">Function</a></li>
-            <li role="presentation"><a href="/" data-toggle="tab">Medical</a></li>
-            <li role="presentation"><a href="/" data-toggle="tab">Expression</a></li>
-            <li role="presentation"><a href="/" data-toggle="tab">Interactions</a></li>
-            <li role="presentation"><a href="/" data-toggle="tab">Localisation</a></li>
-            <li role="presentation"><a href="/" data-toggle="tab">Sequence</a></li>
-            <li role="presentation" class="active"><a href="/" data-toggle="tab">Proteomics</a></li>
-            <li role="presentation"><a href="/" data-toggle="tab">Structures</a></li>
-            <li role="presentation"><a href="/" data-toggle="tab">Identifiers</a></li>
-        </ul>
-         <h5 style="color:#F8F8F8;font-size:20px;border-bottom: 1px solid #656565;margin:0px;padding:15px 15px 15px;font-weight:300;text-shadow: -2px 0px 1px black"><span style="font-size: 28px;">G</span>ene</h5>
-         <h5 style="color:#F8F8F8;font-size:20px;border-bottom: 1px solid #656565;margin:0px;padding:15px 15px 15px;font-weight:300;text-shadow: -2px 0px 1px black"><span style="font-size: 28px;">R</span>eferences</h5>
-     </div>
-
- <div class="col-md-10">
-     <div class="row" style="background-color: white;border-bottom: 1px solid #B6B6B6;">
+    <div class="col-md-2" style="background:#777777;height:60px;padding:0px;border-radius:0px;;border-bottom: 1px solid #595959;box-shadow: inset 0px -3px 6px -6px #D0D0D0, 0px 3px 6px -6px #757575;">
+        <h4 style="color:#F8F8F8;font-size:1.7em;font-family:HelveticaUltraLight;height:40px;font-weight:900;padding:5px 0px 25px;margin-bottom:15px;text-align: center;letter-spacing:0px;">Glycogenin-1</h4>
+    </div>
+    <div class="col-md-10" style="height:60px;">
+     <div class="row" style="height:inherit;background-color:white;border-bottom: 1px solid #B6B6B6;">
          <div class="col-md-4">
              <div style="text-align: center;margin-top:15px;margin-left:20px;display: inline-block;">
                  <span style="background-color:#CFB915;color:white;font-weight:900;padding:3px 8px;">1</span>
@@ -140,24 +125,47 @@
          <div class="col-md-3 pull-right" style="margin-top:15px;margin-right:50px;">
              <input type="text" class="form-control" id="inputSuccess3" aria-describedby="inputSuccess3Status" placeholder="Search...">
              <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true" style="margin-right: 10px;"></span>
-             </div>
+         </div>
      </div>
-	<div class="row" style="margin-right: 20px;margin-left: 20px;">
-	<div id="nx-overview" class="col-lg-10 col-lg-offset-1 col-md-12" style="background:#fff;margin-top:20px;margin-bottom:20px"></div>
+ </div>
 </div>
-<div class="row" style="margin-right: 20px;margin-left: 20px;">
-    <div id="nx-isoformChoice" class="col-lg-10 col-lg-offset-1 col-md-12" style="margin-top:10px;margin-bottom: -5px;"></div>
-</div>
-	<div class="row" style="margin-right: 20px;margin-left: 20px;">
-		<div class="col-lg-10 col-lg-offset-1 col-md-12" style="background:#fff;padding:0px;border-top:4px solid #E7EAEC">
-<div class="chart"></div>
-</div>
-</div>
-    <div class="row" style="margin-right: 20px;margin-left: 20px;margin-top:10px;">
-        <div id="featuresTable" class="col-lg-5 col-md-6 col-lg-offset-1" style="background:#fff;padding:5px 15px;"></div>
-        <div class="col-lg-5 col-md-6" style="padding-right:0px;">
-            <div id="seqViewer" style="background:#fff;padding:5px 15px;height:560px"></div>
+<div class="row">
+        <div style="background:#777777;padding:0px;border-radius:0px;" class="navbar col-md-2 left-side">
+        <ul class="nav nav-stacked" id="navAside" style="color:lightslategrey;height:auto;max-height:450px;overflow:auto;padding-bottom:10px;border-bottom: 1px solid #C50063;">
+            <h5 style="color:#F8F8F8;font-size:20px;border-bottom: 1px solid #C50063;padding:0px 15px 15px;font-weight:300;text-shadow: -2px 0px 1px #666"><span style="font-size: 28px;">P</span>rotein</h5>
+            <li role="presentation"><a href="javascript:;" data-toggle="tab">Function</a></li>
+            <li role="presentation"><a href="javascript:;" data-toggle="tab">Medical</a></li>
+            <li role="presentation"><a href="javascript:;" data-toggle="tab">Expression</a></li>
+            <li role="presentation"><a href="javascript:;" data-toggle="tab">Interactions</a></li>
+            <li role="presentation"><a href="javascript:;" data-toggle="tab">Localisation</a></li>
+            <li role="presentation"><a href="javascript:;" data-toggle="tab">Sequence</a></li>
+            <li role="presentation" class="active"><a href="javascript:;" data-toggle="tab">Proteomics</a></li>
+            <li role="presentation"><a href="javascript:;" data-toggle="tab">Structures</a></li>
+            <li role="presentation"><a href="javascript:;" data-toggle="tab">Identifiers</a></li>
+        </ul>
+        <h5 style="color:#F8F8F8;font-size:20px;border-bottom: 1px solid #656565;margin:0px;padding:15px 15px 15px;font-weight:300;text-shadow: -2px 0px 1px #666"><span style="font-size: 28px;">G</span>ene</h5>
+        <h5 style="color:#F8F8F8;font-size:20px;border-bottom: 1px solid #656565;margin:0px;padding:15px 15px 15px;font-weight:300;text-shadow: -2px 0px 1px #666"><span style="font-size: 28px;">R</span>eferences</h5>
     </div>
+
+    <div class="col-md-10 right-side">
+     <div class="row" style="margin-right: 20px;margin-left: 20px;">
+         <div id="nx-overview" class="col-lg-10 col-lg-offset-1 col-md-12" style="background:#fff;margin-top:20px;margin-bottom:20px;border-top:4px solid #E7EAEC;border-bottom: 1px solid #E7EAEC;"></div>
+     </div>
+     <div class="row" style="margin-right: 20px;margin-left: 20px;">
+        <div id="nx-isoformChoice" class="col-lg-10 col-lg-offset-1 col-md-12" style="margin-top:10px;margin-bottom: -5px;"></div>
+    </div>
+    <div class="row" style="margin-right: 20px;margin-left: 20px;">
+      <div class="col-lg-10 col-lg-offset-1 col-md-12" style="background:#fff;padding:0px;border-top:4px solid #E7EAEC;border-bottom: 1px solid #E7EAEC">
+        <div class="chart"></div>
+    </div>
+</div>
+<div class="row" style="margin-right: 20px;margin-left: 20px;margin-top:10px;">
+    <div id="featuresTable" class="col-lg-5 col-md-6 col-lg-offset-1" style="background:#fff;height:580px;padding:5px 15px;border-top:4px solid #E7EAEC;border-bottom: 1px solid #E7EAEC"></div>
+    <div class="col-lg-5 col-md-6" style="padding-right:0px;">
+        <div id="seqViewer" style="background:#fff;padding:5px 15px;height:580px;border-top:4px solid #E7EAEC;border-bottom: 1px solid #E7EAEC"></div>
+    </div>
+</div>
+</div>
 </div>
 </body>
 </html>

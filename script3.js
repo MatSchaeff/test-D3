@@ -155,6 +155,9 @@
             );
         }
     };
+    function adjustHeight(div1,div2) {
+        $(div1).height($(div2).height());
+    }
 
     var getInfoForIsoform = {
         isoform: function () {
@@ -172,6 +175,7 @@
             createSVG(isoforms,isoID);
             addFeatures(isoID);
             fillTable(isoID);
+            adjustHeight(".left-side",".right-side");
             featureSelection();
             inverseSelection();
         }
@@ -408,6 +412,7 @@
             createSVG(isoforms,isoName);
             addFeatures(isoName);
             fillTable(isoName);
+            adjustHeight(".left-side",".right-side");
             featureSelection();
             inverseSelection();
 
