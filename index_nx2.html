@@ -121,23 +121,24 @@
         <div class="col-md-10" style="height:60px;">
             <div class="row" style="height:inherit;background-color:white;border-bottom: 1px solid #B6B6B6;">
                 <div class="col-md-4">
-                    <div style="text-align: center;margin-top:15px;margin-left:20px;display: inline-block;">
-                        <span style="background-color:#CFB915;color:white;font-weight:900;padding:3px 8px;">1</span>
 
-                        <p style="color:grey;font-size:0.8em;font-weight:600;padding-top:5px;margin-bottom: 5px;">
-                            GENE</p>
-                    </div>
                     <div style="text-align: center;margin-top:15px;margin-left:20px;display: inline-block;">
-                        <span style="background-color:lightgrey;color:blackgrey;font-weight:600;padding:5px 3px;">593</span>
+                        <span style="background-color:lightgrey;color:blackgrey;font-weight:900;padding:3px 8px;">1</span>
 
-                        <p style="color:grey;font-size:0.8em;font-weight:600;padding-top:5px;margin-bottom: 5px;">
-                            REF</p>
+                        <p style="color:grey;font-size:0.8em;font-weight:600;margin-top:5px;margin-bottom: 5px;">
+                            ISO</p>
                     </div>
                     <div style="text-align: center;margin-top:15px;margin-left:20px;display: inline-block;">
                         <span style="background-color:#0F8292;color:white;font-weight:900;padding:3px 8px;">1</span>
 
-                        <p style="color:grey;font-size:0.8em;font-weight:600;padding-top:5px;margin-bottom: 5px;">
-                            ISO</p>
+                        <p style="color:grey;font-size:0.8em;font-weight:600;margin-top:5px;margin-bottom: 5px;">
+                            GENE</p>
+                    </div>
+                    <div style="text-align: center;margin-top:15px;margin-left:20px;display: inline-block;">
+                        <span style="background-color:#CFB915;color:white;font-weight:600;padding:5px 3px;font-size:13px;">593</span>
+
+                        <p style="color:grey;font-size:0.8em;font-weight:600;margin-top:5px;margin-bottom: 5px;">
+                            REF</p>
                     </div>
                     <div style="display:inline-block;margin-top:15px; margin-left:30px;vertical-align:top;">
                         <i class="glyphicon glyphicon-star-empty" style="padding-left:20px;font-size:2em;"></i>
@@ -154,65 +155,67 @@
         </div>
     </div>
     <div class="row">
-        <div style="background:#777777;padding:0px;border-radius:0px;" class="navbar col-md-2 left-side">
-            <div class="panel-group" role="tablist" style="margin:0px">
-                <div class="panel panel-default menu-group">
-                    <div class="panel-heading menu-header" role="tab" id="ProteinHeading1">
+        <div style="background:#777777;padding:0px;border-radius:0px;border:none;" class="navbar col-md-2 left-side">
+            <div class="panel-group"id="accordion" style="margin:0px">
+                <div class="panel panel-default menu-group" style="margin:0px">
+                    <div class="panel-heading menu-header">
                         <h4 class="panel-title">
-                            <a class="" data-toggle="collapse" href="#collapseProteinGroup1" aria-expanded="false"
-                               aria-controls="collapseProteinGroup1">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
                                 <span style="font-size: 28px;">P</span>rotein
                             </a></h4>
                     </div>
-                    <div style="" aria-expanded="false" id="collapseProteinGroup1"
-                         class="panel-collapse collapse menu-content" role="tabpanel" data-parent="#ProteinHeading1" aria-labelledby="ProteinHeading1">
-                        <ul class="nav nav-stacked gene-menu">
-                            <li role="presentation"><a href="javascript:;" data-toggle="tab">Function</a></li>
-                            <li role="presentation"><a href="javascript:;" data-toggle="tab">Medical</a></li>
-                            <li role="presentation" class="active"><a href="javascript:;"
-                                                                      data-toggle="tab">Expression</a></li>
-                        </ul>
+                    <div id="collapse1" class="panel-collapse collapse menu-content">
+                        <div class="panel-body" style="padding:0px">
+                            <ul class="nav nav-stacked prot-menu">
+                                <li><a href="javascript:void(0)" data-toggle="tab">Function</a></li>
+                                <li><a href="javascript:void(0)" data-toggle="tab">Medical</a></li>
+                                <li><a href="javascript:void(0)" data-toggle="tab">Expression</a></li>
+                                <li><a href="javascript:void(0)" data-toggle="tab">Interactions</a></li>
+                                <li><a href="javascript:void(0)" data-toggle="tab">Localisation</a></li>
+                                <li><a href="javascript:void(0)" data-toggle="tab">Sequence</a></li>
+                                <li class="active"><a href="javascript:void(0)" data-toggle="tab">Proteomics</a></li>
+                                <li><a href="javascript:void(0)" data-toggle="tab">Structures</a></li>
+                                <li><a href="javascript:void(0)" data-toggle="tab">Identifiers</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel-group" role="tablist">
-                <div class="panel panel-default menu-group">
-                    <div class="panel-heading menu-header" role="tab" id="ProteinHeading2">
+                <div class="panel panel-default menu-group" style="margin:0px">
+                    <div class="panel-heading menu-header">
                         <h4 class="panel-title">
-                            <a class="" data-toggle="collapse" href="#collapseProteinGroup2" aria-expanded="false"
-                               aria-controls="collapseProteinGroup2">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
                                 <span style="font-size: 28px;">G</span>ene
                             </a></h4>
                     </div>
-                    <div style="" aria-expanded="false" id="collapseProteinGroup2"
-                         class="panel-collapse collapse menu-content" role="tabpanel" data-parent="#ProteinHeading2" aria-labelledby="ProteinHeading1">
-                        <ul class="nav nav-stacked gene-menu">
-                            <li role="presentation"><a href="javascript:;" data-toggle="tab">Function</a></li>
-                            <li role="presentation"><a href="javascript:;" data-toggle="tab">Medical</a></li>
-                            <li role="presentation" class="active"><a href="javascript:;"
-                                                                      data-toggle="tab">Expression</a></li>
-                        </ul>
+                    <div id="collapse2" class="panel-collapse collapse menu-content">
+                        <div class="panel-body" style="padding:0px">
+                            <ul class="nav nav-stacked gene-menu">
+                                <li><a href="javascript:void(0)" data-toggle="tab">Exons</a></li>
+                                <li><a href="javascript:void(0)" data-toggle="tab">Identifiers</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default menu-group" style="margin:0px">
+                    <div class="panel-heading menu-header">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                                <span style="font-size: 28px;">R</span>eferences
+                            </a></h4>
+                    </div>
+                    <div id="collapse3" class="panel-collapse collapse menu-content">
+                        <div class="panel-body" style="padding:0px">
+                            <ul class="nav nav-stacked ref-menu">
+                                <li><a href="javascript:void(0)" data-toggle="tab">Curated publications</a></li>
+                                <li><a href="javascript:void(0)" data-toggle="tab">Additional publications</a></li>
+                                <li><a href="javascript:void(0)" data-toggle="tab">Patents</a></li>
+                                <li><a href="javascript:void(0)" data-toggle="tab">Submissions</a></li>
+                                <li><a href="javascript:void(0)" data-toggle="tab">Web resources</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-            <ul class="nav nav-stacked" id="navAside"
-                style="color:lightslategrey;height:auto;max-height:450px;overflow:auto;padding-bottom:10px;border-bottom: 1px solid #C50063;">
-                <h5 style="color:#F8F8F8;font-size:20px;border-bottom: 1px solid #C50063;padding:0px 15px 15px;font-weight:300;text-shadow: -2px 0px 1px #666">
-                    <span style="font-size: 28px;">P</span>rotein</h5>
-                <li role="presentation"><a href="javascript:;" data-toggle="tab">Function</a></li>
-                <li role="presentation"><a href="javascript:;" data-toggle="tab">Medical</a></li>
-                <li role="presentation"><a href="javascript:;" data-toggle="tab">Expression</a></li>
-                <li role="presentation"><a href="javascript:;" data-toggle="tab">Interactions</a></li>
-                <li role="presentation"><a href="javascript:;" data-toggle="tab">Localisation</a></li>
-                <li role="presentation"><a href="javascript:;" data-toggle="tab">Sequence</a></li>
-                <li role="presentation" class="active"><a href="javascript:;" data-toggle="tab">Proteomics</a></li>
-                <li role="presentation"><a href="javascript:;" data-toggle="tab">Structures</a></li>
-                <li role="presentation"><a href="javascript:;" data-toggle="tab">Identifiers</a></li>
-            </ul>
-            <h5 style="color:#F8F8F8;font-size:20px;border-bottom: 1px solid #656565;margin:0px;padding:15px 15px 15px;font-weight:300;text-shadow: -2px 0px 1px #666">
-                <span style="font-size: 28px;">G</span>ene</h5>
-            <h5 style="color:#F8F8F8;font-size:20px;border-bottom: 1px solid #656565;margin:0px;padding:15px 15px 15px;font-weight:300;text-shadow: -2px 0px 1px #666">
-                <span style="font-size: 28px;">R</span>eferences</h5>
         </div>
 
         <div class="col-md-10 right-side">
