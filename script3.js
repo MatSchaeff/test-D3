@@ -95,32 +95,6 @@
                 }
             );
         },
-        dsB: function (data,property) {
-            //features[property] = {};
-            data.forEach(function (o) {
-                    for (var name in o.targetingIsoformsMap) {
-                        if (o.targetingIsoformsMap.hasOwnProperty(name)) {
-                            var start = o.targetingIsoformsMap[name].firstPosition,
-                                end = o.targetingIsoformsMap[name].lastPosition;
-                            if (!features[name]) features[name] = {};
-                            if (!features[name][property]) features[name][property] = [];
-                            features[name][property].push([
-                                {
-                                    x: start,
-                                    y: 0
-                                }, {
-                                    x: end,
-                                    y: 0
-                                }, {
-                                    x: end,
-                                    y: 0
-                                }
-                            ]);
-                        }
-                    }
-                }
-            );
-        },
         peptide: function (data,property,category) {
 
             //features[property] = {};
