@@ -1,0 +1,2 @@
+1. How to relate a feature data to its visualization properties ?
+2. Utils.convertAnnotations : shouldnt we create the all data at the beginning (current) instead of use this function each time the isoform change ?

@@ -60,7 +60,7 @@ var loadOverview = function(overview,nxEntryName){
 };
 $(function () {
     var Nextprot = window.Nextprot;
-    var nx = new Nextprot.Client();
+    var nx = new Nextprot.Client("overview","MatSchaeff-SIB");
     var nxEntryName = nx.getEntryName();
     nx.getProteinOverview().then(function(data) {
     loadOverview(data, nxEntryName);
