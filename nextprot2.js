@@ -203,6 +203,37 @@
             });
         };
 
+        NextprotClient.prototype.getInteractingRegion = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "interacting-region").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getMiscellaneousSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "miscellaneous-site").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getActiveSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "active-site").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getMetalBindingSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "metal-binding-site").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getVariant = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "variant").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+
         //node.js compatibility
         if (typeof exports !== 'undefined') {
             exports.Client = NextprotClient;
@@ -269,15 +300,20 @@ var NXUtils = {
                         var start = mapping.targetingIsoformsMap[name].firstPosition,
                             end = mapping.targetingIsoformsMap[name].lastPosition,
                             link = NXUtils.getLinkForFeature(mapping.cvTermAccessionCode, mapping.description),
+                            description = mapping.description,
                             evidence = mapping.evidences.map(function(d) {return d.assignedBy}).filter(function(item, pos, self) {
                                 return self.indexOf(item) == pos;});
+                        if (mapping.hasOwnProperty("apicategory") && mapping.apicategory === "VARIANT") {
+                            link = "<span style='color:green'>" + mapping.variant.original + " → " +  mapping.variant.variant + "</span>";
+                            description = mapping.variant.original + " → " +  mapping.variant.variant;
+                        }
                         if (!result[name]) result[name] = [];
                         result[name].push({
                             start: start,
                             end: end,
                             length: end-start+1,
                             id:start.toString()+"_"+end.toString(),
-                            description: mapping.description,
+                            description: description,
                             category: category,
                             link: link,
                             evidence: evidence,
@@ -329,7 +365,7 @@ var NXUtils = {
             }
         });
         numero+=1;
-        console.log(numero);
+        console.log(result);
         return result;
     }
 };

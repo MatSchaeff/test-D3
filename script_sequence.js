@@ -136,28 +136,28 @@
 			            });
 			        }
 			        break;
-        		case 4:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Antibody",
-			                className: "anti",
-			                color: "#B3C2F0",
-			                type: "rect"
-			            });
-			        }
-			        break;
-        		case 5:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Initiator meth",
-			                className: "initMeth",
-			                color: "#B3B3D1",
-			                type: "unique"
-			            });
-			        }
-			        break;
+                case 4:
+                    if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+                        ft.addFeature({
+                            data: featuresForViewer[i][isoName],
+                            name: "Initiator meth",
+                            className: "initMeth",
+                            color: "#B3B3D1",
+                            type: "unique"
+                        });
+                    }
+                    break;
+                case 5:
+                    if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+                        ft.addFeature({
+                            data: featuresForViewer[i][isoName],
+                            name: "Interacting region",
+                            className: "intReg",
+                            color: "#B3D1F0",
+                            type: "rect"
+                        });
+                    }
+                    break;
         		case 6:
 			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
 			            ft.addFeature({
@@ -195,23 +195,46 @@
 			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
 			            ft.addFeature({
 			                data: featuresForViewer[i][isoName],
-			                name: "Peptide",
-			                className: "pep",
-			                color: "#B3E1D1",
-			                type: "multipleRect"
+			                name: "Site",
+			                className: "site",
+			                color: "#B3F0E1",
+			                type: "unique"
 			            });
 			        }
 			        break;
-        		case 10:
+                case 10:
 			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
 			            ft.addFeature({
 			                data: featuresForViewer[i][isoName],
-			                name: "Srm Peptide",
-			                className: "srmPep",
-			                color: "#B3E1F0",
-			                type: "multipleRect"
+			                name: "Active site",
+			                className: "actSite",
+			                color: "#B3F0F0",
+			                type: "unique"
 			            });
 			        }
+                    break;
+                case 11:
+                    if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+                        ft.addFeature({
+                            data: featuresForViewer[i][isoName],
+                            name: "Metal binding",
+                            className: "metal",
+                            color: "#B3FFC2",
+                            type: "unique"
+                        });
+                    }
+                    break;
+                case 12:
+                    if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+                        ft.addFeature({
+                            data: featuresForViewer[i][isoName],
+                            name: "Variant",
+                            className: "variant",
+                            color: "rgba(0,255,154,0.3)",
+                            type: "unique"
+                        });
+                    }
+                    break;
     			}
     		}
     }
@@ -278,9 +301,8 @@
 
     $(function () {
         var startTime = new Date().getTime();
-        Promise.all([nx.getProteinSequence(entry), nx.getProPeptide(entry), nx.getMatureProtein(entry), nx.getSignalPeptide(entry), nx.getDisulfideBond(entry),
-            nx.getAntibody(entry), nx.getInitMeth(entry), nx.getModifResidue(entry), nx.getCrossLink(entry), nx.getGlycoSite(entry), nx.getPeptide(entry),
-            nx.getSrmPeptide(entry)]).then(function (oneData) {
+        Promise.all([nx.getProteinSequence(entry), nx.getProPeptide(entry), nx.getMatureProtein(entry), nx.getSignalPeptide(entry), nx.getDisulfideBond(entry), nx.getInitMeth(entry), nx.getInteractingRegion(entry),
+            nx.getModifResidue(entry), nx.getCrossLink(entry), nx.getGlycoSite(entry), nx.getMiscellaneousSite(entry), nx.getActiveSite(entry), nx.getMetalBindingSite(entry), nx.getVariant(entry)]).then(function (oneData) {
             var endTime2 = new Date().getTime();
             var time2 = endTime2 - startTime;
             console.log('Execution time: ' + time2);
@@ -289,8 +311,8 @@
             
 
 
-		    var featuresName = ["Sequence","Propeptide", "Mature protein", "Signal peptide", "Disulfide bonds", "Antibody", "Initiator meth", 
-		    "Modified residue","Cross-link", "Glycosylation", "Peptide", "Srm peptide"];
+		    var featuresName = ["Sequence","Propeptide", "Mature protein", "Signal peptide", "Disulfide bonds", "Initiator meth", "Interacting region",
+		    "Modified residue","Cross-link", "Glycosylation", "Site", "Active site", "Metal binding","Variant"];
 
             for (var i=1; i<oneData.length;i++) {
                 var feat = NXUtils.convertMappingsToIsoformMap(oneData[i],featuresName[i]);

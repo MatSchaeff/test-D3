@@ -242,6 +242,11 @@ function FeatureViewer(sequence, div,options) {
         svgContainer.selectAll(".Xaxis")
             .attr("transform", "translate(0," + (position+20) + ")")
     }
+    function updateSVGHeight(position) {
+        console.log("blblblbblbl");
+        svgContainer.select(div+" svg")
+            .style("height", position+60)
+    }
     var yAxisScale = d3.scale.ordinal()
         .domain([0, yData.length])
         .rangeRoundBands([0, 500], .1);
@@ -763,6 +768,7 @@ function FeatureViewer(sequence, div,options) {
         fillSVG.typeIdentifier(object);
         updateYaxis();
         updateXaxis(Yposition);
+        updateSVGHeight(Yposition);
         if(SVGOptions.brushActive) {
             svgContainer.selectAll(".brush rect")
                 .attr('height', Yposition+50);

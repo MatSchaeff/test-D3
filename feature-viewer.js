@@ -36,7 +36,7 @@ function FeatureViewer(sequence, div,options) {
                 var absoluteMousePos = d3.mouse(bodyNode);
                 tooltipDiv.style({
                     left: (absoluteMousePos[0]-15)+'px',
-                    top: (absoluteMousePos[1]-52)+'px',
+                    top: (absoluteMousePos[1]-55)+'px',
                     'background-color': 'rgba(0, 0, 0, 0.8)',
                     width: 'auto',
                     'max-width': '170px',
@@ -71,7 +71,7 @@ function FeatureViewer(sequence, div,options) {
                 var absoluteMousePos = d3.mouse(bodyNode);
                 tooltipDiv.style({
                     left: (absoluteMousePos[0]-15)+'px',
-                    top: (absoluteMousePos[1] - 52)+'px'
+                    top: (absoluteMousePos[1] - 55)+'px'
                 });
             })
             .on('mouseout.tooltip', function(pD, pI){
@@ -94,8 +94,8 @@ function FeatureViewer(sequence, div,options) {
                         yTemp= pD[1].x;
                     }
                     else if (object.type === "unique") {
-                        xTemp= pD.x-1;
-                        yTemp= pD.y+1;
+                        xTemp= pD.x-0.5;
+                        yTemp= pD.y+0.5;
                     }
                     else {
                         xTemp= pD.x;
@@ -241,6 +241,10 @@ function FeatureViewer(sequence, div,options) {
     function updateXaxis(position) {
         svgContainer.selectAll(".Xaxis")
             .attr("transform", "translate(0," + (position+20) + ")")
+    }
+    function updateSVGHeight(position) {
+        console.log("blblblbblbl");
+        svg.attr("height", position+80 +"px")
     }
     var yAxisScale = d3.scale.ordinal()
         .domain([0, yData.length])
@@ -422,7 +426,7 @@ function FeatureViewer(sequence, div,options) {
                 .attr("clip-path", "url(#clip)")
                 .attr("class", "element "+object.className)
                 .attr("id", function(d) { return "f"+d.id })
-                .attr("x", X)
+                .attr("x", function (d) { return scaling(d.x-0.5) })
                 .attr("width", uniqueWidth)
                 .attr("height", 12)
                 .style("fill", object.color)
@@ -675,8 +679,8 @@ function FeatureViewer(sequence, div,options) {
             console.log("aaaaaaaa");
         }
         else if (elemSelected[0].x === elemSelected[0].y) {
-            xTemp=elemSelected[0].x-1;
-            yTemp=elemSelected[0].y+1;
+            xTemp=elemSelected[0].x-0.5;
+            yTemp=elemSelected[0].y+0.5;
             console.log("bbbbbbbb");
         }
         else {
@@ -768,6 +772,7 @@ function FeatureViewer(sequence, div,options) {
         fillSVG.typeIdentifier(object);
         updateYaxis();
         updateXaxis(Yposition);
+        updateSVGHeight(Yposition);
         if(SVGOptions.brushActive) {
             svgContainer.selectAll(".brush rect")
                 .attr('height', Yposition+50);
