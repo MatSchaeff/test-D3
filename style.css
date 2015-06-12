@@ -31,9 +31,13 @@
 .lineglycoSite{stroke:#B3C2D1;stroke-width:1px;}
 */
 body{
-    background:#F3F3F4 !important;
+    background:#F4F3F3 !important;
     overflow-y: auto;
 }
+a:focus {
+    outline:0 !important;
+}
+
 .active {
     z-index: 1 !important;
 }
@@ -123,8 +127,9 @@ body{
     box-shadow: none !important;
 }
 .menu-header {
-    background-color: inherit !important;
+    background-color: #777 !important;
     border: none !important;
+    border-radius: 0px !important;
     border-bottom: 1px solid #656565 !important;
     padding:0px !important;
 }
@@ -191,16 +196,16 @@ body{
     transition: border-left 200ms linear !important;
 }
 .menu-content li.active a{
-    color:#E4E4E4 !important;
-    background-color:#666666 !important;
+    color:#333 !important;
+    background-color:#F8F8F8 !important;
 }
 .menu-content a {
-    color:#D0D0D0 !important;
+    color:#777 !important;
     padding:5px 10px !important;
 }
 .menu-content a:hover {
-    color:#E4E4E4 !important;
-    background-color:#666666 !important;
+    color:#333 !important;
+    background-color:#F8F8F8 !important;
     -moz-transition: color,background 500ms ease;
     -webkit-transition: color,background 500ms ease;
     transition: color,background 500ms ease;
