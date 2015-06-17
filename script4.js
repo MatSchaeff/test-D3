@@ -243,7 +243,7 @@
             $(this).parent().parent().addClass("tableHighlight");
             var position = $(this).text().split(" - ").map(Number);
             if (position.length === 1) position.push(position[0]);
-            var svgId = "#" + "f" + position[0] + "_" + position[1];
+            var svgId = "#" + "f" + $(this).parent().parent().attr("id");
 
             console.log(svgId);
             position[0]-=1;
@@ -260,7 +260,7 @@
     function inverseSelection() {
         $(".element").click(function (d) {
             var featSelected = this.id.slice(1);
-            var featPos = featSelected.split("_").map(Number);
+            var featPos = featSelected.split("_").slice(1).map(Number);
             featPos[0]-=1;
             seqView.selection(featPos[0],featPos[1],"#C50063");
             $(".tableHighlight").removeClass("tableHighlight");

@@ -312,7 +312,7 @@ var NXUtils = {
                             start: start,
                             end: end,
                             length: end-start+1,
-                            id:start.toString()+"_"+end.toString(),
+                            id: category.replace(/\s/g,'')+"_"+start.toString()+"_"+end.toString(),
                             description: description,
                             category: category,
                             link: link,
@@ -353,7 +353,7 @@ var NXUtils = {
                                     start: start,
                                     end: end,
                                     length: end - start,
-                                    id:start.toString()+"_"+end.toString(),
+                                    id:category.replace(/\s/g,'')+"_"+start.toString()+"_"+end.toString(),
                                     description: description,
                                     category: category,
                                     link: link,
@@ -365,6 +365,11 @@ var NXUtils = {
             }
         });
         numero+=1;
+        for (var iso in result) {
+            result[iso].sort(function (a, b) {
+                return a.start - b.start;
+            })
+        }
         console.log(result);
         return result;
     }

@@ -30,6 +30,10 @@
 .glycoSite{fill:#B3C2D1;}
 .lineglycoSite{stroke:#B3C2D1;stroke-width:1px;}
 */
+.variant{
+    stroke:rgba(0,255,154,0.6);
+    stroke-width:1px;
+}
 body{
     background:#F4F3F3 !important;
     overflow-y: auto;
