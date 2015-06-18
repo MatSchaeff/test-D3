@@ -12,6 +12,13 @@
     var featuresByIsoform = [];
 	var featuresForViewer= [];
     var selectedRect;
+    var filterOptions = {
+        processing: true,
+        region: true,
+        site: true,
+        residue: true,
+        variant:true
+    };
 
     function nxIsoformChoice(isoforms) {
         if ($("#nx-isoformChoice").length > 0) {
@@ -65,6 +72,9 @@
             featureSelection();
             inverseSelection();
         }
+        // applyFilters: function() {
+
+        // }
     };
 
     function createSVG(sequences,isoName) {
@@ -298,6 +308,28 @@
             $("#scroller").animate({scrollTop: scrollingLength2}, 1000);
         })
     }
+    function toggleFiltering() {
+        $("#allFilters").on("change", function()
+        {
+            var checked = $(this).prop("checked");
+            
+            $(this).parents("#filtering")
+                .first()
+                .find("input[type=checkbox]")
+                .prop("checked", checked);
+            if (checked === false) {
+                for(var key in filterOptions) {
+                    filterOptions[key] = false;
+                }
+            }
+            else {
+                for(var key in filterOptions) {
+                    filterOptions[key] = true;
+                }
+            }
+            // getInfoForIsoform.reload
+        });
+    }
 
     $(function () {
         var startTime = new Date().getTime();
@@ -328,6 +360,7 @@
             adjustHeight("#seqViewer","#featuresTable");
             featureSelection();
             inverseSelection();
+            toggleFiltering();
 
             var endTime = new Date().getTime();
             var time = endTime - startTime;

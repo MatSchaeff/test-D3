@@ -19,16 +19,41 @@
 
 <body>
 	<div class="row" style="margin: 0px 20px;">
-	<div id="nx-overview" class="col-md-12" style="background:#fff;margin-top:20px;margin-bottom:20px"></div>
+	<div id="nx-overview" class="col-md-12" style="background:#fff;margin-top:20px;margin-bottom:10px"></div>
 </div>
 <div class="row" style="margin: 0px 20px;">
-    <div id="nx-isoformChoice" class="col-md-12" style="margin-top:10px;margin-bottom: -5px;"></div>
+    <div id="nx-isoformChoice" class="col-md-12" style="margin-top:5px;margin-bottom: -5px;"></div>
 </div>
 	<div class="row" style="margin: 0px 20px;">
 		<div class="col-md-12" style="background:#fff;padding:0px;border-top:4px solid #E7EAEC">
-<div class="chart"></div>
-</div>
-</div>
+            <div class="panel panel-default" style="margin:20px 20px 0px;">
+                <div class="panel-heading" style="display:inline-block;background:#F8F8F8;padding:0px 15px;height:100%;border-color:#F8F8F8;border-right:1px #ddd solid;"><h5 style="color:#777;padding:0px;height:10px">FILTER </h5></div>
+                <div class="panel-body" style="padding:3px;display:inline-block;">
+                    <div id="filtering" style="margin-left: 15px;">
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="allFilters" value="option0" checked> All/None
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="filterProcessing" value="option1" checked> Processing
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="filterRegion" value="option2" checked> Region
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="filterSite" value="option4" checked> Site
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="filterResidue" value="option5" checked> Modified residue
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="filterVariant" value="option6" checked> Variant
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="chart"></div>
+        </div>
+    </div>
     <div class="row" style="margin: 10px 20px;">
         <div id="featuresTable" class="col-md-6" style="background:#fff;padding:5px 15px;"></div>
         <div class="col-md-6" style="padding-right:0px;">
