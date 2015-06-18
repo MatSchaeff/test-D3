@@ -53,15 +53,17 @@
 
     var getInfoForIsoform = {
         isoform: function () {
-            $(".isoformNames").click(getInfoForIsoform.reload);
+            $(".isoformNames").click(function () {
+                isoName = $(this).text();
+                getInfoForIsoform.reload(isoName);
+            });
             $("#moreIsoforms a").click(function () {
                 var parentThis = $(this).text();
                 console.log(parentThis);
                 $("#extendIsoformChoice").text(parentThis);
             });
         },
-        reload: function (event) {
-            var isoID = $(this).text();
+        reload: function (isoID) {
             console.log(isoID);
             $(".chart").html("");
             createSVG(isoforms,isoID);
@@ -113,7 +115,7 @@
 			        }
 			        break;
         		case 1:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.processing) {
 			        	console.log(featuresForViewer[i][isoName]);
 			            ft.addFeature({
 			                data: featuresForViewer[i][isoName],
@@ -147,7 +149,7 @@
 			        }
 			        break;
                 case 4:
-                    if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+                    if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.processing) {
                         ft.addFeature({
                             data: featuresForViewer[i][isoName],
                             name: "Initiator meth",
@@ -158,7 +160,7 @@
                     }
                     break;
                 case 5:
-                    if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+                    if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.region) {
                         ft.addFeature({
                             data: featuresForViewer[i][isoName],
                             name: "Interacting region",
@@ -169,7 +171,7 @@
                     }
                     break;
         		case 6:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.residue) {
 			            ft.addFeature({
 			                data: featuresForViewer[i][isoName],
 			                name: "Modified residue",
@@ -180,7 +182,7 @@
 			        }
 			        break;
         		case 7:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.residue) {
 			            ft.addFeature({
 			                data: featuresForViewer[i][isoName],
 			                name: "Cross-link",
@@ -191,7 +193,7 @@
 			        }
 			        break;
         		case 8:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.residue) {
 			            ft.addFeature({
 			                data: featuresForViewer[i][isoName],
 			                name: "Glycosylation",
@@ -202,7 +204,7 @@
 			        }
 			        break;
         		case 9:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.site) {
 			            ft.addFeature({
 			                data: featuresForViewer[i][isoName],
 			                name: "Site",
@@ -213,7 +215,7 @@
 			        }
 			        break;
                 case 10:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.site) {
 			            ft.addFeature({
 			                data: featuresForViewer[i][isoName],
 			                name: "Active site",
@@ -224,7 +226,7 @@
 			        }
                     break;
                 case 11:
-                    if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+                    if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.site) {
                         ft.addFeature({
                             data: featuresForViewer[i][isoName],
                             name: "Metal binding",
@@ -235,7 +237,7 @@
                     }
                     break;
                 case 12:
-                    if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+                    if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.variant) {
                         ft.addFeature({
                             data: featuresForViewer[i][isoName],
                             name: "Variant",
@@ -253,11 +255,16 @@
         if ($("#featuresTable").length > 0) {
             var number = 0;
             var features = [];
+            console.log(featuresByIsoform);
             featuresByIsoform.forEach( function (d) { if (d.hasOwnProperty(isoName)) features.push(d[isoName])});
             for (feat in featuresByIsoform) if(featuresByIsoform[feat].hasOwnProperty(isoName)) number += featuresByIsoform[feat][isoName].length;
         Handlebars.registerHelper('position', function (length, options) {
                 if (length === 1) return this.start;
                 else return this.start + " - " + this.end;
+        });
+
+        Handlebars.registerHelper('className', function (category, options) {
+            return category.replace(' ','');
         });
         var datas = {
                 features: features,
@@ -309,26 +316,125 @@
         })
     }
     function toggleFiltering() {
-        $("#allFilters").on("change", function()
-        {
-            var checked = $(this).prop("checked");
-            
-            $(this).parents("#filtering")
-                .first()
-                .find("input[type=checkbox]")
-                .prop("checked", checked);
-            if (checked === false) {
-                for(var key in filterOptions) {
-                    filterOptions[key] = false;
+        //$("#allFilters").on("change", function() {
+        //    var checked = $(this).prop("checked");
+        //
+        //    $(this).parents("#filtering")
+        //        .first()
+        //        .find("input[type=checkbox]")
+        //        .prop("checked", checked);
+        //    if (checked === false) {
+        //        for(var key in filterOptions) {
+        //            filterOptions[key] = false;
+        //        }
+        //    }
+        //    else {
+        //        for(var key in filterOptions) {
+        //            filterOptions[key] = true;
+        //        }
+        //    }
+        //    // getInfoForIsoform.reload
+        //});
+        $("#filtering input:checkbox").on("change", function() {
+            if ($(this)[0] === $("#allFilters")[0]) {
+                var checked = $(this).prop("checked");
+
+                $(this).parents("#filtering")
+                    .first()
+                    .find("input[type=checkbox]")
+                    .prop("checked", checked);
+                if (checked === false) {
+                    for(var key in filterOptions) {
+                        filterOptions[key] = false;
+                    }
+                }
+                else {
+                    for(var key in filterOptions) {
+                        filterOptions[key] = true;
+                    }
                 }
             }
-            else {
-                for(var key in filterOptions) {
-                    filterOptions[key] = true;
-                }
-            }
-            // getInfoForIsoform.reload
+            applyFiltering();
+
         });
+
+        //$("#filterProcessing").on("change", function() {
+        //    console.log("click listened");
+        //    var checked = $(this).prop("checked");
+        //    if (checked === false) {
+        //        $(".Matureprotein").hide();
+        //        $(".Initiatormeth").hide();
+        //        console.log("should hide ?");
+        //    }
+        //    else {
+        //        $(".Matureprotein").show();
+        //        $(".Initiatormeth").show();
+        //    }
+        //})
+        //$("#filterRegion").on("change", function() {
+        //    console.log("click listened");
+        //    var checked = $(this).prop("checked");
+        //    if (checked === false) {
+        //        $(".Interactingregion").hide();
+        //        console.log("should hide ?");
+        //    }
+        //    else {
+        //        $(".Interactingregion").show();
+        //    }
+        //})
+    }
+    function applyFiltering() {
+
+        if ($("#filterProcessing").prop("checked")) {
+            $(".Matureprotein").show();
+            $(".Initiatormeth").show();
+            filterOptions.processing = true;
+        }
+        else {
+            $(".Matureprotein").hide();
+            $(".Initiatormeth").hide();
+            filterOptions.processing = false;
+        }
+        if ($("#filterSite").prop("checked")) {
+            $(".Activesite").show();
+            $(".Site").show();
+            $(".Metalbinding").show();
+            filterOptions.site = true;
+        }
+        else {
+            $(".Activesite").hide();
+            $(".Site").hide();
+            $(".Metalbinding").hide();
+            filterOptions.site = true;
+        }
+        if ($("#filterResidue").prop("checked")) {
+            $(".Modifiedresidue").show();
+            $(".Cross-link").show();
+            $(".Glycosylation").show();
+            filterOptions.residue = true;
+        }
+        else {
+            $(".Modifiedresidue").hide();
+            $(".Cross-link").hide();
+            $(".Glycosylation").hide();
+            filterOptions.residue = false;
+        }
+        if ($("#filterVariant").prop("checked")) {
+            $(".Variant").show();
+            filterOptions.variant = true;
+        }
+        else {
+            $(".Variant").hide();
+            filterOptions.variant = false;
+        }
+        if ($("#filterRegion").prop("checked")) {
+            $(".Interactingregion").show();
+            filterOptions.region = true;
+        }
+        else {
+            $(".Interactingregion").hide();
+            filterOptions.region = false;
+        }
     }
 
     $(function () {
