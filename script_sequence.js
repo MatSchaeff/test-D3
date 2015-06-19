@@ -73,10 +73,12 @@
             adjustHeight("#seqViewer","#featuresTable");
             featureSelection();
             inverseSelection();
+        },
+        reloadSVG: function(isoID) {
+            $(".chart").html("");
+            createSVG(isoforms,isoID);
+            addFeatures(isoID);
         }
-        // applyFilters: function() {
-
-        // }
     };
 
     function createSVG(sequences,isoName) {
@@ -355,6 +357,7 @@
                 }
             }
             applyFiltering();
+            getInfoForIsoform.reloadSVG(isoName);
 
         });
 
@@ -405,7 +408,7 @@
             $(".Activesite").hide();
             $(".Site").hide();
             $(".Metalbinding").hide();
-            filterOptions.site = true;
+            filterOptions.site = false;
         }
         if ($("#filterResidue").prop("checked")) {
             $(".Modifiedresidue").show();

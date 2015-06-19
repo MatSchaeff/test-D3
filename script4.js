@@ -226,6 +226,9 @@
                 if (length === 1) return this.start;
                 else return this.start + " - " + this.end;
         });
+        Handlebars.registerHelper('className', function (category, options) {
+            return category.replace(' ','');
+        });
         var datas = {
                 features: features,
                 featuresLength: number

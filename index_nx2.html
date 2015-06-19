@@ -188,7 +188,7 @@
                                 <span style="font-size: 28px;">G</span>ene
                             </a></h4>
                     </div>
-                    <div id="collapse2" class="panel-collapse collapse menu-content in">
+                    <div id="collapse2" class="panel-collapse collapse menu-content">
                         <div class="panel-body" style="padding:0px">
                             <ul class="nav nav-stacked gene-menu">
                                 <li><a href="javascript:void(0)" data-toggle="tab">Exons</a></li>
@@ -204,7 +204,7 @@
                                 <span style="font-size: 28px;">R</span>eferences
                             </a></h4>
                     </div>
-                    <div id="collapse3" class="panel-collapse collapse menu-content in">
+                    <div id="collapse3" class="panel-collapse collapse menu-content">
                         <div class="panel-body" style="padding:0px">
                             <ul class="nav nav-stacked ref-menu">
                                 <li><a href="javascript:void(0)" data-toggle="tab">Curated publications</a></li>
@@ -246,7 +246,7 @@
         </div>
     </div>
 </div>
-<footer class="container text-center small">
+<div class="container text-center small">
     <hr style="margin-top: 0px;margin-bottom:10px"/>
     <div class="row">
         <div class="col-lg-12">
@@ -281,13 +281,13 @@
         </div>
     </div>
     <hr style="margin-top:10px;margin-bottom:0px"/>
-</footer>
+</div>
 </body>
 <script>
     var entry2 = $(location).attr('search');
     var entry = entry2.substr(entry2.indexOf("=") + 1);
     console.log(entry);
-    $("#iframeView").attr("src", "sequence.html?nxentry=" + entry);
+    $("#iframeView").attr("src", "index_nx3.html?nxentry=" + entry);
     $("#tabSequence").click(function () {
         $("#iframeView").attr("src", "sequence.html?nxentry=" + entry);
     });
