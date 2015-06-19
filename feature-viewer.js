@@ -145,9 +145,9 @@ function FeatureViewer(sequence, div,options) {
 
 
     //Init box & scaling
-    var margin = {top: 20, right: 20, bottom: 60, left: 100},
+    var margin = {top: 10, right: 20, bottom: -60, left: 100},
         width = $(div).width() - margin.left - margin.right - 17,
-        height = 500 - margin.top - margin.bottom;
+        height = 100 - margin.top - margin.bottom;
     var scaling = d3.scale.linear()
         .domain([0, sequence.length-1])
         .range([0, width]);
@@ -244,7 +244,7 @@ function FeatureViewer(sequence, div,options) {
     }
     function updateSVGHeight(position) {
         console.log("blblblbblbl");
-        svg.attr("height", position+80 +"px")
+        svg.attr("height", position+60 +"px")
     }
     var yAxisScale = d3.scale.ordinal()
         .domain([0, yData.length])

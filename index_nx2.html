@@ -287,12 +287,12 @@
     var entry2 = $(location).attr('search');
     var entry = entry2.substr(entry2.indexOf("=") + 1);
     console.log(entry);
-    $("#iframeView").attr("src", "index_nx3.html?nxentry=" + entry);
+    $("#iframeView").attr("src", "proteomics.html?nxentry=" + entry);
     $("#tabSequence").click(function () {
         $("#iframeView").attr("src", "sequence.html?nxentry=" + entry);
     });
     $("#tabProteomics").click(function () {
-        $("#iframeView").attr("src", "index_nx3.html?nxentry=" + entry);
+        $("#iframeView").attr("src", "proteomics.html?nxentry=" + entry);
     })
 </script>
 <!-- Footer

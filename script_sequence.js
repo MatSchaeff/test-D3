@@ -69,6 +69,7 @@
             createSVG(isoforms,isoID);
             addFeatures(isoID);
             fillTable(isoID);
+            applyFiltering();
             adjustHeight(".left-side",".right-side");
             adjustHeight("#seqViewer","#featuresTable");
             featureSelection();
@@ -78,6 +79,8 @@
             $(".chart").html("");
             createSVG(isoforms,isoID);
             addFeatures(isoID);
+            featureSelection();
+            inverseSelection();
         }
     };
 
@@ -257,14 +260,12 @@
         if ($("#featuresTable").length > 0) {
             var number = 0;
             var features = [];
-            console.log(featuresByIsoform);
             featuresByIsoform.forEach( function (d) { if (d.hasOwnProperty(isoName)) features.push(d[isoName])});
             for (feat in featuresByIsoform) if(featuresByIsoform[feat].hasOwnProperty(isoName)) number += featuresByIsoform[feat][isoName].length;
         Handlebars.registerHelper('position', function (length, options) {
                 if (length === 1) return this.start;
                 else return this.start + " - " + this.end;
         });
-
         Handlebars.registerHelper('className', function (category, options) {
             return category.replace(' ','');
         });
@@ -318,25 +319,6 @@
         })
     }
     function toggleFiltering() {
-        //$("#allFilters").on("change", function() {
-        //    var checked = $(this).prop("checked");
-        //
-        //    $(this).parents("#filtering")
-        //        .first()
-        //        .find("input[type=checkbox]")
-        //        .prop("checked", checked);
-        //    if (checked === false) {
-        //        for(var key in filterOptions) {
-        //            filterOptions[key] = false;
-        //        }
-        //    }
-        //    else {
-        //        for(var key in filterOptions) {
-        //            filterOptions[key] = true;
-        //        }
-        //    }
-        //    // getInfoForIsoform.reload
-        //});
         $("#filtering input:checkbox").on("change", function() {
             if ($(this)[0] === $("#allFilters")[0]) {
                 var checked = $(this).prop("checked");
@@ -360,31 +342,6 @@
             getInfoForIsoform.reloadSVG(isoName);
 
         });
-
-        //$("#filterProcessing").on("change", function() {
-        //    console.log("click listened");
-        //    var checked = $(this).prop("checked");
-        //    if (checked === false) {
-        //        $(".Matureprotein").hide();
-        //        $(".Initiatormeth").hide();
-        //        console.log("should hide ?");
-        //    }
-        //    else {
-        //        $(".Matureprotein").show();
-        //        $(".Initiatormeth").show();
-        //    }
-        //})
-        //$("#filterRegion").on("change", function() {
-        //    console.log("click listened");
-        //    var checked = $(this).prop("checked");
-        //    if (checked === false) {
-        //        $(".Interactingregion").hide();
-        //        console.log("should hide ?");
-        //    }
-        //    else {
-        //        $(".Interactingregion").show();
-        //    }
-        //})
     }
     function applyFiltering() {
 

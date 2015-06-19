@@ -12,6 +12,13 @@
     var featuresByIsoform = [];
 	var featuresForViewer= [];
     var selectedRect;
+    var filterOptions = {
+        processing: true,
+        region: true,
+        site: true,
+        residue: true,
+        variant:true
+    };
 
     function nxIsoformChoice(isoforms) {
         if ($("#nx-isoformChoice").length > 0) {
@@ -46,22 +53,32 @@
 
     var getInfoForIsoform = {
         isoform: function () {
-            $(".isoformNames").click(getInfoForIsoform.reload);
+            $(".isoformNames").click(function () {
+                isoName = $(this).text();
+                getInfoForIsoform.reload(isoName);
+            });
             $("#moreIsoforms a").click(function () {
                 var parentThis = $(this).text();
                 console.log(parentThis);
                 $("#extendIsoformChoice").text(parentThis);
             });
         },
-        reload: function (event) {
-            var isoID = $(this).text();
+        reload: function (isoID) {
             console.log(isoID);
             $(".chart").html("");
             createSVG(isoforms,isoID);
             addFeatures(isoID);
             fillTable(isoID);
+            applyFiltering();
             adjustHeight(".left-side",".right-side");
             adjustHeight("#seqViewer","#featuresTable");
+            featureSelection();
+            inverseSelection();
+        },
+        reloadSVG: function(isoID) {
+            $(".chart").html("");
+            createSVG(isoforms,isoID);
+            addFeatures(isoID);
             featureSelection();
             inverseSelection();
         }
@@ -92,7 +109,7 @@
         for (var i=0;i<featuresForViewer.length;i++) {
         	switch(i) {
         		case 0:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.processing) {
 			            ft.addFeature({
 			                data: featuresForViewer[i][isoName],
 			                name: "Propeptide",
@@ -103,7 +120,7 @@
 			        }
 			        break;
         		case 1:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.processing) {
 			        	console.log(featuresForViewer[i][isoName]);
 			            ft.addFeature({
 			                data: featuresForViewer[i][isoName],
@@ -115,7 +132,7 @@
 			        }
 			        break;
         		case 2:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.processing) {
 			            ft.addFeature({
 			                data: featuresForViewer[i][isoName],
 			                name: "Signal peptide",
@@ -126,7 +143,7 @@
 			        }
 			        break;
         		case 3:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.residue) {
 			            ft.addFeature({
 			                data: featuresForViewer[i][isoName],
 			                name: "Disulfide bond",
@@ -148,7 +165,7 @@
 			        }
 			        break;
         		case 5:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.processing) {
 			            ft.addFeature({
 			                data: featuresForViewer[i][isoName],
 			                name: "Initiator meth",
@@ -159,7 +176,7 @@
 			        }
 			        break;
         		case 6:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.residue) {
 			            ft.addFeature({
 			                data: featuresForViewer[i][isoName],
 			                name: "Modified residue",
@@ -170,7 +187,7 @@
 			        }
 			        break;
         		case 7:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.residue) {
 			            ft.addFeature({
 			                data: featuresForViewer[i][isoName],
 			                name: "Cross-link",
@@ -181,7 +198,7 @@
 			        }
 			        break;
         		case 8:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.residue) {
 			            ft.addFeature({
 			                data: featuresForViewer[i][isoName],
 			                name: "Glycosylation",
@@ -278,6 +295,60 @@
             $("#scroller").animate({scrollTop: scrollingLength2}, 1000);
         })
     }
+    function toggleFiltering() {
+        $("#filtering input:checkbox").on("change", function() {
+            if ($(this)[0] === $("#allFilters")[0]) {
+                var checked = $(this).prop("checked");
+
+                $(this).parents("#filtering")
+                    .first()
+                    .find("input[type=checkbox]")
+                    .prop("checked", checked);
+                if (checked === false) {
+                    for(var key in filterOptions) {
+                        filterOptions[key] = false;
+                    }
+                }
+                else {
+                    for(var key in filterOptions) {
+                        filterOptions[key] = true;
+                    }
+                }
+            }
+            applyFiltering();
+            getInfoForIsoform.reloadSVG(isoName);
+
+        });
+    }
+    function applyFiltering() {
+
+        if ($("#filterProcessing").prop("checked")) {
+            $(".Propeptide").show();
+            $(".Matureprotein").show();
+            $(".Initiatormeth").show();
+            filterOptions.processing = true;
+        }
+        else {
+            $(".Propeptide").hide();
+            $(".Matureprotein").hide();
+            $(".Initiatormeth").hide();
+            filterOptions.processing = false;
+        }
+        if ($("#filterResidue").prop("checked")) {
+            $(".Modifiedresidue").show();
+            $(".Disulfidebond").show();
+            $(".Cross-link").show();
+            $(".Glycosylation").show();
+            filterOptions.residue = true;
+        }
+        else {
+            $(".Modifiedresidue").hide();
+            $(".Disulfidebond").hide();
+            $(".Cross-link").hide();
+            $(".Glycosylation").hide();
+            filterOptions.residue = false;
+        }
+    }
 
     $(function () {
         var startTime = new Date().getTime();
@@ -309,6 +380,7 @@
             adjustHeight("#seqViewer","#featuresTable");
             featureSelection();
             inverseSelection();
+            toggleFiltering();
 
             var endTime = new Date().getTime();
             var time = endTime - startTime;
