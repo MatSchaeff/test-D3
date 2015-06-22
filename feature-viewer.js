@@ -13,11 +13,25 @@ function FeatureViewer(sequence, div,options) {
     var svgContainer;
     var yData = [];
     var yAxisSVG;
+    var yAxisSVGgroup;
     var Yposition = 20;
     var level=0;
     var seqShift=0;
+    var zoom = false;
+
+    //Init box & scaling
+    var margin = {top: 10, right: 20, bottom: -60, left: 100},
+        width = $(div).width() - margin.left - margin.right - 17,
+        height = 100 - margin.top - margin.bottom;
+    var scaling = d3.scale.linear()
+        .domain([0, sequence.length-1])
+        .range([0, width]);
+    var scalingPosition = d3.scale.linear()
+        .domain([0, width])
+        .range([0, sequence.length-1]);
 
     d3.helper = {};
+    console.log(width);
 
     d3.helper.tooltip = function(object){
         var tooltipDiv;
@@ -30,12 +44,21 @@ function FeatureViewer(sequence, div,options) {
                 // Clean up lost tooltips
                 d3.select('body').selectAll('div.tooltip').remove();
                 // Append tooltip
-                tooltipDiv = d3.select(div)
-                               .append('div')
-                               .attr('class', 'tooltip2');
                 var absoluteMousePos = d3.mouse(bodyNode);
+                var rightside = (absoluteMousePos[0] > width );
+                if (rightside) {
+                    tooltipDiv = d3.select(div)
+                        .append('div')
+                        .attr('class', 'tooltip3');
+                }
+                else {
+                    tooltipDiv = d3.select(div)
+                                   .append('div')
+                                   .attr('class', 'tooltip2');
+                    tooltipDiv.style({
+                        left: (absoluteMousePos[0]-15)+'px'});
+                }
                 tooltipDiv.style({
-                    left: (absoluteMousePos[0]-15)+'px',
                     top: (absoluteMousePos[1]-55)+'px',
                     'background-color': 'rgba(0, 0, 0, 0.8)',
                     width: 'auto',
@@ -64,15 +87,31 @@ function FeatureViewer(sequence, div,options) {
                     else var second_line = '';
                 }
 
-                tooltipDiv.html(first_line + second_line)
+                tooltipDiv.html(first_line + second_line);
+                if (rightside) {
+                    tooltipDiv.style({
+                        left: (absoluteMousePos[0] + 10 - (tooltipDiv.node().getBoundingClientRect().width)) + 'px'
+                    })
+                }
             })
             .on('mousemove.tooltip', function(pD, pI){
                 // Move tooltip
                 var absoluteMousePos = d3.mouse(bodyNode);
-                tooltipDiv.style({
-                    left: (absoluteMousePos[0]-15)+'px',
-                    top: (absoluteMousePos[1] - 55)+'px'
-                });
+                var rightside = (absoluteMousePos[0] > width );
+                if (rightside) {
+                    tooltipDiv.attr("class", "tooltip3");
+                    tooltipDiv.style({
+                        left: (absoluteMousePos[0] + 10 - (tooltipDiv.node().getBoundingClientRect().width)) + 'px',
+                        top: (absoluteMousePos[1] - 55)+'px'
+                    });
+                }
+                else {
+                    tooltipDiv.attr("class", "tooltip2");
+                    tooltipDiv.style({
+                        left: (absoluteMousePos[0] - 15) + 'px',
+                        top: (absoluteMousePos[1] - 55) + 'px'
+                    })
+                }
             })
             .on('mouseout.tooltip', function(pD, pI){
                 // Remove tooltip
@@ -142,15 +181,6 @@ function FeatureViewer(sequence, div,options) {
 
         return tooltip;
     };
-
-
-    //Init box & scaling
-    var margin = {top: 10, right: 20, bottom: -60, left: 100},
-        width = $(div).width() - margin.left - margin.right - 17,
-        height = 100 - margin.top - margin.bottom;
-    var scaling = d3.scale.linear()
-        .domain([0, sequence.length-1])
-        .range([0, width]);
 
     //COMPUTING FUNCTION
     var X = function (d) {
@@ -260,32 +290,39 @@ function FeatureViewer(sequence, div,options) {
         yAxisSVG = svg.append("g")
             .attr("class", "pro axis")
             .attr("transform", "translate(0," + margin.top + ")");
-        yAxisSVG
+        updateYaxis();
+    }
+    function updateYaxis() {
+
+        yAxisSVGgroup = yAxisSVG
             .selectAll(".yaxis")
             .data(yData)
             .enter()
-            .append("text")
-            .attr("class", "yaxis")
-            .attr("text-anchor", "end")
+            .append("g");
+        yAxisSVGgroup
+            .append("polygon")       // attach a polygon
+            .style("stroke", "none")  // colour the line
+            .style("fill", "rgba(95,46,38,0.2)")     // remove any fill colour
+            .attr("points", function(d) {
+                return (margin.left-15)+"," + (d.y -3) + ", "+ (margin.left-15)+"," + (d.y +12) + ", "+ (margin.left-7)+"," + (d.y +4.5);  // x,y points
+            });
+        yAxisSVGgroup
+            .append("rect")
+            .style("fill","rgba(95,46,38,0.2)")
             .attr("x", function () {
-                return margin.left - 10
+                return margin.left - 95
             })
             .attr("y", function (d) {
-                return d.y + 8
+                return d.y - 3
             })
-            .text(function (d) {
-                return d.title
-            });
-    }
-    function updateYaxis() {
-        yAxisSVG.selectAll(".yaxis")
-            .data(yData)
-            .enter()
+            .attr("width", "80")
+            .attr("height", "15");
+        yAxisSVGgroup
             .append("text")
             .attr("class", "yaxis")
             .attr("text-anchor", "end")
             .attr("x", function () {
-                return margin.left - 10
+                return margin.left - 20
             })
             .attr("y", function (d) {
                 return d.y + 8
@@ -577,7 +614,9 @@ function FeatureViewer(sequence, div,options) {
         else var start = parseInt(extent[1] + 1), end = parseInt(extent[0] - 1);
 
         var seq = displaySequence(extentLength);
-        if (!brush.empty() && extentLength > 5) {
+        if (!brush.empty() && extentLength > 50) {
+            var zoomScale = (sequence.length / extentLength).toFixed(2);
+            $(".zoomUnit").text(zoomScale.toString());
 
             if (SVGOptions.showSequence && seq && svgContainer.selectAll(".AA").empty()) {
                 seqShift = start;
@@ -586,6 +625,7 @@ function FeatureViewer(sequence, div,options) {
 
             //modify scale
             scaling.domain(extent);
+            scalingPosition.range(extent);
 
 
             transition_data(features,seqShift);
@@ -604,7 +644,10 @@ function FeatureViewer(sequence, div,options) {
     function resetAll() {
 
         //reset scale
+
+        $(".zoomUnit").text("1");
         scaling.domain([0, sequence.length-1]);
+        scalingPosition.range([0, sequence.length-1]);
         var seq = displaySequence(sequence.length);
 
         if (seq === false && !svgContainer.selectAll(".AA").empty()) svgContainer.selectAll(".seqGroup").remove();
@@ -721,11 +764,75 @@ function FeatureViewer(sequence, div,options) {
                 'verticalLine':false
             }
         }
+
         d3.select(div)
             .style("position","relative")
             .style("padding","0px")
             .style("z-index","2");
         // Create SVG
+        var headerOptions = d3.select(div).append("div")
+            .attr("class","row")
+            .style("margin", "10px 20px 0px");
+        var headerZoom = headerOptions
+            .append("div")
+            .attr("class","panel panel-default")
+            .style("display", "inline-block")
+            .style("width","150px")
+            .style("margin", "0px")
+            .style("padding", "0px");
+        headerZoom
+            .append("div")
+            .attr("class","panel-heading")
+            .style("padding", "0px 15px")
+            .style("border-right", "1px solid #DDD")
+            .style("display", "inline-block")
+            .style("width", "80px")
+            .append("h5")
+            .style("padding", "0px")
+            .style("height", "10px")
+            .style("color", "#777")
+            .text("ZOOM");
+        headerZoom
+            .append("div")
+            .attr("class","panel-body")
+            .style("display", "inline-block")
+            .style("padding", "0px")
+            .append("h5")
+            .style("padding-left","15px")
+            .style("height", "10px")
+            .text("x ")
+            .append("span")
+            .attr("class","zoomUnit")
+            .text("1");
+        var headerPosition = headerOptions
+            .append("div")
+            .attr("class","panel panel-default pull-right")
+            .style("display", "inline-block")
+            .style("width","175px")
+            .style("margin", "0px")
+            .style("padding", "0px");
+        headerPosition
+            .append("div")
+            .attr("class","panel-heading")
+            .style("padding", "0px 15px")
+            .style("border-right", "1px solid #DDD")
+            .style("display", "inline-block")
+            .append("h5")
+            .style("padding", "0px")
+            .style("height", "10px")
+            .style("color", "#777")
+            .text("POSITION");
+        headerPosition
+            .append("div")
+            .attr("class","panel-body")
+            .style("display", "inline-block")
+            .style("padding", "0px")
+            .append("h5")
+            .style("padding-left","15px")
+            .style("height", "10px")
+            .append("span")
+            .attr("id","zoomPosition")
+            .text("0");
         svg = d3.select(div).append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -735,6 +842,7 @@ function FeatureViewer(sequence, div,options) {
                 resetAll();
                 // react on right-clicking
             });
+
         svgContainer = svg
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -745,6 +853,11 @@ function FeatureViewer(sequence, div,options) {
             .append("rect")
             .attr("width", width)
             .attr("height", height);
+
+        svgContainer.on('mousemove', function() {
+            var absoluteMousePos = d3.mouse(d3.select(".background").node());
+            $("#zoomPosition").text(Math.round(scalingPosition(absoluteMousePos[0])));
+        });
 
         if (options.showSequence) {
             SVGOptions.showSequence=true;
@@ -758,12 +871,14 @@ function FeatureViewer(sequence, div,options) {
         addYAxis();
         if (options.brushActive) {
             SVGOptions.brushActive = true;
+            zoom = true;
             addBrush();
         }
         if (options.verticalLine) {
             SVGOptions.verticalLine = true;
             addVerticalLine();
         }
+
     }
     initSVG(div,options);
     function addFeature(object) {
@@ -778,6 +893,7 @@ function FeatureViewer(sequence, div,options) {
                 .attr('height', Yposition+50);
         }
         if (SVGOptions.verticalLine) d3.selectAll(".Vline").style("height",(Yposition+50)+"px");
+
 
     }
 

@@ -285,7 +285,7 @@
             seqView.selection(featPos[0],featPos[1],"#C50063");
             $(".tableHighlight").removeClass("tableHighlight");
             $("#"+featSelected).addClass("tableHighlight");
-            var ElementTop = $("#"+featSelected).position().top-60;
+            var ElementTop = $("#"+featSelected).position().top-70;
             var scrollPosition = $("#featTableScroller").scrollTop();
             var scrollingLength = ElementTop + scrollPosition;
             $("#featTableScroller").animate({scrollTop: scrollingLength}, 1000);
