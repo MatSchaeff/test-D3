@@ -350,49 +350,49 @@
             filterOptions.residue = false;
         }
     }
-    function mappingIsoformByExons(mapping) {
-        var minForEach = [];
-        var max = 0;
-        for (iso in mapping) {
-            minForEach.push(0);
-            console.log(mapping[iso].mapping.length);
-            if (mapping[iso].mapping.length > max) max = mapping[iso].mapping.length;
-        }
-        console.log("max length" + max);
-        for (var i=0;i<max;i++) {
-            var min=-1;
-            for (iso in mapping) {
-                if ()
-            }
-        }
-
-        2:1,2,3
-        4:1,2,3
-        6:1,2,3
-        9:1,3
-        12:2
-        14:1,2,3
-
-        1-9:1,2,3
-        9-12:2
-        12-14
-
-        2 = = = = = 4|6 = = = = 9 =12,14= = = = = =17,19= = =28 =33 = = = =34 = = = 37
-        a = = = = = a|a = = = = a = a a = = = = = = a = a = = = a = a = = = = a = = = a
-        =======|======  ===========     ==========
-        =======|===================   ========
-        =======|======  =========       ======
-        var a = [[2,4],[6,9],[14,19],[33,37]]
-        var b = [[2,4],[6,12],[14,19],[28,34]]
-        var c = [[2,4],[6,9],[14,17],[33,34]]
-        // for (iso in mapping) {
-        //     for (var i=0;i<mapping[iso].mapping.length;i++) {
-        //         for (iso in mapping) {
-        //             for (var i=0;i<mapping[iso].mapping.length;i++) {
-        //     }
-        // }
-
-    }
+    //function mappingIsoformByExons(mapping) {
+    //    var minForEach = [];
+    //    var max = 0;
+    //    for (iso in mapping) {
+    //        minForEach.push(0);
+    //        console.log(mapping[iso].mapping.length);
+    //        if (mapping[iso].mapping.length > max) max = mapping[iso].mapping.length;
+    //    }
+    //    console.log("max length" + max);
+    //    for (var i=0;i<max;i++) {
+    //        var min=-1;
+    //        for (iso in mapping) {
+    //            if ()
+    //        }
+    //    }
+    //
+    //    2:1,2,3
+    //    4:1,2,3
+    //    6:1,2,3
+    //    9:1,3
+    //    12:2
+    //    14:1,2,3
+    //
+    //    1-9:1,2,3
+    //    9-12:2
+    //    12-14
+    //
+    //    2 = = = = = 4|6 = = = = 9 =12,14= = = = = =17,19= = =28 =33 = = = =34 = = = 37
+    //    a = = = = = a|a = = = = a = a a = = = = = = a = a = = = a = a = = = = a = = = a
+    //    =======|======  ===========     ==========
+    //    =======|===================   ========
+    //    =======|======  =========       ======
+    //    var a = [[2,4],[6,9],[14,19],[33,37]]
+    //    var b = [[2,4],[6,12],[14,19],[28,34]]
+    //    var c = [[2,4],[6,9],[14,17],[33,34]]
+    //    // for (iso in mapping) {
+    //    //     for (var i=0;i<mapping[iso].mapping.length;i++) {
+    //    //         for (iso in mapping) {
+    //    //             for (var i=0;i<mapping[iso].mapping.length;i++) {
+    //    //     }
+    //    // }
+    //
+    //}
 
     $(function () {
         var startTime = new Date().getTime();
@@ -418,7 +418,7 @@
             }
             genomicMappings = NXUtils.convertExonsMappingsToIsoformMap(oneData[12]);
             console.log(genomicMappings);
-            mappingIsoformByExons(genomicMappings);
+            //mappingIsoformByExons(genomicMappings);
 
 
 
