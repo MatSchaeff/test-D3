@@ -38,9 +38,9 @@ function Sequence(sequence) {
             "sequenceLength": sequence.length
         });
         $(divId).html(html);
-        //console.log($(divId + #fastaSeq').text());
 
         if(!(options.wrapAminoAcids === false)) {
+            console.log($('#fastaSeq').html());
             sequenceLayout(divId +" #fastaSeq");
         }
         else $(divId +" #scroller").css("overflow-x","auto");
@@ -125,7 +125,7 @@ function Sequence(sequence) {
         console.log('Time to execute all: ', (timeend - timestart));
     }
 
-    var lineNumbers = function(textAreaID,lineNumberID){
+    function lineNumbers(textAreaID,lineNumberID){
         var textContent = $(textAreaID).html().split("<br>");
         var NBC = parseInt($(textAreaID).attr("display-option"));
         var newTextContent = [];
@@ -138,10 +138,14 @@ function Sequence(sequence) {
 
     };
 
-    var sequenceLayout = function(textAreaID){
+    function sequenceLayout(textAreaID){
 
         var newLines = parseInt($(textAreaID).attr("display-option"));
         newLines = (newLines+(newLines/10)).toString();
+        console.log(textAreaID);
+        console.log($(textAreaID));
+        console.log($(textAreaID).text());
+        console.log($("#fastaSeq").text());
         var seqFormat = $(textAreaID).html();
         seqFormat = seqFormat.toString().match(/.{1,10}/g).join(' ').match(new RegExp('.{1,'+newLines+'}','g')).join('<br>');
 
