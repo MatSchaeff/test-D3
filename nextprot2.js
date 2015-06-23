@@ -233,6 +233,12 @@
             });
         };
 
+        NextprotClient.prototype.getExons = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "genomic-mapping").then(function (data){
+                return data.entry.genomicMappings[0].isoformMappings;
+            });
+        };
+
 
         //node.js compatibility
         if (typeof exports !== 'undefined') {
@@ -372,6 +378,17 @@ var NXUtils = {
         }
         console.log(result);
         return result;
+    },
+    convertExonsMappingsToIsoformMap:function (mappings) {
+        return mappings.map( function (d) {
+            return {
+                uniqueName: d.uniqueName,
+                isoMainName: d.isoMainName,
+                mapping: d.positionsOfIsoformOnReferencedGene.map(function (o) {
+                    return {start:o.key,end:o.value};
+                })
+            }
+        })
     }
 };
 
