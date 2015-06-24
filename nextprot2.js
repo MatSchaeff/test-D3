@@ -376,7 +376,6 @@ var NXUtils = {
                 return a.start - b.start;
             })
         }
-        console.log(result);
         return result;
     },
     convertExonsMappingsToIsoformMap:function (mappings) {
