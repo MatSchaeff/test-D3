@@ -95,13 +95,15 @@
                     brushActive: true,
                     verticalLine: false
                 });
-                seqView = new Sequence(currentSeq);
+                seqView = new Sequence(currentSeq,isoName);
                 seqView.render('#seqViewer', {
                     'showLineNumbers': true,
                     'wrapAminoAcids': true,
                     'charsPerLine': 50,
-                    'search':true
+                    'search':true,
+                    'toolbar':true
                 });
+
 
             }
         });

@@ -98,7 +98,9 @@
                 seqView.render('#seqViewer', {
                     'showLineNumbers': true,
                     'wrapAminoAcids': true,
-                    'charsPerLine': 50
+                    'charsPerLine': 50,
+                    'search':true,
+                    'toolbar':true
                 });
 
             }
