@@ -65,8 +65,8 @@ function Sequence(sequence,isoformName) {
             if (isoName !== "") {
                 $("#sequenceToolbar").append(
                     "<a class=\"btn btn-default\" href=\"http://www.nextprot.org/db/entry/" + isoName.split("-")[0] + "/fasta?isoform=" + isoName.slice(3) + "\" style=\"margin-left:20px;\">view Fasta</a>" +
-                    "<a class=\"btn btn-default\" href=\"\" style=\"margin-left:20px;\">Blast sequence</a>" +
-                    "<a class=\"btn btn-default\" href=\"\" style=\"margin-left:20px;\">Blast selection</a>"
+                    "<a class=\"btn btn-default disabled\" href=\"\" style=\"margin-left:20px;\">Blast sequence</a>" +
+                    "<a class=\"btn btn-default disabled\" href=\"\" style=\"margin-left:20px;\">Blast selection</a>"
                 );
             }
         }

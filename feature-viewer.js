@@ -140,7 +140,12 @@ function FeatureViewer(sequence, div,options) {
                         xTemp= pD.x;
                         yTemp= pD.y;
                     }
-                    if (scaling(xTemp) < 0) {
+
+                    if (scaling(xTemp) < 0 && scaling(yTemp) > svgWidth) {
+                        xRect = margin.left;
+                        widthRect=svgWidth;
+                    }
+                    else if (scaling(xTemp) < 0) {
                         xRect = margin.left;
                         widthRect=(scaling(yTemp));
                     }
@@ -415,6 +420,7 @@ function FeatureViewer(sequence, div,options) {
         rectangle: function (object, sequence, position) {
             var rectsPro = svgContainer.append("g")
                 .attr("class", "rectangle")
+                .attr("clip-path", "url(#clip)")
                 .attr("transform", "translate(0," + position + ")");
 
             rectsPro.append("path")
@@ -426,21 +432,56 @@ function FeatureViewer(sequence, div,options) {
                 .style("stroke", object.color)
                 .style("stroke-width", "1px");
 
-            rectsPro.selectAll("." + object.className)
+            var rectsProGroup = rectsPro.selectAll("." + object.className + "Group")
                 .data(object.data)
                 .enter()
+                .append("g")
+                .attr("class", object.className + "Group")
+                .attr("transform", function(d) { return "translate(" + scaling(d.x) + ",0)"});
+
+            rectsProGroup
                 .append("rect")
-                .attr("clip-path", "url(#clip)")
                 .attr("class", "element "+object.className)
                 .attr("id", function(d) { return "f"+d.id })
-                .attr("x", X)
                 .attr("width", rectWidth)
                 .attr("height", 12)
                 .style("fill", object.color)
                 .style("z-index", "13")
                 .call(d3.helper.tooltip(object));
 
-            forcePropagation(rectsPro);
+            rectsProGroup
+                .append("text")
+                .attr("class", "element "+object.className + "Text")
+                .attr("y", 6)
+                .attr("dy", "0.35em")
+                .style("font-size", "10px")
+                .text(function(d) { return d.description})
+                .style("fill", "black")
+                .style("z-index", "15")
+                .style("visibility", function(d) {
+                    if (d.description) {
+                    return (scaling(d.y) - scaling(d.x)) > d.description.length * 8 ? "visible" : "hidden";
+                    }
+                    else return "hidden";
+                })
+                .call(d3.helper.tooltip(object));
+
+
+            //rectsPro.selectAll("." + object.className)
+            //    .data(object.data)
+            //    .enter()
+            //    .append("rect")
+            //    .attr("clip-path", "url(#clip)")
+            //    .attr("class", "element "+object.className)
+            //    .attr("id", function(d) { return "f"+d.id })
+            //    .attr("x", X)
+            //    .attr("width", rectWidth)
+            //    .attr("height", 12)
+            //    .style("fill", object.color)
+            //    .style("z-index", "13")
+            //    .call(d3.helper.tooltip(object));
+
+            forcePropagation(rectsProGroup);
         },
         unique: function (object, sequence, position) {
             var rectsPro = svgContainer.append("g")
@@ -539,6 +580,23 @@ function FeatureViewer(sequence, div,options) {
 
     var transition = {
         rectangle: function (object) {
+            svgContainer.selectAll("." + object.className + "Group")
+                .data(object.data)
+                .attr("transform", function(d) { return "translate(" + scaling(d.x) + ",0)"});
+
+            svgContainer.selectAll("." + object.className)
+                .attr("width", function (d) {
+                    return scaling(d.y) - scaling(d.x)
+                });
+            svgContainer.selectAll("." + object.className + "Text")
+                .style("visibility", function(d) {
+                    if (d.description) {
+                        return (scaling(d.y) - scaling(d.x)) > d.description.length * 8 ? "visible" : "hidden";
+                    }
+                    else return "hidden";
+                });
+        },
+        multiRec : function (object) {
             svgContainer.selectAll("." + object.className)
                 .data(object.data)
                 //.transition()
@@ -614,7 +672,7 @@ function FeatureViewer(sequence, div,options) {
         else var start = parseInt(extent[1] + 1), end = parseInt(extent[0] - 1);
 
         var seq = displaySequence(extentLength);
-        if (!brush.empty() && extentLength > 50) {
+        if (!brush.empty() && extentLength > 5) {
             var zoomScale = (sequence.length / extentLength).toFixed(2);
             $(".zoomUnit").text(zoomScale.toString());
 
@@ -658,8 +716,11 @@ function FeatureViewer(sequence, div,options) {
 
     function transition_data(features,start) {
         features.forEach(function (o) {
-            if (o.type === "rect" || o.type === "multipleRect") {
+            if (o.type === "rect") {
                 transition.rectangle(o);
+            }
+            else if (o.type === "multipleRect") {
+                transition.multiRec(o);
             }
             else if (o.type === "unique") {
                 transition.unique(o);

@@ -9,8 +9,8 @@
         <thead>
         <tr>
             <th class="featName" class="col-md-2">Name</th>
+            <th data-sort="int" class="col-md-1"  style="text-align:right">Length</th>
             <th data-sort="int" style="text-align:center" class="col-md-2">Position</th>
-            <th data-sort="int" class="col-md-1">Length</th>
             <th data-sort="string" class="col-md-5">Description</th>
             <th data-sort="string" colspan="2" class="col-md-2">Evidence</th>
         </tr>
@@ -20,8 +20,8 @@
         {{#each this}}
         <tr id={{id}} class="{{{className category}}}" >
             <td>{{category}}</td>
+            <td style="text-align:right">{{length}}</td>
             <td style="text-align:center"><a class="featPosition" href="javascript:;">{{{position length}}}</a></td>
-            <td>{{length}}</td>
             <td>{{{link}}}</td>
             <td><span style="background:#7CBA0F;padding:3px 7px;color:white;vertical-align: top">{{evidenceLength}}</span></td>
             <td>
