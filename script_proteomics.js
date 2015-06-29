@@ -18,7 +18,8 @@
         region: true,
         site: true,
         residue: true,
-        variant:true
+        variant:true,
+        none:true
     };
 
     function nxIsoformChoice(isoforms) {
@@ -111,130 +112,10 @@
 
     function addFeatures(isoName) {
         for (var i=0;i<featuresForViewer.length;i++) {
-        	switch(i) {
-        		case 0:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.processing) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Propeptide",
-			                className: "pro",
-			                color: "#B3B3B3",
-			                type: "rect"
-			            });
-			        }
-			        break;
-        		case 1:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.processing) {
-			        	console.log(featuresForViewer[i][isoName]);
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Mature protein",
-			                className: "mat",
-			                color: "#B3B3C2",
-			                type: "rect"
-			            });
-			        }
-			        break;
-        		case 2:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.processing) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Signal peptide",
-			                className: "sign",
-			                color: "#B3B3E1",
-			                type: "rect"
-			            });
-			        }
-			        break;
-        		case 3:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.residue) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Disulfide bond",
-			                className: "dsB",
-			                color: "#B3B3E1",
-			                type: "path"
-			            });
-			        }
-			        break;
-        		case 4:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Antibody",
-			                className: "anti",
-			                color: "#B3C2F0",
-			                type: "rect"
-			            });
-			        }
-			        break;
-        		case 5:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.processing) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Initiator meth",
-			                className: "initMeth",
-			                color: "#B3B3D1",
-			                type: "unique"
-			            });
-			        }
-			        break;
-        		case 6:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.residue) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Modified residue",
-			                className: "modifRes",
-			                color: "#B3C2B3",
-			                type: "unique"
-			            });
-			        }
-			        break;
-        		case 7:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.residue) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Cross-link",
-			                className: "crossLink",
-			                color: "#B3C2C2",
-			                type: "unique"
-			            });
-			        }
-			        break;
-        		case 8:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.residue) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Glycosylation",
-			                className: "glycoSite",
-			                color: "#B3C2D1",
-			                type: "unique"
-			            });
-			        }
-			        break;
-        		case 9:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Peptide",
-			                className: "pep",
-			                color: "#B3E1D1",
-			                type: "multipleRect"
-			            });
-			        }
-			        break;
-        		case 10:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Srm Peptide",
-			                className: "srmPep",
-			                color: "#B3E1F0",
-			                type: "multipleRect"
-			            });
-			        }
-    			}
-    		}
+            if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions[featuresForViewer[i][isoName].filter] === true) {
+                ft.addFeature(featuresForViewer[i][isoName]);
+            }
+        }
     }
 
     function fillTable(isoName) {
@@ -338,6 +219,18 @@
             $(".Initiatormeth").hide();
             filterOptions.processing = false;
         }
+        if ($("#filterSite").prop("checked")) {
+            $(".Activesite").show();
+            $(".Site").show();
+            $(".Metalbinding").show();
+            filterOptions.site = true;
+        }
+        else {
+            $(".Activesite").hide();
+            $(".Site").hide();
+            $(".Metalbinding").hide();
+            filterOptions.site = false;
+        }
         if ($("#filterResidue").prop("checked")) {
             $(".Modifiedresidue").show();
             $(".Disulfidebond").show();
@@ -351,6 +244,22 @@
             $(".Cross-link").hide();
             $(".Glycosylation").hide();
             filterOptions.residue = false;
+        }
+        if ($("#filterVariant").prop("checked")) {
+            $(".Variant").show();
+            filterOptions.variant = true;
+        }
+        else {
+            $(".Variant").hide();
+            filterOptions.variant = false;
+        }
+        if ($("#filterRegion").prop("checked")) {
+            $(".Interactingregion").show();
+            filterOptions.region = true;
+        }
+        else {
+            $(".Interactingregion").hide();
+            filterOptions.region = false;
         }
     }
     //function mappingIsoformByExons(mapping) {
@@ -401,7 +310,21 @@
         var startTime = new Date().getTime();
         Promise.all([nx.getProteinSequence(entry), nx.getProPeptide(entry), nx.getMatureProtein(entry), nx.getSignalPeptide(entry), nx.getDisulfideBond(entry),
             nx.getAntibody(entry), nx.getInitMeth(entry), nx.getModifResidue(entry), nx.getCrossLink(entry), nx.getGlycoSite(entry), nx.getPeptide(entry),
-            nx.getSrmPeptide(entry), nx.getExons(entry)]).then(function (oneData) {
+            nx.getSrmPeptide(entry)]).then(function (oneData) {
+
+            var featuresName = ["Sequence",         "Propeptide",             "Mature protein",          "Signal peptide",           "Disulfide bonds",
+                "Antibody",         "Initiator meth",       "Modified residue",         "Cross-link",           "Glycosylation",        "Peptide",
+                "Srm peptide"];
+
+            var metaData = [
+                {name: "Propeptide",className: "pro",color: "#B3B3B3",type: "rect",filter:"processing"},            {name: "Mature protein",className: "mat",color: "#B3B3C2",type: "rect",filter:"processing"},
+                {name: "Signal peptide",className: "sign",color: "#B3B3E1",type: "rect",filter:"processing"},       {name: "Disulfide bond",className: "dsB",color: "#B3B3E1",type: "path",filter:"residue"},
+                {name: "Antibody",className: "anti",color: "#B3C2F0",type: "rect",filter:"none"},                   {name: "Initiator meth",className: "initMeth",color: "#B3B3D1",type: "unique",filter:"processing"},
+                {name: "Modified residue",className: "modifRes",color: "#B3C2B3",type: "unique",filter:"residue"},  {name: "Cross-link",className: "crossLink",color: "#B3C2C2",type: "unique",filter:"residue"},
+                {name: "Glycosylation",className: "glycoSite",color: "#B3C2D1",type: "unique",filter:"residue"},    {name: "Peptide",className: "pep",color: "#B3E1D1",type: "multipleRect",filter:"none"},
+                {name: "Srm Peptide",className: "srmPep",color: "#B3E1F0",type: "multipleRect",filter:"none"}
+            ];
+
             var endTime2 = new Date().getTime();
             var time2 = endTime2 - startTime;
             console.log('Execution time: ' + time2);
@@ -410,17 +333,15 @@
             
 
 
-		    var featuresName = ["Sequence","Propeptide", "Mature protein", "Signal peptide", "Disulfide bonds", "Antibody", "Initiator meth", 
-		    "Modified residue","Cross-link", "Glycosylation", "Peptide", "Srm peptide"];
 
-            for (var i=1; i<oneData.length-1;i++) {
+            for (var i=1; i<oneData.length;i++) {
                 var feat = NXUtils.convertMappingsToIsoformMap(oneData[i],featuresName[i]);
                 featuresByIsoform.push(feat);
-                var featForViewer = NXViewerUtils.convertNXAnnotations(feat);
+                var featForViewer = NXViewerUtils.convertNXAnnotations(feat,metaData[i-1]);
                 featuresForViewer.push(featForViewer);
             }
-            genomicMappings = NXUtils.convertExonsMappingsToIsoformMap(oneData[12]);
-            console.log(genomicMappings);
+            //genomicMappings = NXUtils.convertExonsMappingsToIsoformMap(oneData[12]);
+            //console.log(genomicMappings);
             //mappingIsoformByExons(genomicMappings);
 
 

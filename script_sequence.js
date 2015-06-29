@@ -17,7 +17,8 @@
         region: true,
         site: true,
         residue: true,
-        variant:true
+        variant:true,
+        none: true
     };
 
     function nxIsoformChoice(isoforms) {
@@ -109,153 +110,10 @@
 
     function addFeatures(isoName) {
         for (var i=0;i<featuresForViewer.length;i++) {
-        	switch(i) {
-        		case 0:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Propeptide",
-			                className: "pro",
-			                color: "#B3B3B3",
-			                type: "rect"
-			            });
-			        }
-			        break;
-        		case 1:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.processing) {
-			        	console.log(featuresForViewer[i][isoName]);
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Mature protein",
-			                className: "mat",
-			                color: "#B3B3C2",
-			                type: "rect"
-			            });
-			        }
-			        break;
-        		case 2:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Signal peptide",
-			                className: "sign",
-			                color: "#B3B3E1",
-			                type: "rect"
-			            });
-			        }
-			        break;
-        		case 3:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Disulfide bond",
-			                className: "dsB",
-			                color: "#B3B3E1",
-			                type: "path"
-			            });
-			        }
-			        break;
-                case 4:
-                    if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.processing) {
-                        ft.addFeature({
-                            data: featuresForViewer[i][isoName],
-                            name: "Initiator meth",
-                            className: "initMeth",
-                            color: "#B3B3D1",
-                            type: "unique"
-                        });
-                    }
-                    break;
-                case 5:
-                    if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.region) {
-                        ft.addFeature({
-                            data: featuresForViewer[i][isoName],
-                            name: "Interacting region",
-                            className: "intReg",
-                            color: "#B3D1F0",
-                            type: "rect"
-                        });
-                    }
-                    break;
-        		case 6:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.residue) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Modified residue",
-			                className: "modifRes",
-			                color: "#B3C2B3",
-			                type: "unique"
-			            });
-			        }
-			        break;
-        		case 7:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.residue) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Cross-link",
-			                className: "crossLink",
-			                color: "#B3C2C2",
-			                type: "unique"
-			            });
-			        }
-			        break;
-        		case 8:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.residue) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Glycosylation",
-			                className: "glycoSite",
-			                color: "#B3C2D1",
-			                type: "unique"
-			            });
-			        }
-			        break;
-        		case 9:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.site) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Site",
-			                className: "site",
-			                color: "#B3F0E1",
-			                type: "unique"
-			            });
-			        }
-			        break;
-                case 10:
-			        if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.site) {
-			            ft.addFeature({
-			                data: featuresForViewer[i][isoName],
-			                name: "Active site",
-			                className: "actSite",
-			                color: "#B3F0F0",
-			                type: "unique"
-			            });
-			        }
-                    break;
-                case 11:
-                    if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.site) {
-                        ft.addFeature({
-                            data: featuresForViewer[i][isoName],
-                            name: "Metal binding",
-                            className: "metal",
-                            color: "#B3FFC2",
-                            type: "unique"
-                        });
-                    }
-                    break;
-                case 12:
-                    if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions.variant) {
-                        ft.addFeature({
-                            data: featuresForViewer[i][isoName],
-                            name: "Variant",
-                            className: "variant",
-                            color: "rgba(0,255,154,0.3)",
-                            type: "unique"
-                        });
-                    }
-                    break;
-    			}
-    		}
+            if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions[featuresForViewer[i][isoName].filter] === true) {
+                ft.addFeature(featuresForViewer[i][isoName]);
+            }
+        }
     }
 
     function fillTable(isoName) {
@@ -348,11 +206,13 @@
     function applyFiltering() {
 
         if ($("#filterProcessing").prop("checked")) {
+            $(".Propeptide").show();
             $(".Matureprotein").show();
             $(".Initiatormeth").show();
             filterOptions.processing = true;
         }
         else {
+            $(".Propeptide").hide();
             $(".Matureprotein").hide();
             $(".Initiatormeth").hide();
             filterOptions.processing = false;
@@ -371,12 +231,14 @@
         }
         if ($("#filterResidue").prop("checked")) {
             $(".Modifiedresidue").show();
+            $(".Disulfidebond").show();
             $(".Cross-link").show();
             $(".Glycosylation").show();
             filterOptions.residue = true;
         }
         else {
             $(".Modifiedresidue").hide();
+            $(".Disulfidebond").hide();
             $(".Cross-link").hide();
             $(".Glycosylation").hide();
             filterOptions.residue = false;
@@ -408,16 +270,25 @@
             console.log('Execution time: ' + time2);
             isoforms=oneData[0];
             nxIsoformChoice(oneData[0]);
-            
-
 
 		    var featuresName = ["Sequence","Propeptide", "Mature protein", "Signal peptide", "Disulfide bonds", "Initiator meth", "Interacting region",
 		    "Modified residue","Cross-link", "Glycosylation", "Site", "Active site", "Metal binding","Variant"];
 
+            var metaData = [
+                {name: "Propeptide",className: "pro",color: "#B3B3B3",type: "rect",filter:"processing"},                {name: "Mature protein",className: "mat",color: "#B3B3C2",type: "rect",filter:"processing"},
+                {name: "Signal peptide",className: "sign",color: "#B3B3E1",type: "rect",filter:"processing"},           {name: "Disulfide bond",className: "dsB",color: "#B3B3E1",type: "path",filter:"none"},
+                {name: "Initiator meth",className: "initMeth",color: "#B3B3D1",type: "unique",filter:"processing"},     {name: "Interacting region",className: "intReg",color: "#B3D1F0",type: "rect",filter:"region"},
+                {name: "Modified residue",className: "modifRes",color: "#B3C2B3",type: "unique",filter:"residue"},      {name: "Cross-link",className: "crossLink",color: "#B3C2C2",type: "unique",filter:"residue"},
+                {name: "Glycosylation",className: "glycoSite",color: "#B3C2D1",type: "unique",filter:"residue"},        {name: "Site",className: "site",color: "#B3F0E1",type: "unique",filter:"site"},
+                {name: "Active site",className: "actSite",color: "#B3F0F0",type: "unique",filter:"site"},               {name: "Metal binding",className: "metal",color: "#B3FFC2",type: "unique",filter:"site"},
+                {name: "Variant",className: "variant",color: "rgba(0,255,154,0.3)",type: "unique",filter:"variant"}
+
+            ];
+
             for (var i=1; i<oneData.length;i++) {
                 var feat = NXUtils.convertMappingsToIsoformMap(oneData[i],featuresName[i]);
                 featuresByIsoform.push(feat);
-                var featForViewer = NXViewerUtils.convertNXAnnotations(feat);
+                var featForViewer = NXViewerUtils.convertNXAnnotations(feat,metaData[i-1]);
                 featuresForViewer.push(featForViewer);
             }
 

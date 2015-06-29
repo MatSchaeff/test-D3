@@ -374,7 +374,7 @@ function FeatureViewer(sequence, div,options) {
                 preComputing.multipleRect(object);
                 fillSVG.rectangle(object, sequence, Yposition, level);
                 yData.push({title: object.name, y: Yposition});
-                Yposition+=pathLevel;
+                Yposition+=(level-1)*20;
             }
             else if (object.type === "text") {
                 fillSVG.sequence(object.data, Yposition);
@@ -388,7 +388,7 @@ function FeatureViewer(sequence, div,options) {
                 preComputing.multipleRect(object);
                 fillSVG.multipleRect(object, sequence, Yposition,level);
                 yData.push({title: object.name, y: Yposition});
-                Yposition+=pathLevel;
+                Yposition+=(level-1)*10;
             }
             else if (object.type === "path") {
                 preComputing.path(object);
@@ -848,9 +848,7 @@ function FeatureViewer(sequence, div,options) {
             .style("padding","0px")
             .style("z-index","2");
         // Create SVG
-        var headerOptions = d3.select(div).append("div")
-            .attr("class","row")
-            .style("margin", "10px 20px 0px");
+        var headerOptions = d3.select(div + " #svgHeader");
         var headerZoom = headerOptions
             .append("div")
             .attr("class","panel panel-default")
@@ -884,10 +882,10 @@ function FeatureViewer(sequence, div,options) {
             .text("1");
         var headerPosition = headerOptions
             .append("div")
-            .attr("class","panel panel-default pull-right")
+            .attr("class","panel panel-default")
             .style("display", "inline-block")
             .style("width","175px")
-            .style("margin", "0px")
+            .style("margin", "0px 20px")
             .style("padding", "0px");
         headerPosition
             .append("div")

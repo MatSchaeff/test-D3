@@ -332,40 +332,45 @@ var NXUtils = {
             else if (mapping.hasOwnProperty("isoformSpecificity")) {
                         for (var name in mapping.isoformSpecificity) {
                             if (mapping.isoformSpecificity.hasOwnProperty(name)) {
-                                var start = mapping.isoformSpecificity[name].positions[0].first,
-                                    end = mapping.isoformSpecificity[name].positions[0].second,
-                                    evidence = "",
-                                    description="",
-                                    link="";
-                                if (mapping.hasOwnProperty("evidences")) evidence = mapping.evidences.map(function(d) {return d.assignedBy}).filter(function(item, pos, self) {
-                                    return self.indexOf(item) == pos;});
-                                else evidence = [mapping.assignedBy];
-                                if (mapping.hasOwnProperty("xrefs")) {
-                                    description = mapping.xrefs[0].accession;
-                                    link = NXUtils.getLinkForFeature(mapping.xrefs[0].resolvedUrl, description, "antibody")
-                                }
-                                else {
-                                    description = mapping.evidences[0].accession;
-                                    for (ev in mapping.evidences) if (mapping.evidences[ev].databaseName === "PeptideAtlas" || mapping.evidences[ev].databaseName === "SRMAtlas") {
-                                        description = mapping.evidences[ev].accession;
-                                        link = NXUtils.getLinkForFeature(description, description, "peptide");
-
-                                        break;
+                                for (var i = 0; i < mapping.isoformSpecificity[name].positions.length; i++) {
+                                    var start = mapping.isoformSpecificity[name].positions[i].first,
+                                        end = mapping.isoformSpecificity[name].positions[i].second,
+                                        evidence = "",
+                                        description = "",
+                                        link = "";
+                                    if (mapping.hasOwnProperty("evidences")) evidence = mapping.evidences.map(function (d) {
+                                        return d.assignedBy
+                                    }).filter(function (item, pos, self) {
+                                        return self.indexOf(item) == pos;
+                                    });
+                                    else evidence = [mapping.assignedBy];
+                                    if (mapping.hasOwnProperty("xrefs")) {
+                                        description = mapping.xrefs[0].accession;
+                                        link = NXUtils.getLinkForFeature(mapping.xrefs[0].resolvedUrl, description, "antibody")
                                     }
-                                }
+                                    else {
+                                        description = mapping.evidences[0].accession;
+                                        for (ev in mapping.evidences) if (mapping.evidences[ev].databaseName === "PeptideAtlas" || mapping.evidences[ev].databaseName === "SRMAtlas") {
+                                            description = mapping.evidences[ev].accession;
+                                            link = NXUtils.getLinkForFeature(description, description, "peptide");
 
-                                if (!result[name]) result[name] = [];
-                                result[name].push({
-                                    start: start,
-                                    end: end,
-                                    length: end - start,
-                                    id:category.replace(/\s/g,'')+"_"+start.toString()+"_"+end.toString(),
-                                    description: description,
-                                    category: category,
-                                    link: link,
-                                    evidence: evidence,
-                                    evidenceLength: evidence.length
-                                });
+                                            break;
+                                        }
+                                    }
+
+                                    if (!result[name]) result[name] = [];
+                                    result[name].push({
+                                        start: start,
+                                        end: end,
+                                        length: end - start,
+                                        id: category.replace(/\s/g, '') + "_" + start.toString() + "_" + end.toString(),
+                                        description: description,
+                                        category: category,
+                                        link: link,
+                                        evidence: evidence,
+                                        evidenceLength: evidence.length
+                                    });
+                                }
                             }
                         }
             }
@@ -392,20 +397,22 @@ var NXUtils = {
 };
 
 var NXViewerUtils = {
-    convertNXAnnotations:function (annotations){
+    convertNXAnnotations:function (annotations, metadata){
         if (!annotations) return "Cannot load this";
-        result={};
-        for (name in annotations){
-            result[name]=annotations[name].map(function (annotation) {
-            return {
-                x: annotation.start,
-                y: annotation.end,
-                id: annotation.id,
-                category: annotation.category,
-                description: annotation.description
+        var result={};
+        for (name in annotations) {
+            var meta = jQuery.extend({}, metadata);
+            meta.data = annotations[name].map(function (annotation) {
+                return {
+                        x: annotation.start,
+                        y: annotation.end,
+                        id: annotation.id,
+                        category: annotation.category,
+                        description: annotation.description
                 }
-            })
+            });
+            result[name] = meta;
         }
         return result;
     }
-}
+};
