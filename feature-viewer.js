@@ -159,7 +159,7 @@ function FeatureViewer(sequence, div,options) {
                     }
                     selectedRect.style({
                         left: xRect+'px',
-                        top: 20+'px',
+                        top: 40+'px',
                         'background-color': 'rgba(0, 0, 0, 0.2)',
                         width: widthRect+'px',
                         height: (Yposition+50)+'px',
@@ -371,8 +371,10 @@ function FeatureViewer(sequence, div,options) {
     var fillSVG = {
         typeIdentifier: function(object) {
             if (object.type === "rect") {
-                fillSVG.rectangle(object, sequence, Yposition);
+                preComputing.multipleRect(object);
+                fillSVG.rectangle(object, sequence, Yposition, level);
                 yData.push({title: object.name, y: Yposition});
+                Yposition+=pathLevel;
             }
             else if (object.type === "text") {
                 fillSVG.sequence(object.data, Yposition);
@@ -418,19 +420,24 @@ function FeatureViewer(sequence, div,options) {
                 });
         },
         rectangle: function (object, sequence, position) {
+            var rectHeight = 12;
+            var rectShift = 20;
+
             var rectsPro = svgContainer.append("g")
                 .attr("class", "rectangle")
                 .attr("clip-path", "url(#clip)")
                 .attr("transform", "translate(0," + position + ")");
 
-            rectsPro.append("path")
-                .attr("d", line([{x: 0, y: 0}, {x: sequence.length-1, y: 0}]))
-                .attr("class", function () {
-                    return "line" + object.className
-                })
-                .style("z-index", "0")
-                .style("stroke", object.color)
-                .style("stroke-width", "1px");
+            for (var i = 0; i < level; i++) {
+                rectsPro.append("path")
+                    .attr("d", line([{x: 0, y: (i * rectShift)}, {x: sequence.length-1, y: (i * rectShift)}]))
+                    .attr("class", function () {
+                        return "line" + object.className
+                    })
+                    .style("z-index", "0")
+                    .style("stroke", object.color)
+                    .style("stroke-width", "1px");
+            }
 
             var rectsProGroup = rectsPro.selectAll("." + object.className + "Group")
                 .data(object.data)
@@ -443,6 +450,9 @@ function FeatureViewer(sequence, div,options) {
                 .append("rect")
                 .attr("class", "element "+object.className)
                 .attr("id", function(d) { return "f"+d.id })
+                .attr("y", function (d) {
+                    return d.level * rectShift
+                })
                 .attr("width", rectWidth)
                 .attr("height", 12)
                 .style("fill", object.color)
@@ -452,7 +462,9 @@ function FeatureViewer(sequence, div,options) {
             rectsProGroup
                 .append("text")
                 .attr("class", "element "+object.className + "Text")
-                .attr("y", 6)
+                .attr("y", function (d) {
+                    return d.level * rectShift +6
+                })
                 .attr("dy", "0.35em")
                 .style("font-size", "10px")
                 .text(function(d) { return d.description})
@@ -523,7 +535,6 @@ function FeatureViewer(sequence, div,options) {
                 .style("z-index", "0")
                 .style("stroke", object.color)
                 .style("stroke-width", "1px");
-            console.log(object);
 
             pathsDB.selectAll("." + object.className)
                 .data(object.data)
@@ -542,13 +553,19 @@ function FeatureViewer(sequence, div,options) {
             forcePropagation(pathsDB);
         },
         multipleRect: function (object, sequence, position, level) {
+            var rectHeight = 12;
+            var rectShift = 20;
+            if (object.className === "pep" | object.className === "srmPep") {
+                rectHeight = 8; 
+                rectShift = 10;
+            }
             var rects = svgContainer.append("g")
                 .attr("class", "multipleRects")
                 .attr("transform", "translate(0," + position + ")");
 
             for (var i = 0; i < level; i++) {
                 rects.append("path")
-                    .attr("d", line([{x: 0, y: (i * 10 - 2)}, {x: sequence.length-1, y: (i * 10 - 2)}]))
+                    .attr("d", line([{x: 0, y: (i * rectShift - 2)}, {x: sequence.length-1, y: (i * rectShift - 2)}]))
                     .attr("class", function () {
                         return "line" + object.className
                     })
@@ -566,10 +583,10 @@ function FeatureViewer(sequence, div,options) {
                 .attr("id", function(d) { return "f"+d.id })
                 .attr("x", X)
                 .attr("y", function (d) {
-                    return d.level * 10
+                    return d.level * rectShift
                 })
                 .attr("width", rectWidth)
-                .attr("height", 8)
+                .attr("height", rectHeight)
                 .style("fill", object.color)
                 .style("z-index", "13")
                 .call(d3.helper.tooltip(object));
@@ -806,7 +823,7 @@ function FeatureViewer(sequence, div,options) {
         }
         selectedRect.style({
             left: xRect+'px',
-            top: 20+'px',
+            top: 40+'px',
             'background-color': 'rgba(0, 0, 0, 0.2)',
             width: widthRect+'px',
             height: (Yposition+50)+'px',
