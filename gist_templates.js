@@ -74,6 +74,22 @@ this["HBtemplates"]["featureTable2.tmpl"] = Handlebars.template({"1":function(de
     + "</tbody>\n    </table>\n</div>";
 },"useData":true});
 
+this["HBtemplates"]["filter.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
+    var helper, alias1=this.escapeExpression;
+
+  return "                <label class=\"checkbox-inline\">\n                    <input type=\"checkbox\" id="
+    + alias1(((helper = (helper = helpers.key || (data && data.key)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"key","hash":{},"data":data}) : helper)))
+    + " value=\"option1\" checked>"
+    + alias1(this.lambda(depth0, depth0))
+    + "\n                </label>\n";
+},"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return "\n    <div class=\"panel panel-default\" style=\"margin:20px 20px 0px;display:inline-block\">\n        <div class=\"panel-heading\"\n             style=\"display:inline-block;background:#F8F8F8;padding:0px 15px;width:80px;height:100%;border-color:#F8F8F8;border-right:1px #ddd solid;\">\n            <h5 style=\"color:#777;padding:0px;height:10px\">FILTER </h5></div>\n        <div class=\"panel-body\" style=\"padding:0px;display:inline-block;\">\n            <div id=\"filtering\" style=\"margin-left: 15px;margin-right: 15px\">\n                <label class=\"checkbox-inline\">\n                    <input type=\"checkbox\" id=\"allFilters\" value=\"option0\" checked> All/None\n                </label>\n"
+    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.filters : depth0),{"name":"each","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "\n            </div>\n        </div>\n    </div>\n";
+},"useData":true});
+
 this["HBtemplates"]["isoformChoice.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var helper;
 

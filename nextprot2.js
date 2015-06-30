@@ -13,6 +13,7 @@
 
         //?default-graph-uri=&named-graph-uri=&output=json
 
+        var tempApiUrl = "http://mac-098:8080/nextprot-api-web/entry/";
         var nextprotApiUrl = "https://api.nextprot.org/entry/";
         var sparqlEndpoint = "https://api.nextprot.org/sparql";
         var sparqlFormat = "?output=json";
@@ -37,7 +38,6 @@
             "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> "+
             "PREFIX sim:<http://purl.org/ontology/similarity/> "+
             "PREFIX source:<http://nextprot.org/rdf/source/> "+
-            "PREFIX term:<http://nextprot.org/rdf/terminology/> "+
             "PREFIX xref:<http://nextprot.org/rdf/xref/> "+
             "PREFIX xsd:<http://www.w3.org/2001/XMLSchema#> ";
 
@@ -87,6 +87,35 @@
 
                 var req = new XMLHttpRequest();
                 var url = nextprotApiUrl + entryName + "/" + context + ".json" + "?clientInfo=" + clientInfo + "&applicationName=" + applicationName;
+                req.open("GET", url);
+
+                req.onload = function() {
+                    // This is called even on errors so check the status
+                    if (req.status == 200) {
+                        resolve(JSON.parse(req.responseText));
+                    }else {
+                        //reject(Error(req.status + " - " + JSON.parse(req.response).message));
+                        reject(Error(req.status));
+                    }
+                };
+
+                // Handle network errors
+                req.onerror = function() {
+                    reject(Error("Network Error"));
+                };
+
+                // Make the request
+                req.send();
+            });
+        };
+        var _callURLTemp = function (entryName, context){
+
+            var me = this;
+
+            return new Promise(function(resolve, reject) {
+
+                var req = new XMLHttpRequest();
+                var url = tempApiUrl + entryName + "/" + context + ".json" + "?clientInfo=" + clientInfo + "&applicationName=" + applicationName;
                 req.open("GET", url);
 
                 req.onload = function() {
@@ -236,6 +265,12 @@
         NextprotClient.prototype.getExons = function(entry) {
             return _callURL(normalizeEntry(entry || this.getEntryName()), "genomic-mapping").then(function (data){
                 return data.entry.genomicMappings[0].isoformMappings;
+            });
+        };
+
+        NextprotClient.prototype.getIsoformMapping = function(entry) {
+            return _callURLTemp(normalizeEntry(entry || this.getEntryName()), "isoform/mapping").then(function (data){
+                return data;
             });
         };
 

@@ -9,8 +9,8 @@
     var seqView;
     var currentSeq;
     var isoforms;
-    var featuresByIsoform = [];
 	var featuresForViewer= [];
+    var featuresByIsoform = [];
     var genomicMappings = [];
     var selectedRect;
     var filterOptions = {
@@ -67,7 +67,7 @@
         },
         reload: function (isoID) {
             console.log(isoID);
-            $(".chart").html("");
+            $(".chart svg").remove();
             createSVG(isoforms,isoID);
             addFeatures(isoID);
             fillTable(isoID);
@@ -78,13 +78,183 @@
             inverseSelection();
         },
         reloadSVG: function(isoID) {
-            $(".chart").html("");
+            $(".chart svg").remove();
             createSVG(isoforms,isoID);
             addFeatures(isoID);
             featureSelection();
             inverseSelection();
         }
     };
+
+    function displayIsoform(array,divIsoform) {
+        //ft2 = new FeatureViewer(33000, "#isoformDisplayed", {
+        //    showAxis: true,
+        //    showSequence: false,
+        //    brushActive: false,
+        //    verticalLine: false
+        //});
+
+        //function getMax(array) {
+        //    var max = 0;
+        //    for (name in array) {
+        //        for (var pos in array[name].positions) {
+        //            if (array[name].positions[pos].second > max) max = array[name].positions[pos].second;
+        //        }
+        //    }
+        //    return max;
+        //}
+        //var max = getMax(array);
+        ////var max = Math.max($.merge(array.map(function (o) {
+        ////    return o.positions.map(function (p) {
+        ////        return p.second;
+        ////    })
+        ////})));
+        //console.log(max);
+        //console.log("ISOFORM SUPPOSED TO BE DISPLAY FFS");
+        //var position = 20;
+        //
+        //var margin = {top: 10, right: 20, bottom: 60, left: 100},
+        //    width = $(divIsoform).width() - margin.left - margin.right - 17,
+        //    height = 200 - margin.top - margin.bottom;
+        //var coverageLength = 33000;
+        //var scaling = d3.scale.linear()
+        //    .domain([0, max])
+        //    .range([0, width]);
+        //
+        //var line = d3.svg.line()
+        //    .interpolate("linear")
+        //    .x(function (d) {
+        //        return scaling(d.x);
+        //    })
+        //    .y(function (d) {
+        //        return d.y + 6;
+        //    });
+        //
+        //var svgIsoform = d3.select(divIsoform).append("svg")
+        //    .attr("width", width + margin.left + margin.right)
+        //    .attr("height", height + margin.top + margin.bottom)
+        //    .style("z-index","2");
+        //
+        //function fillSVGIsoform(data,j) {
+        //    //rectangle: function (object, sequence, position) {
+        //    console.log("YOU ARE IN THE MATRIX");
+        //        var rectHeight = 12;
+        //        var rectShift = 20;
+        //        var rectsPro = svgIsoform.append("g")
+        //            .attr("class", "rectangle")
+        //            .attr("transform", "translate(0," + position + ")");
+        //
+        //        rectsPro.append("path")
+        //            .attr("d", line([{x: 0, y: 0}, {x: max, y: 0}]))
+        //            .attr("class", function () {
+        //                return "line" + data.isoformName
+        //            })
+        //            .style("z-index", "0")
+        //            .style("stroke", "green")
+        //            .style("stroke-width", "1px");
+        //    console.log(data.positions);
+        //        var rectsProGroup = rectsPro.selectAll("." + data.isoformName + "Group")
+        //            .data(data.positions)
+        //            .enter()
+        //            .append("g")
+        //            .attr("class", data.isoformName + "Group")
+        //            .attr("transform", function(d) { return "translate(" + scaling(d.first) + ",0)"});
+        //
+        //        rectsProGroup
+        //            .append("rect")
+        //            .attr("class", "element "+data.isoformName)
+        //            //.attr("y", function (d) {
+        //            //    return position
+        //            //})
+        //            .attr("width", function (d) {
+        //                return (scaling(d.second) - scaling(d.first))})
+        //            .attr("height", 12)
+        //            .style("fill", "blue")
+        //            .style("z-index", "13");
+        //
+        //        rectsProGroup
+        //            .append("text")
+        //            .attr("class", "element "+data.isoformName + "Text")
+        //            //.attr("y", function (d) {
+        //            //    return position +6
+        //            //})
+        //            .attr("dy", "0.35em")
+        //            .style("font-size", "10px")
+        //            .text(function(d) { return data.isoformName})
+        //            .style("fill", "black")
+        //            .style("z-index", "15")
+        //            .style("visibility", function(d) {
+        //                if (data.isoformName) {
+        //                    return (scaling(d.second) - scaling(d.first)) > data.isoformName * 8 ? "visible" : "hidden";
+        //                }
+        //                else return "hidden";
+        //            });
+        //    position += 20;
+        //}
+        //for (var name in array) {
+        //    console.log(name);
+        //    fillSVGIsoform(array[name],name);
+        //}
+        //console.log("ISOFORM SUPPOSED TO BE DISPLAY FFS");
+
+
+
+        //var yAxisScale = d3.scale.ordinal()
+        //    .domain([0, array.length])
+        //    .rangeRoundBands([0, 500], .1);
+        //var yAxis = d3.svg.axis()
+        //    .scale(yAxisScale)
+        //    .tickValues(array.map(function (o) {return o.isoformName})) //specify an array here for values
+        //    .tickFormat(function (d) {
+        //        return d
+        //    })
+        //    .orient("left");
+        //function addYAxis() {
+        //    yAxisSVG = svg.append("g")
+        //        .attr("class", "pro axis")
+        //        .attr("transform", "translate(0," + margin.top + ")");
+        //    updateYaxis();
+        //}
+        //function updateYaxis() {
+        //
+        //    yAxisSVGgroup = yAxisSVG
+        //        .selectAll(".yaxis")
+        //        .data(array.map(function (o) {return o.isoformName}))
+        //        .enter()
+        //        .append("g");
+        //    yAxisSVGgroup
+        //        .append("polygon")       // attach a polygon
+        //        .style("stroke", "none")  // colour the line
+        //        .style("fill", "rgba(95,46,38,0.2)")     // remove any fill colour
+        //        .attr("points", function(d) {
+        //            return (margin.left-15)+"," + (d.y -3) + ", "+ (margin.left-15)+"," + (d.y +12) + ", "+ (margin.left-7)+"," + (d.y +4.5);  // x,y points
+        //        });
+        //    yAxisSVGgroup
+        //        .append("rect")
+        //        .style("fill","rgba(95,46,38,0.2)")
+        //        .attr("x", function () {
+        //            return margin.left - 95
+        //        })
+        //        .attr("y", function (d) {
+        //            return d.y - 3
+        //        })
+        //        .attr("width", "80")
+        //        .attr("height", "15");
+        //    yAxisSVGgroup
+        //        .append("text")
+        //        .attr("class", "yaxis")
+        //        .attr("text-anchor", "end")
+        //        .attr("x", function () {
+        //            return margin.left - 20
+        //        })
+        //        .attr("y", function (d) {
+        //            return d.y + 8
+        //        })
+        //        .text(function (d) {
+        //            return d.title
+        //        });
+        //}
+    }
 
     function createSVG(sequences,isoName) {
         sequences.forEach(function (o) {
@@ -117,8 +287,34 @@
             }
         }
     }
+    function addFiltering() {
+        $(".chart").append("<div id=\"svgHeader\" class=\"row\" style=\"margin:0px 20px\"></div>");
+        var filterHash = {
+            processing: "Processing",
+            residue: "Modified residue",
+            region: "Region",
+            site: "Site",
+            variant: "Variant"
+        };
+        var activeFiltering = {
+            filters: {}
+        };
+        for (var i=0;i<featuresForViewer.length;i++) {
+            if (Object.keys(featuresForViewer[i]).length !== 0) {
+                var filter = featuresForViewer[i][Object.keys(featuresForViewer[i])[0]].filter;
+                if (filter !== "none" && (!activeFiltering.filters[filter])) {
+                    activeFiltering.filters[filter]=filterHash[filter];
+                }
+            }
+        }
+        console.log(activeFiltering);
+        var template = HBtemplates['filter.tmpl'];
+        var results = template(activeFiltering);
+        $("#svgHeader").html(results);
 
-    function fillTable(isoName) {
+
+    }
+    function fillTable(featuresByIsoform, isoName) {
         if ($("#featuresTable").length > 0) {
             var number = 0;
             var features = [];
@@ -199,6 +395,7 @@
                         filterOptions[key] = true;
                     }
                 }
+                filterOptions["none"] = true;
             }
             applyFiltering();
             getInfoForIsoform.reloadSVG(isoName);
@@ -207,7 +404,7 @@
     }
     function applyFiltering() {
 
-        if ($("#filterProcessing").prop("checked")) {
+        if ($("#processing").prop("checked")) {
             $(".Propeptide").show();
             $(".Matureprotein").show();
             $(".Initiatormeth").show();
@@ -219,7 +416,7 @@
             $(".Initiatormeth").hide();
             filterOptions.processing = false;
         }
-        if ($("#filterSite").prop("checked")) {
+        if ($("#site").prop("checked")) {
             $(".Activesite").show();
             $(".Site").show();
             $(".Metalbinding").show();
@@ -231,7 +428,7 @@
             $(".Metalbinding").hide();
             filterOptions.site = false;
         }
-        if ($("#filterResidue").prop("checked")) {
+        if ($("#residue").prop("checked")) {
             $(".Modifiedresidue").show();
             $(".Disulfidebond").show();
             $(".Cross-link").show();
@@ -245,7 +442,7 @@
             $(".Glycosylation").hide();
             filterOptions.residue = false;
         }
-        if ($("#filterVariant").prop("checked")) {
+        if ($("#variant").prop("checked")) {
             $(".Variant").show();
             filterOptions.variant = true;
         }
@@ -253,7 +450,7 @@
             $(".Variant").hide();
             filterOptions.variant = false;
         }
-        if ($("#filterRegion").prop("checked")) {
+        if ($("#region").prop("checked")) {
             $(".Interactingregion").show();
             filterOptions.region = true;
         }
@@ -316,6 +513,7 @@
                 "Antibody",         "Initiator meth",       "Modified residue",         "Cross-link",           "Glycosylation",        "Peptide",
                 "Srm peptide"];
 
+
             var metaData = [
                 {name: "Propeptide",className: "pro",color: "#B3B3B3",type: "rect",filter:"processing"},            {name: "Mature protein",className: "mat",color: "#B3B3C2",type: "rect",filter:"processing"},
                 {name: "Signal peptide",className: "sign",color: "#B3B3E1",type: "rect",filter:"processing"},       {name: "Disulfide bond",className: "dsB",color: "#B3B3E1",type: "path",filter:"residue"},
@@ -333,6 +531,7 @@
             
 
 
+            //var filters = NXViewerUtils.getDistinctFilters(metaData); // {processing: false, residue: false ....}
 
             for (var i=1; i<oneData.length;i++) {
                 var feat = NXUtils.convertMappingsToIsoformMap(oneData[i],featuresName[i]);
@@ -340,15 +539,17 @@
                 var featForViewer = NXViewerUtils.convertNXAnnotations(feat,metaData[i-1]);
                 featuresForViewer.push(featForViewer);
             }
+            //console.log(oneData[oneData.length-1]);
             //genomicMappings = NXUtils.convertExonsMappingsToIsoformMap(oneData[12]);
             //console.log(genomicMappings);
             //mappingIsoformByExons(genomicMappings);
+            //displayIsoform(oneData[oneData.length-1],"#isoformDisplayed");
 
 
-
+            addFiltering();
             createSVG(isoforms,isoName);
             addFeatures(isoName);
-            fillTable(isoName);
+            fillTable(featuresByIsoform, isoName);
             adjustHeight(".left-side",".right-side");
             adjustHeight("#seqViewer","#featuresTable");
             featureSelection();

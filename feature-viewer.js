@@ -849,66 +849,71 @@ function FeatureViewer(sequence, div,options) {
             .style("z-index","2");
         // Create SVG
         var headerOptions = d3.select(div + " #svgHeader");
-        var headerZoom = headerOptions
-            .append("div")
-            .attr("class","panel panel-default")
-            .style("display", "inline-block")
-            .style("width","150px")
-            .style("margin", "0px")
-            .style("padding", "0px");
-        headerZoom
-            .append("div")
-            .attr("class","panel-heading")
-            .style("padding", "0px 15px")
-            .style("border-right", "1px solid #DDD")
-            .style("display", "inline-block")
-            .style("width", "80px")
-            .append("h5")
-            .style("padding", "0px")
-            .style("height", "10px")
-            .style("color", "#777")
-            .text("ZOOM");
-        headerZoom
-            .append("div")
-            .attr("class","panel-body")
-            .style("display", "inline-block")
-            .style("padding", "0px")
-            .append("h5")
-            .style("padding-left","15px")
-            .style("height", "10px")
-            .text("x ")
-            .append("span")
-            .attr("class","zoomUnit")
-            .text("1");
-        var headerPosition = headerOptions
-            .append("div")
-            .attr("class","panel panel-default")
-            .style("display", "inline-block")
-            .style("width","175px")
-            .style("margin", "0px 20px")
-            .style("padding", "0px");
-        headerPosition
-            .append("div")
-            .attr("class","panel-heading")
-            .style("padding", "0px 15px")
-            .style("border-right", "1px solid #DDD")
-            .style("display", "inline-block")
-            .append("h5")
-            .style("padding", "0px")
-            .style("height", "10px")
-            .style("color", "#777")
-            .text("POSITION");
-        headerPosition
-            .append("div")
-            .attr("class","panel-body")
-            .style("display", "inline-block")
-            .style("padding", "0px")
-            .append("h5")
-            .style("padding-left","15px")
-            .style("height", "10px")
-            .append("span")
-            .attr("id","zoomPosition")
-            .text("0");
+
+        if (!$('.header-zoom').length) {
+            var headerZoom = headerOptions
+                .append("div")
+                .attr("class", "panel panel-default header-zoom")
+                .style("display", "inline-block")
+                .style("width", "150px")
+                .style("margin", "0px")
+                .style("padding", "0px");
+            headerZoom
+                .append("div")
+                .attr("class", "panel-heading")
+                .style("padding", "0px 15px")
+                .style("border-right", "1px solid #DDD")
+                .style("display", "inline-block")
+                .style("width", "80px")
+                .append("h5")
+                .style("padding", "0px")
+                .style("height", "10px")
+                .style("color", "#777")
+                .text("ZOOM");
+            headerZoom
+                .append("div")
+                .attr("class", "panel-body")
+                .style("display", "inline-block")
+                .style("padding", "0px")
+                .append("h5")
+                .style("padding-left", "15px")
+                .style("height", "10px")
+                .text("x ")
+                .append("span")
+                .attr("class", "zoomUnit")
+                .text("1");
+        }
+        if (!$('.header-position').length) {
+            var headerPosition = headerOptions
+                .append("div")
+                .attr("class", "panel panel-default header-position")
+                .style("display", "inline-block")
+                .style("width", "175px")
+                .style("margin", "0px 20px")
+                .style("padding", "0px");
+            headerPosition
+                .append("div")
+                .attr("class", "panel-heading")
+                .style("padding", "0px 15px")
+                .style("border-right", "1px solid #DDD")
+                .style("display", "inline-block")
+                .append("h5")
+                .style("padding", "0px")
+                .style("height", "10px")
+                .style("color", "#777")
+                .text("POSITION");
+            headerPosition
+                .append("div")
+                .attr("class", "panel-body")
+                .style("display", "inline-block")
+                .style("padding", "0px")
+                .append("h5")
+                .style("padding-left", "15px")
+                .style("height", "10px")
+                .append("span")
+                .attr("id", "zoomPosition")
+                .text("0");
+        }
         svg = d3.select(div).append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
