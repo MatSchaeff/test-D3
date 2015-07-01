@@ -281,9 +281,12 @@
     }
 
     function addFeatures(isoName) {
+        console.log("REGENESIS OF THE DATAAAAA");
+        console.log(featuresForViewer[3]);
         for (var i=0;i<featuresForViewer.length;i++) {
             if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions[featuresForViewer[i][isoName].filter] === true) {
-                ft.addFeature(featuresForViewer[i][isoName]);
+                var feature = jQuery.extend({}, featuresForViewer[i][isoName]);
+                ft.addFeature(feature);
             }
         }
     }
@@ -314,7 +317,7 @@
 
 
     }
-    function fillTable(featuresByIsoform, isoName) {
+    function fillTable(isoName) {
         if ($("#featuresTable").length > 0) {
             var number = 0;
             var features = [];
@@ -336,6 +339,82 @@
             var results = template(datas);
             $("#featuresTable").html(results);
         }
+    }
+    function testAlgo() {
+        var isoforms = [
+            [[2,3],[4,6],[8,10],[13,14]],
+            [[2,3],[5,7],[8,10],[11,12],[13,14]],
+            [[0,1],[2,3],[5,6],[8,9],[13,14]]
+        ];
+        var positions=[];
+        //var positions2=[];
+        var decalage=[];
+        for (var iso in isoforms) {
+            isoforms[iso].forEach(function (o) {
+                positions.push(o[0],o[1]);
+            })
+        }
+        positions = positions.filter(function(elem, index, self) {
+            return index == self.indexOf(elem);});
+
+        positions.sort(function(a,b) {return a-b});
+        //positions2.sort(function(a,b) {return a[0]-b[0]});
+
+        for (var i=0;i<positions.length-1;i++) {
+            var presence = false;
+            for (var j in isoforms) {
+                for (var k in isoforms[j]) {
+                    if (isoforms[j][k][0] > positions[i+1]) break;
+                    else if (isoforms[j][k][0]<= positions[i] && isoforms[j][k][1] >= positions[i+1]) {
+                        presence=true;
+                        break;
+                    }
+                }
+            if (presence === true) break;
+            }
+            if (presence === false) decalage.push({x:positions[i],length:positions[i+1]-positions[i]});
+        }
+        for (var i=decalage.length-1;i>=0;i--) {
+            for (var j in isoforms) {
+                for (var k=isoforms[j].length-1;k>=0;k--) {
+                    console.log(isoforms[j]);
+                    console.log(isoforms[j][k]);
+                    console.log(decalage[i]);
+                    console.log(j);
+                    if (isoforms[j][k][0] < decalage[i].x) break;
+                    else {
+                        isoforms[j][k][0] -= decalage[i].length;
+                        isoforms[j][k][1] -= decalage[i].length;
+                    }
+
+                    if (k !=isoforms[j].length-1) {
+                        console.log(j);
+                        console.log("AAAAAAFDJKLFJDSKFLJDSFLDSJFKL:SD");
+                        console.log(k);
+                        var p=k+1;
+
+                        console.log(p);
+                        var jojo = isoforms[j].toString();
+                        console.log(jojo);
+                        console.log(isoforms[j][p][0]);
+                        console.log(isoforms[j][k][1]);
+                    }
+                    if (k !=isoforms[j].length-1 && isoforms[j][k+1][0] === isoforms[j][k][1]) {
+                        console.log("AAAAAAFDJKLFJDSKFLJDSFLDSJFKL:SD");
+                        isoforms[j][k][1] = isoforms[j][k+1][1];
+                        isoforms[j].splice(k+1,1);
+                        var jojo = isoforms[j].toString();
+                        console.log(jojo);
+                        console.log(isoforms[j].toString());
+                    }
+                }
+            }
+        }
+
+        console.log(positions);
+        //console.log(positions2);
+        console.log(decalage);
+        console.log(isoforms);
     }
 
     function featureSelection() {
@@ -545,11 +624,10 @@
             //mappingIsoformByExons(genomicMappings);
             //displayIsoform(oneData[oneData.length-1],"#isoformDisplayed");
 
-
             addFiltering();
             createSVG(isoforms,isoName);
             addFeatures(isoName);
-            fillTable(featuresByIsoform, isoName);
+            fillTable(isoName);
             adjustHeight(".left-side",".right-side");
             adjustHeight("#seqViewer","#featuresTable");
             featureSelection();
@@ -559,6 +637,8 @@
             var endTime = new Date().getTime();
             var time = endTime - startTime;
             console.log('Execution time: ' + time);
+
+            testAlgo();
         }).catch(function (err) {
             // catch any error that happened so far
             console.log("Argh, broken: " + err.message);

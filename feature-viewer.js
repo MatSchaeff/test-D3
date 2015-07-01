@@ -20,9 +20,9 @@ function FeatureViewer(sequence, div,options) {
     var zoom = false;
 
     //Init box & scaling
-    var margin = {top: 10, right: 20, bottom: -60, left: 100},
+    var margin = {top: 10, right: 20, bottom: 20, left: 100},
         width = $(div).width() - margin.left - margin.right - 17,
-        height = 100 - margin.top - margin.bottom;
+        height = 600 - margin.top - margin.bottom;
     var scaling = d3.scale.linear()
         .domain([0, sequence.length-1])
         .range([0, width]);
@@ -159,7 +159,7 @@ function FeatureViewer(sequence, div,options) {
                     }
                     selectedRect.style({
                         left: xRect+'px',
-                        top: 40+'px',
+                        top: 60+'px',
                         'background-color': 'rgba(0, 0, 0, 0.2)',
                         width: widthRect+'px',
                         height: (Yposition+50)+'px',
@@ -823,7 +823,7 @@ function FeatureViewer(sequence, div,options) {
         }
         selectedRect.style({
             left: xRect+'px',
-            top: 40+'px',
+            top: 60+'px',
             'background-color': 'rgba(0, 0, 0, 0.2)',
             width: widthRect+'px',
             height: (Yposition+50)+'px',
@@ -959,6 +959,8 @@ function FeatureViewer(sequence, div,options) {
             SVGOptions.verticalLine = true;
             addVerticalLine();
         }
+
+        updateSVGHeight(Yposition);
 
     }
     initSVG(div,options);

@@ -66,7 +66,7 @@
         },
         reload: function (isoID) {
             console.log(isoID);
-            $(".chart").html("");
+            $(".chart svg").remove();
             createSVG(isoforms,isoID);
             addFeatures(isoID);
             fillTable(isoID);
@@ -77,7 +77,7 @@
             inverseSelection();
         },
         reloadSVG: function(isoID) {
-            $(".chart").html("");
+            $(".chart svg").remove();
             createSVG(isoforms,isoID);
             addFeatures(isoID);
             featureSelection();
@@ -114,6 +114,34 @@
                 ft.addFeature(featuresForViewer[i][isoName]);
             }
         }
+    }
+
+    function addFiltering() {
+        $(".chart").append("<div id=\"svgHeader\" class=\"row\" style=\"margin:0px 20px\"></div>");
+        var filterHash = {
+            processing: "Processing",
+            residue: "Modified residue",
+            region: "Region",
+            site: "Site",
+            variant: "Variant"
+        };
+        var activeFiltering = {
+            filters: {}
+        };
+        for (var i=0;i<featuresForViewer.length;i++) {
+            if (Object.keys(featuresForViewer[i]).length !== 0) {
+                var filter = featuresForViewer[i][Object.keys(featuresForViewer[i])[0]].filter;
+                if (filter !== "none" && (!activeFiltering.filters[filter])) {
+                    activeFiltering.filters[filter]=filterHash[filter];
+                }
+            }
+        }
+        console.log(activeFiltering);
+        var template = HBtemplates['filter.tmpl'];
+        var results = template(activeFiltering);
+        $("#svgHeader").html(results);
+
+
     }
 
     function fillTable(isoName) {
@@ -205,7 +233,7 @@
     }
     function applyFiltering() {
 
-        if ($("#filterProcessing").prop("checked")) {
+        if ($("#processing").prop("checked")) {
             $(".Propeptide").show();
             $(".Matureprotein").show();
             $(".Initiatormeth").show();
@@ -217,7 +245,7 @@
             $(".Initiatormeth").hide();
             filterOptions.processing = false;
         }
-        if ($("#filterSite").prop("checked")) {
+        if ($("#site").prop("checked")) {
             $(".Activesite").show();
             $(".Site").show();
             $(".Metalbinding").show();
@@ -229,7 +257,7 @@
             $(".Metalbinding").hide();
             filterOptions.site = false;
         }
-        if ($("#filterResidue").prop("checked")) {
+        if ($("#residue").prop("checked")) {
             $(".Modifiedresidue").show();
             $(".Disulfidebond").show();
             $(".Cross-link").show();
@@ -243,7 +271,7 @@
             $(".Glycosylation").hide();
             filterOptions.residue = false;
         }
-        if ($("#filterVariant").prop("checked")) {
+        if ($("#variant").prop("checked")) {
             $(".Variant").show();
             filterOptions.variant = true;
         }
@@ -251,7 +279,7 @@
             $(".Variant").hide();
             filterOptions.variant = false;
         }
-        if ($("#filterRegion").prop("checked")) {
+        if ($("#region").prop("checked")) {
             $(".Interactingregion").show();
             filterOptions.region = true;
         }
@@ -292,6 +320,7 @@
                 featuresForViewer.push(featForViewer);
             }
 
+            addFiltering();
             createSVG(isoforms,isoName);
             addFeatures(isoName);
             fillTable(isoName);
