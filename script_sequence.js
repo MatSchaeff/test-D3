@@ -75,6 +75,8 @@
             adjustHeight("#seqViewer","#featuresTable");
             featureSelection();
             inverseSelection();
+            displayIsoform(isoformMapping,"#isoformDisplayed",isoID);
+            toggleIsoformMap();
         },
         reloadSVG: function(isoID) {
             $(".chart svg").remove();
@@ -84,6 +86,192 @@
             inverseSelection();
         }
     };
+
+    function displayIsoform(array,divIsoform,isoIdentifier) {
+        $(divIsoform).html("");
+        //ft2 = new FeatureViewer(33000, "#isoformDisplayed", {
+        //    showAxis: true,
+        //    showSequence: false,
+        //    brushActive: false,
+        //    verticalLine: false
+        //});
+
+        function getMax(array) {
+            var max = 0;
+            for (name in array) {
+                for (var pos in array[name].positions) {
+                    if (array[name].positions[pos].second > max) max = array[name].positions[pos].second;
+                }
+            }
+            return max;
+        }
+        function getMin(array) {
+            var min = 100000000;
+            for (name in array) {
+                for (var pos in array[name].positions) {
+                    if (array[name].positions[pos].first < min) min = array[name].positions[pos].first;
+                }
+            }
+            return min;
+        }
+        var max = getMax(array);
+        var min = getMin(array);
+        //var max = Math.max($.merge(array.map(function (o) {
+        //    return o.positions.map(function (p) {
+        //        return p.second;
+        //    })
+        //})));
+        console.log(max);
+        console.log("ISOFORM SUPPOSED TO BE DISPLAY FFS");
+        var position = 20;
+
+        var margin = {top: 10, right: 50, bottom: 60, left: 50},
+            width = $(divIsoform).width() - margin.left - margin.right - 17,
+            height = 200 - margin.top - margin.bottom;
+        var coverageLength = 33000;
+        var scaling = d3.scale.linear()
+            .domain([min, max])
+            .range([0, width]);
+
+        var line = d3.svg.line()
+            .interpolate("linear")
+            .x(function (d) {
+                return scaling(d.x);
+            })
+            .y(function (d) {
+                return d.y + 6;
+            });
+
+        var svgIso = d3.select(divIsoform).append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .style("z-index","2");
+        var svgIsoform = svgIso
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        function fillSVGIsoform(data) {
+            //rectangle: function (object, sequence, position) {
+            console.log("YOU ARE IN THE MATRIX");
+            var rectHeight = 12;
+            var rectShift = 20;
+            var rectsPro = svgIsoform.append("g")
+                .attr("class", "rectangle")
+                .attr("transform", "translate(0," + position + ")");
+
+            rectsPro.append("path")
+                .attr("d", line([{x: min, y: 0}, {x: max, y: 0}]))
+                .attr("class", function () {
+                    return "line"
+                })
+                .style("z-index", "0")
+                .style("stroke", "#C2DEC8")
+                .style("stroke-width", "1px");
+
+            var rectsProGroup = rectsPro.selectAll("." + "Group")
+                .data(data.positions)
+                .enter()
+                .append("g")
+                .attr("class", "Group")
+                .attr("transform", function(d) { return "translate(" + scaling(d.first) + ",0)"});
+
+            rectsProGroup
+                .append("rect")
+                .attr("class", function () {
+                    if (name === isoIdentifier) return "element "+"Rect isoSelected";
+                    else return "element "+"Rect";
+                })
+                //.attr("y", function (d) {
+                //    return position
+                //})
+                .attr("width", function (d) {
+                    return (scaling(d.second) - scaling(d.first))})
+                .attr("height", 12)
+                .style("fill", "#C2DEC8")
+                .style("z-index", "13");
+
+            rectsProGroup
+                .append("text")
+                .attr("class", "element "+"Text")
+                .attr("y", 6)
+                .attr("dy", "0.35em")
+                .style("font-size", "10px")
+                .text(function(d) { return data.isoformName})
+                .style("fill", "black")
+                .style("z-index", "15")
+                .style("visibility", function(d) {
+                    if (data.isoformName) {
+                        return (scaling(d.second) - scaling(d.first)) > data.isoformName.length * 8 ? "visible" : "hidden";
+                    }
+                    else return "hidden";
+                });
+            position += 20;
+        }
+        for (var name in array) {
+            console.log(name);
+            fillSVGIsoform(array[name],name);
+        }
+        svgIso.attr("height", position+20 +"px");
+        console.log("ISOFORM SUPPOSED TO BE DISPLAY FFS");
+
+
+
+        //var yAxisScale = d3.scale.ordinal()
+        //    .domain([0, array.length])
+        //    .rangeRoundBands([0, 500], .1);
+        //var yAxis = d3.svg.axis()
+        //    .scale(yAxisScale)
+        //    .tickValues(array.map(function (o) {return o.isoformName})) //specify an array here for values
+        //    .tickFormat(function (d) {
+        //        return d
+        //    })
+        //    .orient("left");
+        //function addYAxis() {
+        //    yAxisSVG = svg.append("g")
+        //        .attr("class", "pro axis")
+        //        .attr("transform", "translate(0," + margin.top + ")");
+        //    updateYaxis();
+        //}
+        //function updateYaxis() {
+        //
+        //    yAxisSVGgroup = yAxisSVG
+        //        .selectAll(".yaxis")
+        //        .data(array.map(function (o) {return o.isoformName}))
+        //        .enter()
+        //        .append("g");
+        //    yAxisSVGgroup
+        //        .append("polygon")       // attach a polygon
+        //        .style("stroke", "none")  // colour the line
+        //        .style("fill", "rgba(95,46,38,0.2)")     // remove any fill colour
+        //        .attr("points", function(d) {
+        //            return (margin.left-15)+"," + (d.y -3) + ", "+ (margin.left-15)+"," + (d.y +12) + ", "+ (margin.left-7)+"," + (d.y +4.5);  // x,y points
+        //        });
+        //    yAxisSVGgroup
+        //        .append("rect")
+        //        .style("fill","rgba(95,46,38,0.2)")
+        //        .attr("x", function () {
+        //            return margin.left - 95
+        //        })
+        //        .attr("y", function (d) {
+        //            return d.y - 3
+        //        })
+        //        .attr("width", "80")
+        //        .attr("height", "15");
+        //    yAxisSVGgroup
+        //        .append("text")
+        //        .attr("class", "yaxis")
+        //        .attr("text-anchor", "end")
+        //        .attr("x", function () {
+        //            return margin.left - 20
+        //        })
+        //        .attr("y", function (d) {
+        //            return d.y + 8
+        //        })
+        //        .text(function (d) {
+        //            return d.title
+        //        });
+        //}
+    }
 
     function createSVG(sequences,isoName) {
         sequences.forEach(function (o) {
@@ -166,6 +354,93 @@
             var results = template(datas);
             $("#featuresTable").html(results);
         }
+    }
+
+
+    function testAlgoObject(isoformsMap) {
+        //Algorithm to concat exons of each isoform
+        //Tetris-like
+        var isoformsMapping = [];
+        //for (var name in isoformsMap) {
+        //    console.log(name);
+        //    isoformsMapping.push(isoformsMap[name]);
+        //}
+
+        var isoNamesSorted = Object.keys(isoformsMap).sort();
+
+        console.log(isoNamesSorted);
+        for (var name in isoNamesSorted) {
+            console.log(isoNamesSorted[name]);
+            isoformsMapping.push(isoformsMap[isoNamesSorted[name]]);
+        }
+        var meta = jQuery.extend([], isoformsMapping);
+        isoformsMapping.sort(function (a,b) {
+            var textA = a.isoformName;
+            var textB = b.isoformName;
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        });
+
+        console.log("metaaa");
+        console.log(meta);
+        var positions=[];
+        var decalage=[];
+        // GET All positions x & y into new array positions
+        for (var iso in isoformsMapping) {
+            isoformsMapping[iso].positions.forEach(function (o) {
+                positions.push(o.first, o.second);
+            })
+        }
+        //delete double in list of positions
+        positions = positions.filter(function(elem, index, self) {
+            return index == self.indexOf(elem);});
+        // sort positions
+        positions.sort(function(a,b) {return a-b});
+
+        console.log(positions);
+        //for each interval between position, check if there is something in isoforms
+        //if not, add the empty interval to array decalage
+        for (var i=0;i<positions.length-1;i++) {
+            var presence = false;
+            for (var j in isoforms) {
+                for (var k in isoformsMapping[j].positions) {
+                    if (isoformsMapping[j].positions[k].first > positions[i+1]) break;
+                    else if (isoformsMapping[j].positions[k].first<= positions[i] && isoformsMapping[j].positions[k].second >= positions[i+1]) {
+                        presence=true;
+                        break;
+                    }
+                }
+                if (presence === true) break;
+            }
+            if (presence === false) decalage.push({x:positions[i],length:positions[i+1]-positions[i]});
+        }
+        console.log(decalage);
+        ////For each "hole", apply a shift by adding the length of the hole to the values after the hole
+        ////In the same time, if i[y] == i+1[x] merge those two
+        for (var i=decalage.length-1;i>=0;i--) {
+            for (var j in isoformsMapping) {
+                for (var k=isoformsMapping[j].positions.length-1;k>=0;k--) {
+                    if (isoformsMapping[j].positions[k].first < decalage[i].x) {
+                        if (i===0 && isoformsMapping[j].positions[k+1].first === isoformsMapping[j].positions[k].second) {
+                            isoformsMapping[j].positions[k].second = isoformsMapping[j].positions[k+1].second;
+                            isoformsMapping[j].positions.splice(k+1,1);
+                        }
+                        break;
+                    }
+                    else {
+                        isoformsMapping[j].positions[k].first -= decalage[i].length;
+                        isoformsMapping[j].positions[k].second -= decalage[i].length;
+                    }
+                    if (k !=isoformsMapping[j].positions.length-1 && isoformsMapping[j].positions[k+1].first === isoformsMapping[j].positions[k].second) {
+                        isoformsMapping[j].positions[k].second = isoformsMapping[j].positions[k+1].second;
+                        isoformsMapping[j].positions.splice(k+1,1);
+                    }
+                }
+            }
+        }
+        //console.log(positions);
+        //console.log(decalage);
+        console.log(isoformsMapping);
+        return isoformsMapping;
     }
 
     function featureSelection() {
@@ -292,7 +567,7 @@
     $(function () {
         var startTime = new Date().getTime();
         Promise.all([nx.getProteinSequence(entry), nx.getProPeptide(entry), nx.getMatureProtein(entry), nx.getSignalPeptide(entry), nx.getDisulfideBond(entry), nx.getInitMeth(entry), nx.getInteractingRegion(entry),
-            nx.getModifResidue(entry), nx.getCrossLink(entry), nx.getGlycoSite(entry), nx.getMiscellaneousSite(entry), nx.getActiveSite(entry), nx.getMetalBindingSite(entry), nx.getVariant(entry)]).then(function (oneData) {
+            nx.getModifResidue(entry), nx.getCrossLink(entry), nx.getGlycoSite(entry), nx.getMiscellaneousSite(entry), nx.getActiveSite(entry), nx.getMetalBindingSite(entry), nx.getVariant(entry),nx.getIsoformMapping(entry)]).then(function (oneData) {
             var endTime2 = new Date().getTime();
             var time2 = endTime2 - startTime;
             console.log('Execution time: ' + time2);
@@ -313,12 +588,17 @@
 
             ];
 
-            for (var i=1; i<oneData.length;i++) {
+            for (var i=1; i<oneData.length-1;i++) {
                 var feat = NXUtils.convertMappingsToIsoformMap(oneData[i],featuresName[i]);
                 featuresByIsoform.push(feat);
                 var featForViewer = NXViewerUtils.convertNXAnnotations(feat,metaData[i-1]);
                 featuresForViewer.push(featForViewer);
             }
+
+            isoformMapping = testAlgoObject(oneData[oneData.length-1]);
+            console.log(isoformMapping);
+            displayIsoform(isoformMapping,"#isoformDisplayed",isoName);
+            toggleIsoformMap();
 
             addFiltering();
             createSVG(isoforms,isoName);

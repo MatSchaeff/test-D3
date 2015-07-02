@@ -690,7 +690,7 @@ function FeatureViewer(sequence, div,options) {
 
         var seq = displaySequence(extentLength);
         if (!brush.empty() && extentLength > 5) {
-            var zoomScale = (sequence.length / extentLength).toFixed(2);
+            var zoomScale = (sequence.length / extentLength).toFixed(1);
             $(".zoomUnit").text(zoomScale.toString());
 
             if (SVGOptions.showSequence && seq && svgContainer.selectAll(".AA").empty()) {

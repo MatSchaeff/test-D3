@@ -238,3 +238,6 @@ a:focus {
     -webkit-transition: color,background 500ms ease;
     transition: color,background 500ms ease;
 }
+.isoSelected{
+    fill:#74EB78 !important;
+}

@@ -14,7 +14,7 @@
         //?default-graph-uri=&named-graph-uri=&output=json
 
         var tempApiUrl = "http://mac-098:8080/nextprot-api-web/entry/";
-        var nextprotApiUrl = "https://api.nextprot.org/entry/";
+        var nextprotApiUrl = "http://dev-api.nextprot.org/entry/";
         var sparqlEndpoint = "https://api.nextprot.org/sparql";
         var sparqlFormat = "?output=json";
         var sparqlPrefixes = "PREFIX :<http://nextprot.org/rdf#> "+
@@ -195,7 +195,7 @@
         };
 
         NextprotClient.prototype.getProPeptide = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "maturation-peptide").then(function (data){
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "propeptide").then(function (data){
                 return data.entry.annotations;
             });
         };
