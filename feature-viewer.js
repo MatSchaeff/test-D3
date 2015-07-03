@@ -69,7 +69,7 @@ function FeatureViewer(sequence, div,options) {
                     "font": '10px sans-serif',
                     'text-align':'center',
                     position: 'absolute',
-                    'z-index': 1001,
+                    'z-index': 45,
                     'box-shadow': '0 1px 2px 0 #656565'
                 });
                 if (object.type === "path") {

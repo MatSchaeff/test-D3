@@ -13,7 +13,7 @@
 
         //?default-graph-uri=&named-graph-uri=&output=json
 
-        var tempApiUrl = "http://mac-098:8080/nextprot-api-web/entry/";
+        var tempApiUrl = "http://alpha-api.nextprot.org//entry/";
         var nextprotApiUrl = "http://dev-api.nextprot.org/entry/";
         var sparqlEndpoint = "https://api.nextprot.org/sparql";
         var sparqlFormat = "?output=json";
@@ -115,7 +115,7 @@
             return new Promise(function(resolve, reject) {
 
                 var req = new XMLHttpRequest();
-                var url = tempApiUrl + entryName + "/" + context + ".json" + "?clientInfo=" + clientInfo + "&applicationName=" + applicationName;
+                var url = nextprotApiUrl + entryName + "/" + context + ".json" + "?clientInfo=" + clientInfo + "&applicationName=" + applicationName;
                 req.open("GET", url);
 
                 req.onload = function() {

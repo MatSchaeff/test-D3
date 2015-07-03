@@ -198,7 +198,6 @@ function Sequence(sequence,isoformName) {
     }
 
     function addSequenceSearch() {
-        console.log($("#sequenceHeader"));
         $("#sequenceHeader").append('<input id=\"inputSearchSeq\" type=\"text\" class=\"form-control pull-right\" style=\"width:40%;margin-top:3px;\" placeholder=\"Search in sequence.. (Regex supported)\">');
         sequenceSearch();
 

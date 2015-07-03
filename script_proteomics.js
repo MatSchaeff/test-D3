@@ -56,10 +56,10 @@
     function toggleIsoformMap() {
         $(function () {
             $("#isoformMap").click(function () {
-                $("#isoformDisplayed").toggle("slow");
+                $("#isoformDisplayed #isoContainer").toggle("slow");
             });
 
-            $("#isoformDisplayed").hide();
+            $("#isoformDisplayed #isoContainer").hide();
         });
     }
     var getInfoForIsoform = {
@@ -98,7 +98,11 @@
     };
 
     function displayIsoform(array,divIsoform,isoIdentifier) {
-        $(divIsoform).html("");
+        $(divIsoform + " #isoContainer").html("");
+        if (!$('#isoContainer').length > 0 ) {
+            $(divIsoform).append("<div id=\"isoContainer\"></div>");
+        }
+
         //ft2 = new FeatureViewer(33000, "#isoformDisplayed", {
         //    showAxis: true,
         //    showSequence: false,
@@ -135,7 +139,7 @@
         console.log("ISOFORM SUPPOSED TO BE DISPLAY FFS");
         var position = 20;
 
-        var margin = {top: 10, right: 50, bottom: 60, left: 50},
+        var margin = {top: 10, right: 50, bottom: 0, left: 50},
             width = $(divIsoform).width() - margin.left - margin.right - 17,
             height = 200 - margin.top - margin.bottom;
         var coverageLength = 33000;
@@ -152,7 +156,7 @@
                 return d.y + 6;
             });
 
-        var svgIso = d3.select(divIsoform).append("svg")
+        var svgIso = d3.select(divIsoform+" #isoContainer").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .style("z-index","2");
@@ -221,7 +225,7 @@
             console.log(name);
             fillSVGIsoform(array[name],name);
         }
-        svgIso.attr("height", position+20 +"px");
+        svgIso.attr("height", position+10 +"px");
         console.log("ISOFORM SUPPOSED TO BE DISPLAY FFS");
 
 
