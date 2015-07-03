@@ -43,7 +43,7 @@ a:focus {
 }
 
 .active {
-    z-index: 1 !important;
+    z-index: 1;
 }
 .brush .extent{
     stroke: #fff;
