@@ -14,6 +14,7 @@
     var featuresByIsoform = [];
     var genomicMappings = [];
     var selectedRect;
+    var iFrameWidth=0;
     var filterOptions = {
         processing: true,
         region: true,
@@ -81,8 +82,18 @@
             addFeatures(isoID);
             fillTable(isoID);
             applyFiltering();
-            adjustHeight(".left-side",".right-side");
-            adjustHeight("#seqViewer","#featuresTable");
+            /*
+             var startTime2 = new Date().getTime();
+             adjustHeight(".left-side",".right-side");
+             var endTime2 = new Date().getTime();
+             var time2 = endTime2 - startTime2;
+             console.log('Execution time: ' + time2);
+             var startTime3 = new Date().getTime();
+             adjustHeight("#seqViewer","#featuresTable");
+             var endTime3 = new Date().getTime();
+             var time3 = endTime3 - startTime3;
+             console.log('Execution time: ' + time3);
+             */
             featureSelection();
             inverseSelection();
             displayIsoform(isoformMapping,"#isoformDisplayed",isoID);
@@ -137,10 +148,12 @@
         //})));
         console.log(max);
         console.log("ISOFORM SUPPOSED TO BE DISPLAY FFS");
+        //console.log($(divIsoform).width());
         var position = 20;
 
+        //$(divIsoform).width()
         var margin = {top: 10, right: 50, bottom: 0, left: 50},
-            width = $(divIsoform).width() - margin.left - margin.right - 17,
+            width =  iFrameWidth - margin.left - margin.right - 17,
             height = 200 - margin.top - margin.bottom;
         var coverageLength = 33000;
         var scaling = d3.scale.linear()
@@ -349,6 +362,7 @@
 
     }
     function fillTable(isoName) {
+
         if ($("#featuresTable").length > 0) {
             var number = 0;
             var features = [];
@@ -358,6 +372,7 @@
                 if (length === 1) return this.start;
                 else return this.start + " - " + this.end;
         });
+
         Handlebars.registerHelper('className', function (category, options) {
             return category.replace(' ','');
         });
@@ -582,7 +597,7 @@
         });
     }
     function applyFiltering() {
-
+/*
         if ($("#processing").prop("checked")) {
             $(".Propeptide").show();
             $(".Matureprotein").show();
@@ -637,6 +652,8 @@
             $(".Interactingregion").hide();
             filterOptions.region = false;
         }
+        */
+
     }
     //function mappingIsoformByExons(mapping) {
     //    var minForEach = [];
@@ -707,6 +724,8 @@
             console.log('Execution time: ' + time2);
             isoforms=oneData[0];
             nxIsoformChoice(oneData[0]);
+
+            iFrameWidth =$("#visuContainer").width();
             
 
 
@@ -732,11 +751,24 @@
             createSVG(isoforms,isoName);
             addFeatures(isoName);
             fillTable(isoName);
+            /*
+            var startTime2 = new Date().getTime();
             adjustHeight(".left-side",".right-side");
+            var endTime2 = new Date().getTime();
+            var time2 = endTime2 - startTime2;
+            console.log('Execution time: ' + time2);
+            var startTime3 = new Date().getTime();
             adjustHeight("#seqViewer","#featuresTable");
+            var endTime3 = new Date().getTime();
+            var time3 = endTime3 - startTime3;
+            console.log('Execution time: ' + time3);
+            */
             featureSelection();
             inverseSelection();
             toggleFiltering();
+
+
+
 
             var endTime = new Date().getTime();
             var time = endTime - startTime;

@@ -89,6 +89,7 @@ function Sequence(sequence,isoformName) {
     }
 
     function multiHighlighting(ArrayHL, color, options) {
+        var startTime2 = new Date().getTime();
         if (ArrayHL.length === 0) {
             console.log("empty!!!");
             $(divID + " #fastaSeq").html(seqInit);
@@ -108,6 +109,8 @@ function Sequence(sequence,isoformName) {
             $(divID + " #fastaSeq").html(seqTemp);
 
         }
+        var time2 = new Date().getTime() - startTime2;
+        console.log('fill table 3 time: ' + time2);
     }
 
     function addLegend(hashLegend) {
@@ -211,14 +214,12 @@ function Sequence(sequence,isoformName) {
                 var match;
                 var matches = [];
                 while (( match = text2.exec(sequence) ) != null) {
-                    console.log(match);
                     matches.push({start: match.index, end: match.index + match[0].length});
                 }
                 matches.sort(function (a, b) {
                     return b.start - a.start;
                 });
                 multiHighlighting(matches, "#C50063");
-                console.log(matches);
             }
             else {
                 $(divID + " #fastaSeq").html(seqInit);
