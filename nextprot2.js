@@ -274,6 +274,35 @@
             });
         };
 
+        NextprotClient.prototype.getLipidationSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "lipidation-site").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getTopologicalDomain = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "topological-domain").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getTransmembraneRegion = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "transmembrane-region").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getMutagenesis = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "mutagenesis").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getSequenceConflict = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "sequence-conflict").then(function (data){
+                return data.entry.annotations;
+            });
+        };
 
         //node.js compatibility
         if (typeof exports !== 'undefined') {
@@ -332,7 +361,7 @@ var NXUtils = {
         else if (description) return description;
         else return "";
     },
-    convertMappingsToIsoformMap:function (mappings, category){
+    convertMappingsToIsoformMap:function (mappings, category,group){
         var result = {};
         mappings.forEach(function (mapping) {
             if (mapping.hasOwnProperty("targetingIsoformsMap")) {
@@ -356,6 +385,7 @@ var NXUtils = {
                             id: category.replace(/\s/g,'')+"_"+start.toString()+"_"+end.toString(),
                             description: description,
                             category: category,
+                            group:group,
                             link: link,
                             evidence: evidence,
                             evidenceLength: evidence.length
@@ -401,6 +431,7 @@ var NXUtils = {
                                         id: category.replace(/\s/g, '') + "_" + start.toString() + "_" + end.toString(),
                                         description: description,
                                         category: category,
+                                        group:group,
                                         link: link,
                                         evidence: evidence,
                                         evidenceLength: evidence.length

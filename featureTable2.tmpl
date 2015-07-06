@@ -12,7 +12,7 @@
             <th data-sort="int" class="col-md-1"  style="text-align:right">Length</th>
             <th data-sort="int" style="text-align:center" class="col-md-2">Position</th>
             <th data-sort="string" class="col-md-5">Description</th>
-            <th data-sort="string" colspan="2" class="col-md-2">Evidence</th>
+            <th data-sort="string" style="text-align:center" colspan="2" class="col-md-2">Evidence</th>
         </tr>
         </thead>
         <tbody>
@@ -23,12 +23,13 @@
             <td style="text-align:right">{{length}}</td>
             <td style="text-align:center"><a class="featPosition" href="javascript:;">{{{position length}}}</a></td>
             <td>{{{link}}}</td>
-            <td><span style="background:#7CBA0F;padding:3px 7px;color:white;vertical-align: top">{{evidenceLength}}</span></td>
-            <td>
-             {{#each evidence}}
-                <div>{{this}}</div>
-                {{/each}}
-            </td>
+            <td style="text-align:right"><span style="background:#7CBA0F;padding:3px 7px;color:white;vertical-align:top">{{evidenceLength}}</span></td>
+            <td><span style="color:black;">Evidences</span></td>
+            <!--<td>-->
+             <!--{{#each evidence}}-->
+                <!--<div>{{this}}</div>-->
+                <!--{{/each}}-->
+            <!--</td>-->
         </tr>{{/each}}{{/each}}</tbody>
     </table>
 </div>
