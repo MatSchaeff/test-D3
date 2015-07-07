@@ -14,7 +14,7 @@
         //?default-graph-uri=&named-graph-uri=&output=json
 
         var tempApiUrl = "http://alpha-api.nextprot.org//entry/";
-        var nextprotApiUrl = "http://dev-api.nextprot.org/entry/";
+        var nextprotApiUrl = "http://mac-097:8080/nextprot-api-web/entry/";
         var sparqlEndpoint = "https://api.nextprot.org/sparql";
         var sparqlFormat = "?output=json";
         var sparqlPrefixes = "PREFIX :<http://nextprot.org/rdf#> "+
@@ -304,6 +304,115 @@
             });
         };
 
+        NextprotClient.prototype.getPeroxisomeTransitPeptide = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "peroxisome-transit-peptide").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getMitochondrialTransitPeptide = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "mitochondrial-transit-peptide").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getSelenocysteine = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "selenocysteine").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+
+        NextprotClient.prototype.getMiscellaneousRegion = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "miscellaneous-region").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getDomain = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "domain").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getRepeat = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "repeat").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getCalciumBinding = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "calcium-binding-region").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getZincFinger = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "zinc-finger-region").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getDnaBinding = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "dna-binding-region").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getMotif = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "short-sequence-motif").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getBiasedRegion = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "compositionally-biased-region").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getNucleotideBinding = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "nucleotide-phosphate-binding-region").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getCoiledCoilRegion = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "coiled-coil-region").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getBindingSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "binding-site").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getCleavageSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "cleavage-site").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getBetaStrand = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "beta-strand").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getHelix = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "helix").then(function (data){
+                return data.entry.annotations;
+            });
+        };
+
+        NextprotClient.prototype.getTurn = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "turn").then(function (data){
+                return [data.entry.annotations, data.entry.publications];
+            });
+        };
+
         //node.js compatibility
         if (typeof exports !== 'undefined') {
             exports.Client = NextprotClient;
@@ -373,9 +482,10 @@ var NXUtils = {
                             description = mapping.description,
                             evidence = mapping.evidences.map(function(d) {return d.assignedBy}).filter(function(item, pos, self) {
                                 return self.indexOf(item) == pos;});
-                        if (mapping.hasOwnProperty("apicategory") && mapping.apicategory === "VARIANT") {
-                            link = "<span style='color:green'>" + mapping.variant.original + " → " +  mapping.variant.variant + "</span>";
-                            description = mapping.variant.original + " → " +  mapping.variant.variant;
+                        if (mapping.hasOwnProperty("variant") && !jQuery.isEmptyObject(mapping.variant)) {
+                            link = "<span style='color:#00C500'>" + mapping.variant.original + " → " +  mapping.variant.variant + "</span>";
+                            description = "<span style=\"color:#00C500\">" + mapping.variant.original + " → " +  mapping.variant.variant + "</span>  ";
+                            if (mapping.variant.description) description += mapping.variant.description;
                         }
                         if (!result[name]) result[name] = [];
                         result[name].push({

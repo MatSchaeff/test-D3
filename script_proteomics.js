@@ -729,7 +729,7 @@
             nx.getSrmPeptide(entry),nx.getIsoformMapping(entry)]).then(function (oneData) {
 
             var featuresName = ["Sequence",         "Propeptide",             "Mature protein",          "Signal peptide",           "Disulfide bonds",
-                "Antibody",         "Initiator meth",       "Modified r esidue",         "Cross-link",           "Glycosylation",        "Peptide",
+                "Antibody",         "Initiator meth",       "Modified residue",         "Cross-link",           "Glycosylation",        "Peptide",
                 "Srm peptide"];
 
 

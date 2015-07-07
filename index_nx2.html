@@ -177,7 +177,7 @@
                                 <li id="tabSequence"><a href="javascript:void(0)" data-toggle="tab">Sequence</a></li>
                                 <li id="tabProteomics" class="active"><a href="javascript:void(0)" data-toggle="tab">Proteomics</a>
                                 </li>
-                                <li><a href="javascript:void(0)" data-toggle="tab">Structures</a></li>
+                                <li id="tabStructure"><a href="javascript:void(0)" data-toggle="tab">Structures</a></li>
                                 <li><a href="javascript:void(0)" data-toggle="tab">Identifiers</a></li>
                             </ul>
                         </div>
@@ -295,6 +295,9 @@
     });
     $("#tabProteomics").click(function () {
         $("#iframeView").attr("src", "proteomics.html?nxentry=" + entry);
+    });
+    $("#tabStructure").click(function () {
+        $("#iframeView").attr("src", "structure.html?nxentry=" + entry);
     })
 </script>
 <!-- Footer
