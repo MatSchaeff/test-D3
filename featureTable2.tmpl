@@ -23,8 +23,16 @@
             <td style="text-align:right">{{length}}</td>
             <td style="text-align:center"><a class="featPosition" href="javascript:;">{{{position length}}}</a></td>
             <td>{{{link}}}</td>
+            {{#if evidence}}
             <td style="text-align:right"><span style="background:#7CBA0F;padding:3px 7px;color:white;vertical-align:top">{{evidenceLength}}</span></td>
             <td><span style="color:black;">Evidences</span></td>
+            {{else}}
+            <td></td>
+            <td></td>
+            {{/if}}
+        </tr>
+        <tr style="">
+            <td colspan="6" style="word-break: break-all">{{#each source}}{{publicationMD5}}{{publicationMD5}}{{publicationMD5}}{{publicationMD5}}{{publicationMD5}}{{publicationMD5}}{{/each}}</td>
             <!--<td>-->
              <!--{{#each evidence}}-->
                 <!--<div>{{this}}</div>-->

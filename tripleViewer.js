@@ -36,6 +36,8 @@ function TripleViewer(entry) {
                     return listIsoforms;
                 }())
             };
+            console.log(datas);
+            isoName = datas.isoforms.visible[0].uniqueName;
             var template = HBtemplates['isoformChoice.tmpl'];
             var results = template(datas);
             $("#nx-isoformChoice").append(results);
@@ -72,6 +74,7 @@ function TripleViewer(entry) {
         },
         init: function (oneData,metaData) {
             isoforms=oneData[0];
+            console.log(oneData[0]);
             nxIsoformChoice(oneData[0]);
 
             iFrameWidth =$("#visuContainer").width();

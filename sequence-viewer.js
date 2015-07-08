@@ -50,7 +50,6 @@ function Sequence(sequence,isoformName) {
         $(divId).html(html);
 
         if (!(options.wrapAminoAcids === false)) {
-            console.log($('#fastaSeq').html());
             sequenceLayout(divId + " #fastaSeq");
         }
         else $(divId + " #scroller").css("overflow-x", "auto");
@@ -91,26 +90,23 @@ function Sequence(sequence,isoformName) {
     function multiHighlighting(ArrayHL, color, options) {
         var startTime2 = new Date().getTime();
         if (ArrayHL.length === 0) {
-            console.log("empty!!!");
             $(divID + " #fastaSeq").html(seqInit);
         }
         var hlSeq = seqInit;
         var seqTemp = hlSeq.toString();
+        console.log("length : " + ArrayHL.length);
+        var positionStart=0;
+        var positionEnd=0;
         for (i in ArrayHL) {
-            var positions = [ArrayHL[i].start, ArrayHL[i].end];
-            positions[0] = positions[0] + ~~(positions[0] / 10) + 4 * (~~(positions[0] / lineJump));
-            positions[1] = positions[1] + ~~(positions[1] / 10) + 4 * (~~(positions[1] / lineJump));
-
-            seqTemp = seqTemp.substring(0, positions[0]) +
+            positionStart=jTranslation(ArrayHL[i].start);
+            positionEnd=jTranslation(ArrayHL[i].end);
+            seqTemp = seqTemp.substring(0, positionStart) +
             "<span class='stringsSelected' style=\"background:" + color + ";color:white;\">" +
-            seqTemp.substring(positions[0], positions[1]) +
+            seqTemp.substring(positionStart, positionEnd) +
             "</span>" +
-            seqTemp.substring(positions[1], seqTemp.length);
-            $(divID + " #fastaSeq").html(seqTemp);
-
+            seqTemp.substring(positionEnd, seqTemp.length);
         }
-        var time2 = new Date().getTime() - startTime2;
-        console.log('fill table 3 time: ' + time2);
+        $(divID + " #fastaSeq").html(seqTemp);
     }
 
     function addLegend(hashLegend) {
@@ -207,19 +203,23 @@ function Sequence(sequence,isoformName) {
     }
 
     function sequenceSearch() {
-        $("#inputSearchSeq").keyup(function () {
+        $("#inputSearchSeq").keyup(function() {
             var text = $(this).val();
             if (text !== "") {
                 var text2 = new RegExp(text, "gi");
                 var match;
                 var matches = [];
+                console.log("while begin");
                 while (( match = text2.exec(sequence) ) != null) {
                     matches.push({start: match.index, end: match.index + match[0].length});
                 }
+                console.log("while finished");
                 matches.sort(function (a, b) {
                     return b.start - a.start;
                 });
+                console.log("matches sorted");
                 multiHighlighting(matches, "#C50063");
+                console.log("matches highlighted");
             }
             else {
                 $(divID + " #fastaSeq").html(seqInit);

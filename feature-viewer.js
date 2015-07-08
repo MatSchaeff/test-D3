@@ -517,7 +517,10 @@ function FeatureViewer(sequence, div,options) {
                 .attr("class", "element "+object.className)
                 .attr("id", function(d) { return "f"+d.id })
                 .attr("x", function (d) { return scaling(d.x-0.5) })
-                .attr("width", uniqueWidth)
+                .attr("width", function(d) {
+                    if (scaling(1) < 2) return 2;
+                    else return scaling(1);
+                })
                 .attr("height", 12)
                 .style("fill", object.color)
                 .style("z-index", "3")
@@ -634,7 +637,8 @@ function FeatureViewer(sequence, div,options) {
                     return scaling(d.x-0.5)
                 })
                 .attr("width", function (d) {
-                    return scaling(d.x+0.5) - scaling(d.x-0.5)
+                    if (scaling(d.x+0.5) - scaling(d.x-0.5) < 2) return 2;
+                    else return scaling(d.x+0.5) - scaling(d.x-0.5);
                 });
         },
         path: function (object) {
@@ -689,7 +693,7 @@ function FeatureViewer(sequence, div,options) {
         else var start = parseInt(extent[1] + 1), end = parseInt(extent[0] - 1);
 
         var seq = displaySequence(extentLength);
-        if (!brush.empty() && extentLength > 5) {
+        if (!brush.empty() && extentLength > 50) {
             var zoomScale = (sequence.length / extentLength).toFixed(1);
             $(".zoomUnit").text(zoomScale.toString());
 

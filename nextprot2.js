@@ -213,7 +213,8 @@
         };
         NextprotClient.prototype.getInitMeth= function(entry) {
             return _callURL(normalizeEntry(entry || this.getEntryName()), "initiator-methionine").then(function (data){
-                return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:data.entry.publications};
+                //return data.entry.annotations;
             });
         };
         NextprotClient.prototype.getModifResidue = function(entry) {
@@ -470,7 +471,14 @@ var NXUtils = {
         else if (description) return description;
         else return "";
     },
-    convertMappingsToIsoformMap:function (mappings, category,group){
+    convertMappingsToIsoformMap:function (featMappings, category,group){
+        console.log(featMappings);
+        var mappings = jQuery.extend([], featMappings);
+        if (!(featMappings instanceof Array)) {
+            mappings = jQuery.extend([], featMappings.annot);
+            console.log("GOOOOOOOOOOOT OOOOONE !!!!!!!!!!!!!!!!!!!!!!!!!!")
+        }
+        //console.log(mmappings);
         var result = {};
         mappings.forEach(function (mapping) {
             if (mapping.hasOwnProperty("targetingIsoformsMap")) {
@@ -481,7 +489,12 @@ var NXUtils = {
                             link = NXUtils.getLinkForFeature(mapping.cvTermAccessionCode, mapping.description),
                             description = mapping.description,
                             evidence = mapping.evidences.map(function(d) {return d.assignedBy}).filter(function(item, pos, self) {
-                                return self.indexOf(item) == pos;});
+                                return self.indexOf(item) == pos;}),
+                            source = mapping.evidences.map(function (d) {return {
+                                evidenceCodeName: d.evidenceCodeName,
+                                assignedBy: d.assignedBy,
+                                publicationMD5: d.publicationMD5
+                            }});
                         if (mapping.hasOwnProperty("variant") && !jQuery.isEmptyObject(mapping.variant)) {
                             link = "<span style='color:#00C500'>" + mapping.variant.original + " → " +  mapping.variant.variant + "</span>";
                             description = "<span style=\"color:#00C500\">" + mapping.variant.original + " → " +  mapping.variant.variant + "</span>  ";
@@ -498,7 +511,8 @@ var NXUtils = {
                             group:group,
                             link: link,
                             evidence: evidence,
-                            evidenceLength: evidence.length
+                            evidenceLength: evidence.length,
+                            source:source
                         });
                     }
                 }
@@ -512,12 +526,20 @@ var NXUtils = {
                                         end = mapping.isoformSpecificity[name].positions[i].second,
                                         evidence = "",
                                         description = "",
-                                        link = "";
-                                    if (mapping.hasOwnProperty("evidences")) evidence = mapping.evidences.map(function (d) {
-                                        return d.assignedBy
-                                    }).filter(function (item, pos, self) {
-                                        return self.indexOf(item) == pos;
-                                    });
+                                        link = "",
+                                        source = [];
+                                    if (mapping.hasOwnProperty("evidences")) {
+                                        source = mapping.evidences.map(function (d) {return {
+                                            evidenceCodeName: d.evidenceCodeName,
+                                            assignedBy: d.assignedBy,
+                                            publicationMD5: d.publicationMD5
+                                        }});
+                                        evidence = mapping.evidences.map(function (d) {
+                                            return d.assignedBy
+                                        }).filter(function (item, pos, self) {
+                                            return self.indexOf(item) == pos;
+                                        });
+                                    }
                                     else evidence = [mapping.assignedBy];
                                     if (mapping.hasOwnProperty("xrefs")) {
                                         description = mapping.xrefs[0].accession;
@@ -544,7 +566,8 @@ var NXUtils = {
                                         group:group,
                                         link: link,
                                         evidence: evidence,
-                                        evidenceLength: evidence.length
+                                        evidenceLength: evidence.length,
+                                        source:source
                                     });
                                 }
                             }
@@ -557,6 +580,7 @@ var NXUtils = {
                 return a.start - b.start;
             })
         }
+        console.log(result);
         return result;
     },
     convertExonsMappingsToIsoformMap:function (mappings) {
