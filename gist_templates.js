@@ -47,7 +47,7 @@ this["HBtemplates"]["featureTable2.tmpl"] = Handlebars.template({"1":function(de
     + alias3(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"id","hash":{},"data":data}) : helper)))
     + " class=\""
     + ((stack1 = (helpers.className || (depth0 && depth0.className) || alias1).call(depth0,(depth0 != null ? depth0.category : depth0),{"name":"className","hash":{},"data":data})) != null ? stack1 : "")
-    + "\" >\n            <td>"
+    + " general-info\" >\n            <td>"
     + alias3(((helper = (helper = helpers.category || (depth0 != null ? depth0.category : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"category","hash":{},"data":data}) : helper)))
     + "</td>\n            <td style=\"text-align:right\">"
     + alias3(((helper = (helper = helpers.length || (depth0 != null ? depth0.length : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"length","hash":{},"data":data}) : helper)))
@@ -56,8 +56,10 @@ this["HBtemplates"]["featureTable2.tmpl"] = Handlebars.template({"1":function(de
     + "</a></td>\n            <td>"
     + ((stack1 = ((helper = (helper = helpers.link || (depth0 != null ? depth0.link : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"link","hash":{},"data":data}) : helper))) != null ? stack1 : "")
     + "</td>\n"
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.evidence : depth0),{"name":"if","hash":{},"fn":this.program(3, data, 0),"inverse":this.program(5, data, 0),"data":data})) != null ? stack1 : "")
-    + "        </tr>\n        <tr style=\"\">\n            <td colspan=\"6\" style=\"word-break: break-all\">"
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.source : depth0),{"name":"if","hash":{},"fn":this.program(3, data, 0),"inverse":this.program(5, data, 0),"data":data})) != null ? stack1 : "")
+    + "        </tr>\n        <tr class=\""
+    + ((stack1 = (helpers.className || (depth0 && depth0.className) || alias1).call(depth0,(depth0 != null ? depth0.category : depth0),{"name":"className","hash":{},"data":data})) != null ? stack1 : "")
+    + " detailed-info\">\n            <td colspan=\"6\" style=\"word-break: break-all\">"
     + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.source : depth0),{"name":"each","hash":{},"fn":this.program(7, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "</td>\n            <!--<td>-->\n             <!--"
     + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.evidence : depth0),{"name":"each","hash":{},"fn":this.program(9, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
@@ -65,20 +67,21 @@ this["HBtemplates"]["featureTable2.tmpl"] = Handlebars.template({"1":function(de
 },"3":function(depth0,helpers,partials,data) {
     var helper;
 
-  return "            <td style=\"text-align:right\"><span style=\"background:#7CBA0F;padding:3px 7px;color:white;vertical-align:top\">"
+  return "            <td style=\"text-align:right\"><span class=\"evidenceNumber\">"
     + this.escapeExpression(((helper = (helper = helpers.evidenceLength || (depth0 != null ? depth0.evidenceLength : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"evidenceLength","hash":{},"data":data}) : helper)))
     + "</span></td>\n            <td><span style=\"color:black;\">Evidences</span></td>\n";
 },"5":function(depth0,helpers,partials,data) {
     return "            <td></td>\n            <td></td>\n";
 },"7":function(depth0,helpers,partials,data) {
-    var helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
+    var helper, alias1=helpers.helperMissing, alias2=this.escapeExpression, alias3="function";
 
-  return alias3(((helper = (helper = helpers.publicationMD5 || (depth0 != null ? depth0.publicationMD5 : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"publicationMD5","hash":{},"data":data}) : helper)))
-    + alias3(((helper = (helper = helpers.publicationMD5 || (depth0 != null ? depth0.publicationMD5 : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"publicationMD5","hash":{},"data":data}) : helper)))
-    + alias3(((helper = (helper = helpers.publicationMD5 || (depth0 != null ? depth0.publicationMD5 : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"publicationMD5","hash":{},"data":data}) : helper)))
-    + alias3(((helper = (helper = helpers.publicationMD5 || (depth0 != null ? depth0.publicationMD5 : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"publicationMD5","hash":{},"data":data}) : helper)))
-    + alias3(((helper = (helper = helpers.publicationMD5 || (depth0 != null ? depth0.publicationMD5 : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"publicationMD5","hash":{},"data":data}) : helper)))
-    + alias3(((helper = (helper = helpers.publicationMD5 || (depth0 != null ? depth0.publicationMD5 : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"publicationMD5","hash":{},"data":data}) : helper)));
+  return "<div class=\"evidenceLine\"><div class=\"evidenceArrow\">&#10549;</div>  Evidence "
+    + alias2((helpers.math || (depth0 && depth0.math) || alias1).call(depth0,(data && data.index),"+",1,{"name":"math","hash":{},"data":data}))
+    + "<span class=\"evidenceCodeName\">"
+    + alias2(((helper = (helper = helpers.evidenceCodeName || (depth0 != null ? depth0.evidenceCodeName : depth0)) != null ? helper : alias1),(typeof helper === alias3 ? helper.call(depth0,{"name":"evidenceCodeName","hash":{},"data":data}) : helper)))
+    + "</span>\n            <span class=\"evidenceSource\">"
+    + alias2(((helper = (helper = helpers.assignedBy || (depth0 != null ? depth0.assignedBy : depth0)) != null ? helper : alias1),(typeof helper === alias3 ? helper.call(depth0,{"name":"assignedBy","hash":{},"data":data}) : helper)))
+    + "</span></div>";
 },"9":function(depth0,helpers,partials,data) {
     return "-->\n                <!--<div>"
     + this.escapeExpression(this.lambda(depth0, depth0))

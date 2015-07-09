@@ -241,3 +241,35 @@ a:focus {
 .isoSelected{
     fill:#74EB78 !important;
 }
+.evidenceNumber{
+    background:#7CBA0F;
+    padding:3px 7px;
+    color:white;
+    vertical-align:top;
+    cursor: pointer;
+}
+.detailed-info{
+    display:none;
+}
+.evidenceArrow{
+    -ms-transform: rotate(180deg); /* IE 9 */
+    -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+    transform: rotate(180deg);
+    display:inline-block;
+    font-weight:900;
+}
+.evidenceCodeName{
+    background-color: #7cba0f;
+    color:white;
+    padding:2px 6px;
+    border-radius: 2px;
+    margin-left:5px;
+}
+.evidenceLine{
+    margin:10px;
+}
+.evidenceSource{
+    background-color: #dedede;
+    color:#999;
+    padding:2px 6px;
+}

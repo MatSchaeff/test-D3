@@ -177,13 +177,13 @@
         };
 
         NextprotClient.prototype.getPeptide = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "peptide").then(function (data){
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "peptide-mapping").then(function (data){
                 return data.entry.peptideMappings;
             });
         };
 
         NextprotClient.prototype.getSrmPeptide = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "srm-peptide").then(function (data){
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "srm-peptide-mapping").then(function (data){
                 return data.entry.srmPeptideMappings;
             });
         };
@@ -472,7 +472,6 @@ var NXUtils = {
         else return "";
     },
     convertMappingsToIsoformMap:function (featMappings, category,group){
-        console.log(featMappings);
         var mappings = jQuery.extend([], featMappings);
         if (!(featMappings instanceof Array)) {
             mappings = jQuery.extend([], featMappings.annot);
@@ -511,7 +510,7 @@ var NXUtils = {
                             group:group,
                             link: link,
                             evidence: evidence,
-                            evidenceLength: evidence.length,
+                            evidenceLength: source.length,
                             source:source
                         });
                     }
@@ -566,7 +565,7 @@ var NXUtils = {
                                         group:group,
                                         link: link,
                                         evidence: evidence,
-                                        evidenceLength: evidence.length,
+                                        evidenceLength: source.length,
                                         source:source
                                     });
                                 }
@@ -582,6 +581,20 @@ var NXUtils = {
         }
         console.log(result);
         return result;
+    },
+    convertPublications: function (publi, HashMD5) {
+        console.log(publi);
+        for (var pub in publi) {
+            HashMD5[publi[pub].md5]= {
+                title:publi[pub].title,
+                author:publi[pub].authors.map(function (d) { return {lastName: d.lastName, initials: d.initials}}),
+                journal:publi[pub].cvJournal.name,
+                volume:publi[pub].volume,
+                abstract:publi[pub].abstractText
+            }
+        }
+        console.log(HashMD5);
+
     },
     convertExonsMappingsToIsoformMap:function (mappings) {
         return mappings.map( function (d) {

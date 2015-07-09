@@ -13,6 +13,7 @@ function TripleViewer(entry) {
     var isoformMapping;
     var featuresForViewer= [];
     var featuresByIsoform = [];
+    var publications = {};
     var iFrameWidth=0;
     var activeFiltering;
     var filterOptions = {
@@ -82,6 +83,11 @@ function TripleViewer(entry) {
             for (var i=1; i<oneData.length-1;i++) {
                 var feat = NXUtils.convertMappingsToIsoformMap(oneData[i],metaData[i].name,metaData[i].filter);
                 featuresByIsoform.push(feat);
+                if (!(oneData[i] instanceof Array)) {
+                    console.log("BANANA !");
+                    NXUtils.convertPublications(oneData[i].publi, publications);
+                    console.log(publications);
+                }
                 var featForViewer = NXViewerUtils.convertNXAnnotations(feat,metaData[i]);
                 featuresForViewer.push(featForViewer);
             }
@@ -243,12 +249,12 @@ function TripleViewer(entry) {
                 .attr("y", 6)
                 .attr("dy", "0.35em")
                 .style("font-size", "10px")
-                .text(function(d) { return data.isoformName})
+                .text(function(d) { return data.isoformMainName})
                 .style("fill", "black")
                 .style("z-index", "15")
                 .style("visibility", function(d) {
-                    if (data.isoformName) {
-                        return (scaling(d.second) - scaling(d.first)) > data.isoformName.length * 8 ? "visible" : "hidden";
+                    if (data.isoformMainName) {
+                        return (scaling(d.second) - scaling(d.first)) > data.isoformMainName.length * 8 ? "visible" : "hidden";
                     }
                     else return "hidden";
                 });
@@ -382,6 +388,11 @@ function TripleViewer(entry) {
 
     }
     function fillTable(isoName) {
+        function toggleEvidenceInfos() {
+            $(".evidenceNumber").click(function () {
+                $(this).parent().parent().next().toggle();
+            })
+        }
 
         if ($("#featuresTable").length > 0) {
             var number = 0;
@@ -397,14 +408,24 @@ function TripleViewer(entry) {
             Handlebars.registerHelper('className', function (category, options) {
                 return category.replace(' ','')+" "+this.group.split(" ").join("_").toLowerCase();
             });
+            Handlebars.registerHelper("math", function(lvalue, operator, rvalue, options) {
+                lvalue = parseFloat(lvalue);
+                rvalue = parseFloat(rvalue);
+
+                return {
+                    "+": lvalue + rvalue
+                }[operator];
+            });
             var datas = {
                 features: features,
-                featuresLength: number
+                featuresLength: number,
+                publications:publications
             };
 
             var template = HBtemplates['featureTable2.tmpl'];
             var results = template(datas);
             $("#featuresTable").html(results);
+            toggleEvidenceInfos();
         }
     }
     function testAlgo() {
@@ -619,7 +640,8 @@ function TripleViewer(entry) {
 
         for (var filter in activeFiltering.filters) {
             if ($("#"+filter).prop("checked")) {
-                $("."+filter).show();
+                console.log("."+filter+".general-info");
+                $("."+filter+".general-info").show();
                 filterOptions[filter] = true;
             }
             else {
