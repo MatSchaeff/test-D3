@@ -33,7 +33,8 @@
         </tr>
         <tr class="{{{className category}}} detailed-info">
             <td colspan="6" style="word-break: break-all">{{#each source}}<div class="evidenceLine"><div class="evidenceArrow">&#10549;</div>  Evidence {{math @index "+" 1}}<span class="evidenceCodeName">{{evidenceCodeName}}</span>
-            <span class="evidenceSource">{{assignedBy}}</span></div>{{/each}}</td>
+            <span class="evidenceSource">{{assignedBy}}</span></div>
+                <div>{{#publications.[{{publicationMD5}}]}}<span>{{title}} blblbl</span>{{/publications.[{{publicationMD5}}]}}</div>{{/each}}</td>
             <!--<td>-->
              <!--{{#each evidence}}-->
                 <!--<div>{{this}}</div>-->

@@ -473,7 +473,9 @@ var NXUtils = {
     },
     convertMappingsToIsoformMap:function (featMappings, category,group){
         var mappings = jQuery.extend([], featMappings);
+        var publiActive = false;
         if (!(featMappings instanceof Array)) {
+            publiActive = true;
             mappings = jQuery.extend([], featMappings.annot);
             console.log("GOOOOOOOOOOOT OOOOONE !!!!!!!!!!!!!!!!!!!!!!!!!!")
         }
@@ -489,10 +491,24 @@ var NXUtils = {
                             description = mapping.description,
                             evidence = mapping.evidences.map(function(d) {return d.assignedBy}).filter(function(item, pos, self) {
                                 return self.indexOf(item) == pos;}),
-                            source = mapping.evidences.map(function (d) {return {
+                            source = mapping.evidences.map(function (d) {
+                                var pub = "";
+                                if (publiActive) {
+                                    for (var name in featMappings.publi) {
+                                        if (featMappings.publi[name].md5 === 5) {
+                                            console.log("TODO");
+                                        }
+                                    }
+                                }
+                                return {
                                 evidenceCodeName: d.evidenceCodeName,
                                 assignedBy: d.assignedBy,
-                                publicationMD5: d.publicationMD5
+                                publicationMD5: d.publicationMD5,
+                                title:featMappings.publi[pub].title || "",
+                                author:featMappings.publi[pub].authors.map(function (d) { return {lastName: d.lastName, initials: d.initials}}) || [],
+                                journal:featMappings.publi[pub].cvJournal.name || "",
+                                volume:featMappings.publi[pub].volume || "",
+                                abstract:featMappings.publi[pub].abstractText || ""
                             }});
                         if (mapping.hasOwnProperty("variant") && !jQuery.isEmptyObject(mapping.variant)) {
                             link = "<span style='color:#00C500'>" + mapping.variant.original + " → " +  mapping.variant.variant + "</span>";

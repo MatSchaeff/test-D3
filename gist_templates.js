@@ -62,7 +62,7 @@ this["HBtemplates"]["featureTable2.tmpl"] = Handlebars.template({"1":function(de
     + " detailed-info\">\n            <td colspan=\"6\" style=\"word-break: break-all\">"
     + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.source : depth0),{"name":"each","hash":{},"fn":this.program(7, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "</td>\n            <!--<td>-->\n             <!--"
-    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.evidence : depth0),{"name":"each","hash":{},"fn":this.program(9, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.evidence : depth0),{"name":"each","hash":{},"fn":this.program(10, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "-->\n            <!--</td>-->\n        </tr>";
 },"3":function(depth0,helpers,partials,data) {
     var helper;
@@ -73,7 +73,7 @@ this["HBtemplates"]["featureTable2.tmpl"] = Handlebars.template({"1":function(de
 },"5":function(depth0,helpers,partials,data) {
     return "            <td></td>\n            <td></td>\n";
 },"7":function(depth0,helpers,partials,data) {
-    var helper, alias1=helpers.helperMissing, alias2=this.escapeExpression, alias3="function";
+    var stack1, helper, alias1=helpers.helperMissing, alias2=this.escapeExpression, alias3="function";
 
   return "<div class=\"evidenceLine\"><div class=\"evidenceArrow\">&#10549;</div>  Evidence "
     + alias2((helpers.math || (depth0 && depth0.math) || alias1).call(depth0,(data && data.index),"+",1,{"name":"math","hash":{},"data":data}))
@@ -81,8 +81,16 @@ this["HBtemplates"]["featureTable2.tmpl"] = Handlebars.template({"1":function(de
     + alias2(((helper = (helper = helpers.evidenceCodeName || (depth0 != null ? depth0.evidenceCodeName : depth0)) != null ? helper : alias1),(typeof helper === alias3 ? helper.call(depth0,{"name":"evidenceCodeName","hash":{},"data":data}) : helper)))
     + "</span>\n            <span class=\"evidenceSource\">"
     + alias2(((helper = (helper = helpers.assignedBy || (depth0 != null ? depth0.assignedBy : depth0)) != null ? helper : alias1),(typeof helper === alias3 ? helper.call(depth0,{"name":"assignedBy","hash":{},"data":data}) : helper)))
-    + "</span></div>";
-},"9":function(depth0,helpers,partials,data) {
+    + "</span></div>\n                <div>"
+    + ((stack1 = helpers.blockHelperMissing.call(depth0,this.lambda(((stack1 = (depth0 != null ? depth0.publications : depth0)) != null ? stack1['{{publicationMD5}}'] : stack1), depth0),{"name":"publications.{{publicationMD5}}","hash":{},"fn":this.program(8, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "</div>";
+},"8":function(depth0,helpers,partials,data) {
+    var helper;
+
+  return "<span>"
+    + this.escapeExpression(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"title","hash":{},"data":data}) : helper)))
+    + " blblbl</span>";
+},"10":function(depth0,helpers,partials,data) {
     return "-->\n                <!--<div>"
     + this.escapeExpression(this.lambda(depth0, depth0))
     + "</div>-->\n                <!--";
