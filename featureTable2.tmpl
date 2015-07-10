@@ -32,9 +32,21 @@
             {{/if}}
         </tr>
         <tr class="{{{className category}}} detailed-info">
-            <td colspan="6" style="word-break: break-all">{{#each source}}<div class="evidenceLine"><div class="evidenceArrow">&#10549;</div>  Evidence {{math @index "+" 1}}<span class="evidenceCodeName">{{evidenceCodeName}}</span>
+            <td colspan="6" style="word-break: break-all">{{#each source}}<div class="evidenceLine"><div class="evidenceArrow">&#10549;</div>  Evidence {{math @index 1}}<span class="evidenceCodeName">{{evidenceCodeName}}</span>
             <span class="evidenceSource">{{assignedBy}}</span></div>
-                <div>{{#publications.[{{publicationMD5}}]}}<span>{{title}} blblbl</span>{{/publications.[{{publicationMD5}}]}}</div>{{/each}}</td>
+                <div style="padding-left:10px;border-left:1px solid darkgray;margin-right:10px;">
+                    {{#if title}}<button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#collapse{{pubId}}{{../../id}}"  aria-expanded="false" aria-controls="collapse{{pubId}}{{../../id}}">
+                    abstract
+                </button>
+                    {{#if title}}<p>{{{title}}}</p>{{/if}}
+                    <p style="color:#6a90d9;">{{#each authors}}{{lastName}} {{initials}}. , {{/each}}</p>
+                    <p>{{journal}} <strong>{{volume}}</strong>, {{firstPage}} - {{lastPage}} ({{year}})</p>
+                    <div class="collapse" id="collapse{{pubId}}{{../../id}}" style="margin-top:5px;">
+                        <p>{{abstract}}</p>
+                    </div>{{/if}}
+
+                </div>{{/each}}</td>
+
             <!--<td>-->
              <!--{{#each evidence}}-->
                 <!--<div>{{this}}</div>-->

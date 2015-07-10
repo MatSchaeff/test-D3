@@ -172,7 +172,8 @@
 
         NextprotClient.prototype.getMatureProtein = function(entry) {
             return _callURL(normalizeEntry(entry || this.getEntryName()), "mature-protein").then(function (data){
-                return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:data.entry.publications}
+                //return data.entry.annotations;
             });
         };
 
@@ -219,7 +220,8 @@
         };
         NextprotClient.prototype.getModifResidue = function(entry) {
             return _callURL(normalizeEntry(entry || this.getEntryName()), "modified-residue").then(function (data){
-                return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:data.entry.publications};
+                //return data.entry.annotations;
             });
         };
         NextprotClient.prototype.getCrossLink = function(entry) {
@@ -468,6 +470,10 @@ var NXUtils = {
             var url = "http://www.nextprot.org/db/term/" + accession;
             return "<a href='" + url + "'>" + description + "</a>";
         }
+        else if (type==="publication") {
+            var url = "http://www.nextprot.org/db/publication/" + accession;
+            return "<a href='" + url + "'>" + description + "</a>";
+        }
         else if (description) return description;
         else return "";
     },
@@ -492,24 +498,37 @@ var NXUtils = {
                             evidence = mapping.evidences.map(function(d) {return d.assignedBy}).filter(function(item, pos, self) {
                                 return self.indexOf(item) == pos;}),
                             source = mapping.evidences.map(function (d) {
-                                var pub = "";
+                                var pub = null;
                                 if (publiActive) {
                                     for (var name in featMappings.publi) {
-                                        if (featMappings.publi[name].md5 === 5) {
-                                            console.log("TODO");
+                                        if (featMappings.publi[name].md5 === d.publicationMD5) pub = name;
                                         }
+                                    return {
+                                        evidenceCodeName: d.evidenceCodeName,
+                                        assignedBy: d.assignedBy,
+                                        publicationMD5: d.publicationMD5,
+                                        title: pub ? NXUtils.getLinkForFeature(featMappings.publi[pub].publicationId, featMappings.publi[pub].title, "publication") : "",
+                                        authors: pub ? featMappings.publi[pub].authors.map(function (d) { return {lastName: d.lastName, initials: d.initials}}) : [],
+                                        journal: pub ? featMappings.publi[pub].cvJournal.name : "",
+                                        volume: pub ? featMappings.publi[pub].volume : "",
+                                        year: pub ? featMappings.publi[pub].publicationYear : "",
+                                        firstPage: pub ? featMappings.publi[pub].firstPage  : "",
+                                        lastPage: pub ? (featMappings.publi[pub].lastPage === "" ? featMappings.publi[pub].firstPage : featMappings.publi[pub].lastPage) : "",
+                                        pubId: pub ? featMappings.publi[pub].publicationId : "",
+                                        abstract: pub ? featMappings.publi[pub].abstractText : ""
                                     }
                                 }
-                                return {
+                                else return {
                                 evidenceCodeName: d.evidenceCodeName,
                                 assignedBy: d.assignedBy,
                                 publicationMD5: d.publicationMD5,
-                                title:featMappings.publi[pub].title || "",
-                                author:featMappings.publi[pub].authors.map(function (d) { return {lastName: d.lastName, initials: d.initials}}) || [],
-                                journal:featMappings.publi[pub].cvJournal.name || "",
-                                volume:featMappings.publi[pub].volume || "",
-                                abstract:featMappings.publi[pub].abstractText || ""
-                            }});
+                                title:"",
+                                authors:[],
+                                journal:"",
+                                volume:"",
+                                abstract:""
+                                }
+                            });
                         if (mapping.hasOwnProperty("variant") && !jQuery.isEmptyObject(mapping.variant)) {
                             link = "<span style='color:#00C500'>" + mapping.variant.original + " → " +  mapping.variant.variant + "</span>";
                             description = "<span style=\"color:#00C500\">" + mapping.variant.original + " → " +  mapping.variant.variant + "</span>  ";

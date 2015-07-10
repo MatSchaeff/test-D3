@@ -408,13 +408,11 @@ function TripleViewer(entry) {
             Handlebars.registerHelper('className', function (category, options) {
                 return category.replace(' ','')+" "+this.group.split(" ").join("_").toLowerCase();
             });
-            Handlebars.registerHelper("math", function(lvalue, operator, rvalue, options) {
+            Handlebars.registerHelper("math", function(lvalue, rvalue, options) {
                 lvalue = parseFloat(lvalue);
                 rvalue = parseFloat(rvalue);
 
-                return {
-                    "+": lvalue + rvalue
-                }[operator];
+                return lvalue + rvalue
             });
             var datas = {
                 features: features,
