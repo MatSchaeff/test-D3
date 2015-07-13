@@ -172,7 +172,7 @@
 
         NextprotClient.prototype.getMatureProtein = function(entry) {
             return _callURL(normalizeEntry(entry || this.getEntryName()), "mature-protein").then(function (data){
-                return {annot:data.entry.annotations,publi:data.entry.publications}
+                return {annot:data.entry.annotations,publi:data.entry.publications,xrefs:data.entry.xrefs};
                 //return data.entry.annotations;
             });
         };
@@ -214,19 +214,20 @@
         };
         NextprotClient.prototype.getInitMeth= function(entry) {
             return _callURL(normalizeEntry(entry || this.getEntryName()), "initiator-methionine").then(function (data){
-                return {annot:data.entry.annotations,publi:data.entry.publications};
+                return {annot:data.entry.annotations,publi:data.entry.publications,xrefs:data.entry.xrefs};
                 //return data.entry.annotations;
             });
         };
         NextprotClient.prototype.getModifResidue = function(entry) {
             return _callURL(normalizeEntry(entry || this.getEntryName()), "modified-residue").then(function (data){
-                return {annot:data.entry.annotations,publi:data.entry.publications};
+                return {annot:data.entry.annotations,publi:data.entry.publications,xrefs:data.entry.xrefs};
                 //return data.entry.annotations;
             });
         };
         NextprotClient.prototype.getCrossLink = function(entry) {
             return _callURL(normalizeEntry(entry || this.getEntryName()), "cross-link").then(function (data){
-                return data.entry.annotations;
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:data.entry.publications,xrefs:data.entry.xrefs};
             });
         };
         NextprotClient.prototype.getGlycoSite = function(entry) {
@@ -499,10 +500,22 @@ var NXUtils = {
                                 return self.indexOf(item) == pos;}),
                             source = mapping.evidences.map(function (d) {
                                 var pub = null;
+                                var xref = null;
                                 if (publiActive) {
                                     for (var name in featMappings.publi) {
-                                        if (featMappings.publi[name].md5 === d.publicationMD5) pub = name;
+                                        if (featMappings.publi[name].md5 === d.publicationMD5) {
+                                            pub = name;
+                                            break;
                                         }
+                                    }
+                                    for (var ref in featMappings.xrefs) {
+                                        if (featMappings.xrefs[ref].dbXrefId === d.resourceId) {
+                                            xref=featMappings.xrefs[ref];
+                                            console.log("xreff");
+                                            console.log(xref);
+                                            break;
+                                        }
+                                    }
                                     return {
                                         evidenceCodeName: d.evidenceCodeName,
                                         assignedBy: d.assignedBy,
@@ -515,7 +528,9 @@ var NXUtils = {
                                         firstPage: pub ? featMappings.publi[pub].firstPage  : "",
                                         lastPage: pub ? (featMappings.publi[pub].lastPage === "" ? featMappings.publi[pub].firstPage : featMappings.publi[pub].lastPage) : "",
                                         pubId: pub ? featMappings.publi[pub].publicationId : "",
-                                        abstract: pub ? featMappings.publi[pub].abstractText : ""
+                                        abstract: pub ? featMappings.publi[pub].abstractText : "",
+                                        dbXrefs: pub ? featMappings.publi[pub].dbXrefs.map( function (o) {return {name: o.databaseName==="DOI" ? "Full Text" : o.databaseName, url:o.resolvedUrl, accession: o.accession}}) : [],
+                                        crossRef: xref ? {name: xref.accession, url: xref.resolvedUrl} : {}
                                     }
                                 }
                                 else return {

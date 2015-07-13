@@ -119,8 +119,8 @@ function TripleViewer(entry) {
             $(".chart svg").remove();
             createSVG(isoforms,isoID);
             addFeatures(isoID);
-            featureSelection();
-            inverseSelection();
+            //featureSelection();
+            //inverseSelection();
         }
     };
 
@@ -413,6 +413,9 @@ function TripleViewer(entry) {
                 rvalue = parseFloat(rvalue);
 
                 return lvalue + rvalue
+            });
+            Handlebars.registerHelper("linkTo", function(name, link, options) {
+                return "<a href=\"" + link + "\">" + name + "</a>";
             });
             var datas = {
                 features: features,
