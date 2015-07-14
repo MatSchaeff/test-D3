@@ -8,11 +8,14 @@ module.exports = function(grunt) {
                 separator: ';'
             },
             dist: {
-                src: ['jquery.js',
-                    'd3.v3.js',
-                    'nxViewer.js'
+                src: ['bower_components/jquery/src/jquery.js',
+                    'bower_components/d3/src/d3.v3.js',
+                    'bower_components/sequence-viewer/src/sequence-viewer.js',
+                    'bower_components/feature-viewer/src/feature-viewer.js',
+                    'bower_components/bootstrap/src/bootstrap.js',
+                    'bower_components/handlebars/src/handlebars.js'
                 ],
-                dest: 'demo/featureViewer.bundle.js'
+                dest: 'js/triple-viewer.bundle.js'
             }
         },
         connect: {

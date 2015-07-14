@@ -12,7 +12,9 @@
     "bootstrap": "3.x.x",
     "sequence-viewer": "x.x.x",
     "nextprot": "0.0.x",
-    "feature-viewer":"x.x.x"
+    "feature-viewer":"x.x.x",
+    "d3":"x.x.x",
+    "handlebars":"x.x.x"
 
   }
 }
