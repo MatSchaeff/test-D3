@@ -27,17 +27,17 @@ module.exports = function(grunt) {
         watch: {
             all: {
                 options: {livereload: true},
-                files: ['*.js']
+                files: ['js/*.js']
             },
             handlebars: {
-                files: '*.tmpl',
+                files: 'templates/*.tmpl',
                 tasks: ['handlebars:compile']
             }
         },
         handlebars: {
             compile: {
-                src: '*.tmpl',
-                dest: 'gist_templates.js',
+                src: 'templates/*.tmpl',
+                dest: 'js/gist_templates.js',
                 options: {
                     namespace: "HBtemplates"
                 }

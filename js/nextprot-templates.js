@@ -34,7 +34,7 @@ var loadOverview = function(overview,nxEntryName){
 
         console.log(data);
 
-        var template = HBtemplates['overviewProtein.tmpl'];
+        var template = HBtemplates['templates/overviewProtein.tmpl'];
         console.log(template);
         var result = template(data);
         $("#nx-overview").append(result);

@@ -140,11 +140,11 @@ a:focus {
 
 @font-face {
     font-family: "HelveticaUltraLight";
-    src: url('fonts/HelveticaNeue-UltraLight.otf');
+    src: url('../fonts/HelveticaNeue-UltraLight.otf');
 }
 @font-face {
     font-family: "HelveticaLight";
-    src: url('fonts/HelveticaNeue-Light.otf');
+    src: url('../fonts/HelveticaNeue-Light.otf');
 }
 .menu-group {
     background-color: inherit !important;

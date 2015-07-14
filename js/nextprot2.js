@@ -49,7 +49,7 @@
             applicationName = appName;
             clientInfo = clientInformation;
             if(!appName){
-                throw "Please provide some application name  ex:  new Nextprot.Client('demo applicaiton for visualizing peptides', clientInformation);";
+                throw "Please provide some application name  ex:  new Nextprot.Client('demo application for visualizing peptides', clientInformation);";
             }
             
             if(!clientInformation){

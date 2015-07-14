@@ -18,6 +18,7 @@ function FeatureViewer(sequence, div, options) {
     var level = 0;
     var seqShift = 0;
     var zoom = false;
+    var zoomMax = 50;
 
     //Init box & scaling
     var margin = {top: 10, right: 20, bottom: 20, left: 100},
@@ -723,7 +724,7 @@ function FeatureViewer(sequence, div, options) {
         else var start = parseInt(extent[1] + 1), end = parseInt(extent[0] - 1);
 
         var seq = displaySequence(extentLength);
-        if (!brush.empty() && extentLength > 50) {
+        if (!brush.empty() && extentLength > zoomMax) {
             var zoomScale = (sequence.length / extentLength).toFixed(1);
             $(div + " .zoomUnit").text(zoomScale.toString());
 
@@ -874,7 +875,8 @@ function FeatureViewer(sequence, div, options) {
                 'showSequence': false,
                 'brushActive': false,
                 'verticalLine': false,
-                'toolbar': false
+                'toolbar': false,
+                'zoommax':50
             }
         }
         d3.select(div)
@@ -884,11 +886,11 @@ function FeatureViewer(sequence, div, options) {
         // Create SVG
 
         if (options.toolbar === true) {
-            console.log($(div + ".svgHeader").length);
-            var headerOptions = $(div + ".svgHeader").length ? d3.select(div + ".svgHeader") : d3.select(div).append("div").attr("class", "svgHeader");
+            console.log($(div + " .svgHeader").length);
+            var headerOptions = $(div + " .svgHeader").length ? d3.select(div + " .svgHeader") : d3.select(div).append("div").attr("class", "svgHeader");
             console.log(headerOptions);
 
-            if (!$(div + '.header-zoom').length) {
+            if (!$(div + ' .header-zoom').length) {
                 var headerZoom = headerOptions
                     .append("div")
                     .attr("class", "panel panel-default header-zoom")
@@ -921,7 +923,7 @@ function FeatureViewer(sequence, div, options) {
                     .attr("class", "zoomUnit")
                     .text("1");
             }
-            if (!$(div + '.header-position').length) {
+            if (!$(div + ' .header-position').length) {
                 var headerPosition = headerOptions
                     .append("div")
                     .attr("class", "panel panel-default header-position")
@@ -997,6 +999,9 @@ function FeatureViewer(sequence, div, options) {
         if (options.verticalLine) {
             SVGOptions.verticalLine = true;
             addVerticalLine();
+        }
+        if (options.zoomMax) {
+            zoomMax = options.zoomMax;
         }
 
         updateSVGHeight(Yposition);

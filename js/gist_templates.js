@@ -1,6 +1,6 @@
 this["HBtemplates"] = this["HBtemplates"] || {};
 
-this["HBtemplates"]["featureTable.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
+this["HBtemplates"]["templates/featureTable.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var stack1;
 
   return ((stack1 = helpers.each.call(depth0,depth0,{"name":"each","hash":{},"fn":this.program(2, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
@@ -36,7 +36,7 @@ this["HBtemplates"]["featureTable.tmpl"] = Handlebars.template({"1":function(dep
     + "</tbody>\n    </table>\n</div>";
 },"useData":true});
 
-this["HBtemplates"]["featureTable2.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data,blockParams,depths) {
+this["HBtemplates"]["templates/featureTable2.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data,blockParams,depths) {
     var stack1;
 
   return ((stack1 = helpers.each.call(depth0,depth0,{"name":"each","hash":{},"fn":this.program(2, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "");
@@ -175,7 +175,7 @@ this["HBtemplates"]["featureTable2.tmpl"] = Handlebars.template({"1":function(de
     + "</tbody>\n    </table>\n</div>";
 },"useData":true,"useDepths":true});
 
-this["HBtemplates"]["filter.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
+this["HBtemplates"]["templates/filter.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var helper, alias1=this.escapeExpression;
 
   return "                <label class=\"checkbox-inline\">\n                    <input type=\"checkbox\" id="
@@ -191,7 +191,7 @@ this["HBtemplates"]["filter.tmpl"] = Handlebars.template({"1":function(depth0,he
     + "\n            </div>\n        </div>\n    </div>\n";
 },"useData":true});
 
-this["HBtemplates"]["isoformChoice.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
+this["HBtemplates"]["templates/isoformChoice.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
   return "        <li role=\"presentation\"><a class=\"isoformNames\" href=\"#"
@@ -222,7 +222,7 @@ this["HBtemplates"]["isoformChoice.tmpl"] = Handlebars.template({"1":function(de
     + "        <li><a id=\"isoformMap\" href=\"#\" style=\"color:#007800;font-size:16px;padding-top: 8px;\">See isoforms</a></li>\n    </ul>\n</div>";
 },"useData":true});
 
-this["HBtemplates"]["overviewProtein.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
+this["HBtemplates"]["templates/overviewProtein.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
   "    <div id=\"cleavage-less\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Cleaved into :</div>\n        <div class=\"col-md-6 col-xs-6\">";
   stack1 = ((helper = (helper = helpers.cleavage || (depth0 != null ? depth0.cleavage : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"cleavage","hash":{},"fn":this.program(2, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));

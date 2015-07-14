@@ -2,9 +2,6 @@
 
 function TripleViewer(entry) {
 
-    function showSequence(){
-
-    }
     var isoName = entry + "-1";
     var ft;
     var seqView;
@@ -39,7 +36,7 @@ function TripleViewer(entry) {
             };
             console.log(datas);
             isoName = datas.isoforms.visible[0].uniqueName;
-            var template = HBtemplates['isoformChoice.tmpl'];
+            var template = HBtemplates['templates/isoformChoice.tmpl'];
             var results = template(datas);
             $("#nx-isoformChoice").append(results);
             /////////// EventListener to change isoform
@@ -332,7 +329,8 @@ function TripleViewer(entry) {
                     showAxis: true,
                     showSequence: true,
                     brushActive: true,
-                    verticalLine: false
+                    verticalLine: false,
+                    toolbar:true
                 });
                 seqView = new Sequence(currentSeq,isoName);
                 seqView.render('#seqViewer', {
@@ -359,7 +357,7 @@ function TripleViewer(entry) {
         }
     }
     function addFiltering() {
-        $(".chart").append("<div id=\"svgHeader\" class=\"row\" style=\"margin:0px 20px\"></div>");
+        $(".chart").append("<div class=\"svgHeader\" class=\"row\" style=\"margin:0px 20px\"></div>");
         var filterHash = {
             processing: "Processing",
             residue: "Modified residue",
@@ -381,9 +379,9 @@ function TripleViewer(entry) {
             }
         }
         console.log(activeFiltering);
-        var template = HBtemplates['filter.tmpl'];
+        var template = HBtemplates['templates/filter.tmpl'];
         var results = template(activeFiltering);
-        $("#svgHeader").html(results);
+        $(".svgHeader").html(results);
 
 
     }
@@ -423,7 +421,7 @@ function TripleViewer(entry) {
                 publications:publications
             };
 
-            var template = HBtemplates['featureTable2.tmpl'];
+            var template = HBtemplates['templates/featureTable2.tmpl'];
             var results = template(datas);
             $("#featuresTable").html(results);
             toggleEvidenceInfos();
