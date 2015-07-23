@@ -273,7 +273,7 @@
         };
 
         NextprotClient.prototype.getIsoformMapping = function(entry) {
-            return _callURLTemp(normalizeEntry(entry || this.getEntryName()), "isoform/mapping").then(function (data){
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "isoform/mapping").then(function (data){
                 return data;
             });
         };
